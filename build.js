@@ -105,7 +105,7 @@ function consultDrawer() {
       <p>확인한 뒤 아이에게 맞는 과정과 일정을 안내해 드립니다.</p>
     </div>
     <div class="dr-perf" aria-hidden="true"></div>
-    <form class="fm" id="consultForm" autocomplete="off" data-ep="${esc(SITE.formEndpoint)}">
+    <form class="fm" id="consultForm" autocomplete="off" data-ep="${esc(SITE.formEndpoint)}" data-site="${esc(BRAND)}">
       <div class="fm-2">
         <label>학생 이름 <b class="req">*</b><input type="text" name="이름" required placeholder="이름"></label>
         <div><span class="lb">연락처 <b class="req">*</b></span><div class="row"><select name="연락처앞" aria-label="연락처 앞자리"><option>010</option><option>011</option><option>016</option><option>017</option><option>018</option><option>019</option></select><input type="tel" name="연락처" required inputmode="numeric" placeholder="1234-5678" aria-label="연락처 뒷자리"></div></div>

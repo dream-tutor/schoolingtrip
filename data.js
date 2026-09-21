@@ -18,8 +18,11 @@ const SITE = {
   seasonEn: "WINTER 2027",
   // 전화는 우하단 플로팅 [전화 상담] 하나만. 이 번호 말고 다른 번호는 넣지 말 것.
   phone: { display: "010-2635-5114", tel: "01026355114" },
-  // 상담 접수 GAS 웹앱 /exec 주소. 비어 있으면 데모 모드(전송 안 함). 공개 직전에 채운다.
-  formEndpoint: "",
+  // 상담 접수 GAS 웹앱 /exec 주소. 비어 있으면 데모 모드(전송 안 함).
+  // 2026-09-21 사용자 결정: 러닝트래블과 같은 시트·같은 GAS 를 쓴다(러닝트래블 data.js FORM_ENDPOINT 와 같은 값).
+  //   메일 제목은 GAS 쪽 고정값이라 [러닝트래블]로 온다 — 구분은 문의내용 첫 줄의 [브랜드] 표기와 유입페이지 열(도메인)로 한다.
+  //   ⚠ 이제 제출하면 실제 시트·메일로 간다. 테스트로 제출하지 말 것(확인은 Image 를 가로채 주소만 볼 것).
+  formEndpoint: "https://script.google.com/macros/s/AKfycbwWEdDyQ6kDDqBpTpHKkfOfRyicCRYAj6wivIv3FK4ILzfO5eMWgMRAwZg05DO29dyZ/exec",
   // t.js 추적 키. 공개 전에 전문과외 워커 analytics.js 의 SITES·SITE_ORDER·SITE_GROUPS 에 같은 키를 등록해야 수집된다.
   trackKey: "",
   privacyEmail: "zskykr@naver.com",

@@ -152,6 +152,9 @@
       if (f.getAll("궁금한점").length) rows.push("상담 희망 내용: " + f.getAll("궁금한점").join(", "));
       var free = (f.get("문의내용") || "").trim();
       if (free) rows.push((rows.length ? NL : "") + free);
+      /* 러닝트래블과 시트를 같이 쓴다 — 어느 사이트 접수인지 문의내용 첫 줄에 적는다(더세이브 공용 시트와 같은 방식) */
+      var siteTag = form.getAttribute("data-site") || "";
+      if (siteTag) rows.unshift("[" + siteTag + "]");
       var data = {
         "이름": name, "연락처": tel, "학년": grade, "관심캠프": f.get("관심과정") || "",
         "문의내용": rows.join(NL),
