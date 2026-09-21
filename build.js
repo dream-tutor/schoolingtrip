@@ -283,7 +283,7 @@ function posterCard(dst) {
 }
 
 function buildHome() {
-  const passList = CAMPS.map((c) => ({ to: c.city, ko: `${c.countryKo} · ${c.short}`, date: fmtPass(c.depart), len: c.weeks, who: c.target.replace(/ ~ /, " – "), iso: c.iso, href: `${c.slug}.html` }));
+  const passList = CAMPS.map((c) => ({ to: c.city, ko: c.short, date: fmtPass(c.depart), len: c.weeks, who: c.target.replace(/ ~ /, " – "), iso: c.iso, href: `${c.slug}.html` }));
   const p0 = passList[0];
   const mqItems = ["NIAGARA", "AUCKLAND", "KYOTO", "JOHOR BAHRU", "CLARK"].map((x) => `${x} <i>✈</i>`).join(" ") + ` <em>${SITE.seasonEn.toLowerCase()}</em> <i>✈</i> `;
   const gates = [
@@ -319,7 +319,7 @@ function buildHome() {
           <div class="pass-meta" style="grid-template-columns:1fr;border-top:0;padding:10px 0 0 78px"><div><small>PROGRAM</small><span class="flap" data-f="ko">${p0.ko}</span></div></div>
         </div>
         <div class="pass-stub" aria-hidden="true"><small>GATE</small><b>2027</b><div class="barcode"></div></div>
-        <div class="stamp" aria-hidden="true"><span>DEPARTURE<b>ICN</b>${SITE.seasonEn}</span></div>
+        <div class="stamp" aria-hidden="true"><span>DEPARTURE<b>SEL</b>${SITE.seasonEn}</span></div>
       </a>
     </div>
   </div>
