@@ -50,6 +50,17 @@
     if (list.length > 1 && !reduce) setInterval(function () { if (d.hidden) return; i = (i + 1) % list.length; show(i); }, 3200);
   }
 
+  /* 한시 할인 — 마감일이 지났는데 아직 안 지운 페이지가 남아 있으면 원래 금액으로 되돌린다.
+     data-plain 이 있으면 그 내용으로 갈아끼우고, 없으면(배지·칩) 그냥 지운다. */
+  var todayStr = new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10);
+  $$("[data-promo-until]").forEach(function (el) {
+    if (el.getAttribute("data-promo-until") >= todayStr) return;
+    var plain = el.getAttribute("data-plain");
+    if (plain !== null) { el.innerHTML = plain; el.classList.remove("has-promo"); el.removeAttribute("data-plain"); }
+    else el.remove();
+    el.removeAttribute && el.removeAttribute("data-promo-until");
+  });
+
   /* 전광판 모집 상태 — 마감일이 지나면 문구만 바꾼다 (재빌드 없이도 맞게) */
   var today = new Date(); today.setHours(0, 0, 0, 0);
   $$("[data-deadline]").forEach(function (el) {

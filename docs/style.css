@@ -211,6 +211,16 @@ table{border-collapse:collapse;width:100%}
 }
 @media(min-width:1081px){.b-meta{display:contents}}
 
+/* ---------- 한시 할인 ---------- */
+/* 마감일이 지나면 app.js 가 data-plain 으로 되돌리거나 칩을 지운다 — 재빌드를 잊어도 틀린 금액이 안 남는다 */
+.has-promo s{opacity:.55;font-weight:500;text-decoration-thickness:1.5px}
+.promo-tag{font-style:normal;font-size:12.5px;font-weight:700;letter-spacing:-.01em;background:var(--tangerine);color:#fff;padding:3px 9px;border-radius:999px;vertical-align:middle;white-space:nowrap}
+.promo-chip{display:inline-flex;align-items:center;font-size:13.5px;font-weight:700;letter-spacing:-.01em;background:var(--tangerine);color:#fff;padding:6px 15px;border-radius:999px;margin-bottom:16px}
+.ph .lead .promo-chip{margin-bottom:14px}
+.ph .lead{display:flex;flex-direction:column;align-items:flex-start}
+.tk .hl.has-promo small{color:var(--tangerine-2);font-weight:700}
+.tk .hl.has-promo s{font-size:13px}
+
 /* ---------- 목적별 고르기 ---------- */
 .fd{border-bottom:1px solid var(--line)}
 .fd-r{display:grid;grid-template-columns:96px minmax(0,1fr) auto;gap:20px 30px;align-items:center;padding:38px 0;border-top:1px solid var(--line);position:relative;transition:padding .4s var(--ease)}
