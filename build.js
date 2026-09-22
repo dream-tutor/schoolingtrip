@@ -650,7 +650,10 @@ const indexable = PAGES.filter((p) => p.index);
 fs.writeFileSync(path.join(OUT, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${indexable.map((p) => `<url><loc>${absUrl(p.file)}</loc><lastmod>${p.modified}</lastmod><priority>${p.file === "index.html" ? "1.0" : /^camp|^study|^stpaul|^college/.test(p.file) ? "0.8" : "0.6"}</priority></url>`).join("\n")}\n</urlset>\n`);
 fs.writeFileSync(path.join(OUT, "robots.txt"), SITE.domainReady ? `User-agent: *\nAllow: /\nSitemap: ${SITE.baseUrl}/sitemap.xml\n` : `User-agent: *\nDisallow: /\n`);
 fs.writeFileSync(path.join(OUT, ".nojekyll"), "");
-if (SITE.domainReady) fs.writeFileSync(path.join(OUT, "CNAME"), SITE.baseUrl.replace(/^https?:\/\//, "") + "\n");
+// CNAME 은 쓰지 않는다 — 2026-09-22 부터 Cloudflare Pages 로 배포한다(커스텀 도메인은 CF 쪽 설정).
+// GitHub Pages 로 되돌릴 일이 생기면 아래 한 줄을 살리고 저장소 Pages 를 다시 켤 것.
+//   if (SITE.domainReady) fs.writeFileSync(path.join(OUT, "CNAME"), SITE.baseUrl.replace(/^https?:\/\//, "") + "\n");
+fs.rmSync(path.join(OUT, "CNAME"), { force: true });
 // IndexNow 공용 키 (전문과외 워커의 중앙 크론이 이 파일을 확인한다)
 fs.writeFileSync(path.join(OUT, "5e5ad86af25533efae3948773b676a6c.txt"), "5e5ad86af25533efae3948773b676a6c");
 

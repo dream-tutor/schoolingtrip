@@ -1,23 +1,22 @@
 // ============================================================
-// Cloudflare DNS 레코드 넣기 — GitHub Pages 연결용
-//   실행: node tools/cf-dns.js            (현재 상태만 보여준다)
+// Cloudflare DNS 레코드 넣기 — Cloudflare Pages 커스텀 도메인용
+//   실행: node tools/cf-dns.js            (지금 상태만 본다)
 //         node tools/cf-dns.js --apply    (없는 레코드를 만든다)
 //
 //   토큰: 환경변수 CLOUDFLARE_DNS_TOKEN, 없으면 %TEMP%\cf-token.txt 첫 줄.
-//   필요 권한: Zone:DNS:Edit + Zone:Zone:Read (해당 존만). wrangler OAuth 토큰에는
-//   zone(read) 뿐이라 이 작업이 안 된다 — 따로 만든 토큰이어야 한다.
+//   필요 권한: Zone:DNS:Edit + Zone:Zone:Read (해당 존만).
+//   ⚠ wrangler OAuth 토큰에는 pages:write·zone:read 는 있어도 DNS 쓰기가 없다 —
+//     그래서 Pages 에 커스텀 도메인을 붙여도 레코드는 자동으로 안 생기고 status=pending 에 머문다.
+//     Cloudflare 대시보드에서 커스텀 도메인을 추가하면 UI 가 대신 만들어 준다.
 //
-// ⚠ 프록시는 반드시 꺼 둔다(proxied:false). 주황으로 켜면 GitHub 이 Let's Encrypt
-//   인증서를 못 받아 'Enforce HTTPS' 가 계속 잠긴다. 인증서가 나온 뒤 켜려면 SSL 모드 Full.
+// Cloudflare Pages 는 GitHub Pages 와 달리 **프록시를 켠(orange) CNAME** 을 쓴다.
+// apex 는 CNAME flattening 으로 처리된다(A 레코드 필요 없음).
 // ============================================================
 const fs = require("fs");
 const path = require("path");
 
 const ZONE = process.env.CF_ZONE || "schoolingtrip.com";
-const PAGES_HOST = "dream-tutor.github.io";
-// GitHub Pages apex 용 고정 IP (https://docs.github.com/pages 안내값)
-const A = ["185.199.108.153", "185.199.109.153", "185.199.110.153", "185.199.111.153"];
-const AAAA = ["2606:50c0:8000::153", "2606:50c0:8001::153", "2606:50c0:8002::153", "2606:50c0:8003::153"];
+const TARGET = process.env.CF_PAGES_HOST || "schoolingtrip.pages.dev";
 
 function token() {
   if (process.env.CLOUDFLARE_DNS_TOKEN) return process.env.CLOUDFLARE_DNS_TOKEN.trim();
@@ -55,28 +54,22 @@ async function cf(url, init = {}) {
   const have = await cf(`/zones/${zid}/dns_records?per_page=200`);
   const shown = have.filter((r) => ["A", "AAAA", "CNAME"].includes(r.type));
   console.log("지금 있는 레코드:");
-  console.log(shown.length ? shown.map((r) => `  ${r.type.padEnd(5)} ${r.name.padEnd(28)} ${r.content}${r.proxied ? "  [프록시 켜짐 ⚠]" : ""}`).join("\n") : "  (없음)");
+  console.log(shown.length ? shown.map((r) => `  ${r.type.padEnd(5)} ${r.name.padEnd(28)} ${r.content}${r.proxied ? "  [프록시]" : ""}`).join("\n") : "  (없음)");
 
+  // Pages 커스텀 도메인은 프록시 켠 CNAME 두 줄이면 끝난다.
   const want = [
-    ...A.map((c) => ({ type: "A", name: ZONE, content: c })),
-    ...AAAA.map((c) => ({ type: "AAAA", name: ZONE, content: c })),
-    { type: "CNAME", name: "www." + ZONE, content: PAGES_HOST },
+    { type: "CNAME", name: ZONE, content: TARGET },
+    { type: "CNAME", name: "www." + ZONE, content: TARGET },
   ];
-  const missing = want.filter((w) => !have.some((r) => r.type === w.type && r.name === w.name && r.content === w.content));
-  const proxiedHits = have.filter((r) => r.proxied && (r.name === ZONE || r.name === "www." + ZONE));
+  const missing = want.filter((w) => !have.some((r) => r.name === w.name && r.type === w.type && r.content === w.content));
 
   console.log(`\n넣어야 할 것 ${missing.length}건:`);
-  console.log(missing.length ? missing.map((w) => `  ${w.type.padEnd(5)} ${w.name.padEnd(28)} ${w.content}`).join("\n") : "  (없음 — 이미 다 있다)");
-  if (proxiedHits.length) console.log(`\n⚠ 프록시가 켜진 레코드 ${proxiedHits.length}건 — GitHub 인증서 발급이 막힌다. 회색(DNS only)으로 바꿀 것.`);
+  console.log(missing.length ? missing.map((w) => `  ${w.type.padEnd(5)} ${w.name.padEnd(28)} ${w.content}  [프록시 켬]`).join("\n") : "  (없음 — 이미 다 있다)");
 
   if (!APPLY) { console.log("\n(--apply 를 붙이면 실제로 만든다)"); return; }
   for (const w of missing) {
-    await cf(`/zones/${zid}/dns_records`, { method: "POST", body: JSON.stringify({ ...w, ttl: 1, proxied: false, comment: "GitHub Pages (schoolingtrip)" }) });
-    console.log(`  + ${w.type} ${w.name} ${w.content}`);
+    await cf(`/zones/${zid}/dns_records`, { method: "POST", body: JSON.stringify({ ...w, ttl: 1, proxied: true, comment: "Cloudflare Pages (schoolingtrip)" }) });
+    console.log(`  + ${w.type} ${w.name} → ${w.content}`);
   }
-  for (const r of proxiedHits) {
-    await cf(`/zones/${zid}/dns_records/${r.id}`, { method: "PATCH", body: JSON.stringify({ proxied: false }) });
-    console.log(`  ~ 프록시 끔: ${r.type} ${r.name}`);
-  }
-  console.log("\n완료. DNS 가 퍼지면 GitHub 이 인증서를 발급한다(보통 몇 분~15분).");
+  console.log("\n완료. Pages 커스텀 도메인 status 가 pending → active 로 바뀌면 끝이다.");
 })().catch((e) => { console.error("실패: " + e.message); process.exit(1); });
