@@ -8,14 +8,15 @@
 // ============================================================
 
 const SITE = {
-  // 브랜드는 가칭이다. 확정되면 여기 세 줄과 baseUrl 만 바꾸면 전 페이지에 반영된다.
-  brandKo: "보딩타임",
-  brandEn: "BOARDING TIME",
+  // 2026-09-22 브랜드 확정: 스쿨링트립 / schoolingtrip.com (사용자 구매 완료).
+  // 바꿀 일이 생기면 여기 네 줄만 고치면 로고·title·JSON-LD·푸터 워드마크·OG 원본까지 따라온다.
+  brandKo: "스쿨링트립",
+  brandEn: "SCHOOLING TRIP",
   tagline: "방학에 떠나는 해외캠프 · 유학",
   // 헤더 로고 아래 한 줄 (2026-09-22 사용자 요청: 헤더는 영문 워드마크만 쓰고 무엇을 하는 곳인지 옆에 적는다)
   navSub: "방학캠프 · 해외유학 · 해외대학 진학",
-  baseUrl: "https://boardingtime.example", // TODO 도메인 확정 후 교체 (docs/CNAME 도 build.js 가 같이 쓴다)
-  domainReady: false, // true 로 바꾸면 CNAME 을 쓰고 robots 가 색인을 연다. false 면 noindex.
+  baseUrl: "https://schoolingtrip.com", // docs/CNAME 도 이 값에서 나온다
+  domainReady: true, // canonical·robots Allow·sitemap·CNAME 이 켜진다. 배포 전에 되돌리려면 false.
   season: "2027 겨울",
   seasonEn: "WINTER 2027",
   // 전화는 우하단 플로팅 [전화 상담] 하나만. 이 번호 말고 다른 번호는 넣지 말 것.

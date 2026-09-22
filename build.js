@@ -18,7 +18,7 @@ const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replac
 const pad = (n) => String(n).padStart(2, "0");
 const BRAND = SITE.brandKo;
 const hasJong = (w) => { const c = w.charCodeAt(w.length - 1); return c >= 0xac00 && c <= 0xd7a3 ? (c - 0xac00) % 28 > 0 : false; };
-const josa = (w, a, b) => w + (hasJong(w) ? a : b); // josa("보딩타임","은","는")
+const josa = (w, a, b) => w + (hasJong(w) ? a : b); // josa("스쿨링트립","은","는")
 const titleCase = (t) => t.toLowerCase().replace(/(^|\s)\S/g, (m) => m.toUpperCase());
 const campBy = (slug) => CAMPS.find((c) => c.slug === slug);
 
