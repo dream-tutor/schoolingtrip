@@ -60,8 +60,10 @@ function pageDates(seed) {
 // ---------- 그림 ----------
 const PLANE = "M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z";
 const ICON_TEL = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1Z"/></svg>`;
-const LOGO_MARK = `<svg class="logo-mark" viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="17" r="17" fill="#ff5b24"/><path d="M8 17.4 26.4 9l-5.6 17.2-3.9-6.8Z" fill="#fff"/><path d="m16.9 19.4 9.5-10.4-5.6 17.2Z" fill="#ffd9c9"/></svg>`;
-const FAVICON = "data:image/svg+xml," + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34 34"><circle cx="17" cy="17" r="17" fill="#ff5b24"/><path d="M8 17.4 26.4 9l-5.6 17.2-3.9-6.8Z" fill="#fff"/><path d="m16.9 19.4 9.5-10.4-5.6 17.2Z" fill="#ffd9c9"/></svg>`);
+/* 종이비행기 마크 — 로고·파비콘·OG 가 같은 그림을 쓴다. 도형은 무게중심을 원 중심에 맞춰 두었다(2026-09-22). */
+const MARK = `<circle cx="17" cy="17" r="17" fill="#ff5b24"/><path d="M5.8 17.7 24.2 9.3l-5.6 17.2-3.9-6.8Z" fill="#fff"/><path d="m14.7 19.7 9.5-10.4-5.6 17.2Z" fill="#ffd9c9"/>`;
+const LOGO_MARK = `<svg class="logo-mark" viewBox="0 0 34 34" aria-hidden="true">${MARK}</svg>`;
+const FAVICON = "data:image/svg+xml," + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34 34">${MARK}</svg>`);
 
 const pine = (x, y, s, c = "#0b2a20") => `<g transform="translate(${x} ${y}) scale(${s})"><path d="M0-64 17-34H8l18 30h-52l18-30h-9Z" fill="${c}"/><rect x="-3" y="-4" width="6" height="14" fill="${c}"/></g>`;
 const sheep = (x, y, s = 1) => `<g transform="translate(${x} ${y}) scale(${s})"><rect x="-7" y="6" width="2.6" height="8" fill="#10231c"/><rect x="5" y="6" width="2.6" height="8" fill="#10231c"/><ellipse rx="13" ry="9" fill="#fffdf8"/><circle cx="-13" cy="-3" r="5" fill="#10231c"/></g>`;

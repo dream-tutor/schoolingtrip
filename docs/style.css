@@ -423,6 +423,7 @@ table{border-collapse:collapse;width:100%}
 .blk.tight{padding-top:0}
 .fine{margin-top:22px;font-size:14px;color:var(--ink-2)}
 .bg-forest .fine,.bg-ink .fine{color:rgba(245,240,230,.6)}
+.blk-h>*{min-width:0}
 .blk-h{display:grid;grid-template-columns:230px minmax(0,1fr);gap:30px 50px;align-items:start}
 .blk-h>header{position:sticky;top:110px}
 .blk-h>header .serif{display:block;font-size:24px;color:var(--tangerine);margin-bottom:8px;line-height:1.1}
