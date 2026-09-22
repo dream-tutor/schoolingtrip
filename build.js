@@ -204,7 +204,7 @@ ${allLd.map((o) => `<script type="application/ld+json">${JSON.stringify(o)}</scr
 <a class="skip" href="#main">본문으로 건너뛰기</a>
 <header class="hd" id="hd">
   <div class="wrap hd-in">
-    <a class="logo" href="index.html" aria-label="${esc(BRAND)} 홈">${LOGO_MARK}<span>${BRAND}</span><span class="logo-en">${SITE.brandEn}</span></a>
+    <a class="logo" href="index.html" aria-label="${esc(BRAND)} 홈">${LOGO_MARK}<span class="logo-txt"><b>${SITE.brandEn}</b><small>${SITE.navSub}</small></span></a>
     <nav class="gnb" aria-label="주 메뉴">${NAV.map(([h, k, , key]) => `<a href="${h}"${cur === key ? ` aria-current="page"` : ""}>${k}</a>`).join("")}</nav>
     <a class="hd-cta" href="#consult">상담 신청</a>
     <button type="button" class="burger" id="burger" aria-label="메뉴 열기" aria-expanded="false" aria-controls="mnav"><i></i><i></i></button>
@@ -288,7 +288,7 @@ function buildHome() {
   const mqItems = ["NIAGARA", "AUCKLAND", "KYOTO", "JOHOR BAHRU", "CLARK"].map((x) => `${x} <i>✈</i>`).join(" ") + ` <em>${SITE.seasonEn.toLowerCase()}</em> <i>✈</i> `;
   const gates = [
     ["A", "study.html", "중·고등 유학", "뉴질랜드 Waiuku College, 캐나다 나이아가라 교육청. 캠프가 열린 바로 그 학교로 이어집니다."],
-    ["B", "stpaul.html", STPAUL.name, "집에서 통학하면서 미국 교과과정 8~12학년을 밟습니다. 서울 대치동."],
+    ["B", "stpaul.html", STPAUL.name, "집에서 통학하면서 8~12학년 과정을 전 과목 영어로 공부합니다. 서울 대치동."],
     ["C", "college.html", "미국·캐나다 대학 토플면제", "국내 6개월 공인 ESL 과정을 마치고 TOEFL·SAT·내신 없이 진학합니다."],
     ["D", "pathway.html", "교환학생 · 기숙학교 · 컨설팅", "미국 공립 교환학생 1년, EF Academy, 성적표에서 시작하는 대학 입학 컨설팅."],
   ];
@@ -375,7 +375,7 @@ function buildHome() {
 <section class="sec bg-paper sheet">
   <div class="wrap">
     <div class="sh"><div class="rv">${eb("Next gate", "06")}<h2>캠프가 끝난 다음</h2></div>
-    <p class="rv d1">3주를 다녀오면 다음 질문이 생깁니다. 더 길게 가 볼까, 한국에서 미국 학교를 다녀 볼까, 대학은 어디로 갈까. 그 뒤의 길도 같이 안내합니다.</p></div>
+    <p class="rv d1">3주를 다녀오면 다음 질문이 생깁니다. 더 길게 가 볼까, 한국에서 영어로 공부해 볼까, 대학은 어디로 갈까. 그 뒤의 길도 같이 안내합니다.</p></div>
     <div class="gates">${gates.map(([k, h, t, p]) => `<a class="gate rv" href="${h}"><span class="gate-k">GATE<b>${k}</b></span><h3>${t}</h3><p>${p}</p><span class="gate-a" aria-hidden="true">→</span></a>`).join("")}</div>
   </div>
 </section>
@@ -524,7 +524,7 @@ function buildStpaul() {
     ["몇 학년부터 들어갈 수 있나요?", `${STPAUL.target}. ${STPAUL.intake}이며 학년당 12~22명 규모입니다.`],
     ["기숙사가 있나요?", "없습니다. 통학제 학교이고, 집이 멀어 통학이 어려우면 학교 근처 학사를 이용할 수 있습니다."],
   ];
-  const body = `${pageHero({ trail, kicker: "American curriculum · Seoul", h1: STPAUL.name, lead: STPAUL.tag, art: "seoul", iso: "SEL", bgiso: "SPA", cta: `<a class="btn btn-t" href="#consult">입학 상담 신청 <span class="ar">→</span></a>` })}
+  const body = `${pageHero({ trail, kicker: "SPASS · Seoul", h1: STPAUL.name, lead: STPAUL.tag, art: "seoul", iso: "SEL", bgiso: "SPA", cta: `<a class="btn btn-t" href="#consult">입학 상담 신청 <span class="ar">→</span></a>` })}
 <div class="wrap"><div class="tk rv" style="grid-template-columns:repeat(4,minmax(0,1fr))">
   <div><small>Who</small><b>중2 ~ 고2 편입학</b><span>고3은 상담 후 결정</span></div>
   <div><small>Intake</small><b>2월 · 8월 학기</b><span>학년당 12~22명</span></div>
@@ -538,7 +538,7 @@ ${block("Colleges", "졸업생이 간 대학", `<ul class="pts">${STPAUL.results
 ${block("Q&A", "자주 나오는 질문", faqHtml(faqs), "bg-paper sheet")}
 ${block("Compare", "해외 유학과 견주어 보면", `<div class="prose"><p>집에서 다니기 때문에 홈스테이 적응이나 현지 생활 관리에 드는 부담이 없습니다. 대신 영어를 쓰는 환경은 학교 안으로 한정됩니다. 생활까지 영어권에서 해 보고 싶다면 <a href="study.html">뉴질랜드·캐나다 유학</a>이 맞고, 부모 곁에서 미국 대학 입시를 준비하고 싶다면 이쪽이 맞습니다.</p></div>`, "tight")}
 ${ctaBlock(`<em class="serif">Visit first.</em><br>입학 전에 상담부터`, "학년과 영어 수준을 알려 주시면 편입 가능한 학기와 준비 과정을 안내해 드립니다.", STPAUL.name)}`;
-  page({ file: "stpaul.html", title: `${STPAUL.name} | 대치동에서 미국 교과과정 8~12학년 | ${BRAND}`, desc: "통학하며 밟는 미국 교과과정. 중2~고2 편입학, 2월·8월 학기, 전교 95명, 연간 학비 2,540만원.", body, crumbs: trail, course: STPAUL.name, cur: "stpaul", ld: [faqLd(faqs)] });
+  page({ file: "stpaul.html", title: `${STPAUL.name} | 대치동 8~12학년 영어 수업 과정 | ${BRAND}`, desc: "통학하며 다니는 8~12학년 과정. 전 과목 영어 수업, 중2~고2 편입학, 전교 95명, 연 학비 2,540만원.", body, crumbs: trail, course: STPAUL.name, cur: "stpaul", ld: [faqLd(faqs)] });
 }
 
 // ============================================================
