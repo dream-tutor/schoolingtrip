@@ -191,6 +191,8 @@ ${noindex ? `<meta name="robots" content="noindex">` : `<link rel="canonical" hr
 <meta property="article:published_time" content="${published}T00:00:00+09:00">
 <meta property="article:modified_time" content="${modified}T00:00:00+09:00">
 <meta name="theme-color" content="#f5f0e6">
+${(SITE.verifyGoogle || "").split(",").map((c) => c.trim()).filter(Boolean).map((c) => `<meta name="google-site-verification" content="${esc(c)}">`).join("\n")}
+${(SITE.verifyNaver || "").split(",").map((c) => c.trim()).filter(Boolean).map((c) => `<meta name="naver-site-verification" content="${esc(c)}">`).join("\n")}
 <link rel="icon" href="${FAVICON}">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
