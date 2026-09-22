@@ -176,11 +176,11 @@ table{border-collapse:collapse;width:100%}
 .rv.d1{transition-delay:.08s}.rv.d2{transition-delay:.16s}.rv.d3{transition-delay:.24s}.rv.d4{transition-delay:.32s}.rv.d5{transition-delay:.4s}
 
 /* ---------- 출발 전광판 ---------- */
-.board{border:1px solid rgba(245,240,230,.14);border-radius:26px;overflow:hidden;background:#0b1a15}
+.board{border:1px solid rgba(245,240,230,.3);border-radius:26px;overflow:hidden;background:#0b1a15}
 .board-h,.board-r{display:grid;grid-template-columns:118px minmax(0,1.15fr) minmax(0,1.5fr) 92px 112px 150px 128px;gap:18px;align-items:center;padding:0 26px}
 .board-h{height:50px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:rgba(245,240,230,.5);border-bottom:1px solid rgba(245,240,230,.12)}
-.board-r{min-height:92px;padding-block:18px;border-bottom:1px solid rgba(245,240,230,.2);position:relative;transition:background .25s}
-.board-r:nth-of-type(even){background:rgba(245,240,230,.035)}
+.board-r{min-height:92px;padding-block:20px;border-bottom:1px solid rgba(245,240,230,.42);position:relative;transition:background .25s}
+.board-r:nth-of-type(even){background:rgba(245,240,230,.06)}
 .board-r:last-child{border-bottom:0}
 .board-r::after{content:"→";position:absolute;right:22px;top:50%;transform:translate(-8px,-50%);opacity:0;color:var(--butter);font-size:20px;transition:.3s var(--ease)}
 .board-r:hover{background:rgba(255,210,94,.07)}
@@ -204,7 +204,7 @@ table{border-collapse:collapse;width:100%}
   .board-h{display:none}
   .board-r{grid-template-columns:96px 1fr auto;grid-template-areas:"d c p" "d n n" "m m s";gap:6px 16px;padding:22px 20px}
   .board-r::after{display:none}.board-r:hover .b-st{opacity:1}
-  .b-date{border-right:1px solid rgba(245,240,230,.16);padding-right:14px;height:100%}
+  .b-date{border-right:1px solid rgba(245,240,230,.3);padding-right:14px;height:100%}
   .b-date{grid-area:d;align-self:start}.b-city{grid-area:c}.b-price{grid-area:p;text-align:right}.b-name{grid-area:n}
   .b-meta{grid-area:m;display:flex;gap:12px;margin-top:6px}.b-st{grid-area:s;justify-self:end;margin-top:6px}
   .b-c{font-size:13.5px}

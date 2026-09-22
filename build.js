@@ -337,8 +337,8 @@ function buildHome() {
 
 <section class="sec bg-paper sheet">
   <div class="wrap">
-    <div class="sh"><div class="rv">${eb("Find yours", "02")}<h2>무엇을 하러 가는지부터<br>정하면 쉽습니다</h2></div>
-    <p class="rv d1">같은 해외캠프라도 하루의 모습이 전혀 다릅니다. 현지 학교에 다니는 과정이 있고, 영어 수업만 종일 듣는 과정이 있고, 일본어 연수가 있습니다. 아이에게 지금 필요한 쪽을 먼저 고르면 과정은 저절로 좁혀집니다.</p></div>
+    <div class="sh"><div class="rv">${eb("Find yours", "02")}<h2>목적부터 정하면<br>고르기 쉽습니다</h2></div>
+    <p class="rv d1">현지 학교에 다니는 과정, 영어 수업을 종일 듣는 과정, 일본어 연수로 나뉩니다. 목적을 먼저 정하면 볼 과정이 두세 개로 줄어듭니다.</p></div>
     <div class="fd">
       ${FINDER.map((f, i) => `<div class="fd-r rv"><span class="fd-n">${pad(i + 1)}<em>${f.en}</em></span><p class="fd-q">${f.q}</p><div class="fd-c">${f.camps.map((s) => `<a class="chip" href="${s}.html">${campBy(s).short} →</a>`).join("")}</div></div>`).join("\n      ")}
     </div>
@@ -347,8 +347,8 @@ function buildHome() {
 
 <section class="sec bg-paper" style="padding-top:20px">
   <div class="wrap">
-    <div class="sh"><div class="rv">${eb("Destinations", "03")}<h2>다섯 나라,<br>다섯 가지 겨울</h2></div>
-    <p class="rv d1">1월의 나이아가라는 영하이고 와이우쿠는 한여름입니다. 어디로 가느냐에 따라 가방에 넣는 옷부터 달라집니다.</p></div>
+    <div class="sh"><div class="rv">${eb("Destinations", "03")}<h2>가는 나라는<br>다섯 곳입니다</h2></div>
+    <p class="rv d1">1월의 나이아가라는 영하, 와이우쿠는 한여름입니다. 나라마다 날씨도 학교 일정도 다릅니다.</p></div>
   </div>
   <div class="posters rv d1" tabindex="0" aria-label="나라별 과정. 좌우로 넘겨 보세요">${DESTINATIONS.map(posterCard).join("\n")}</div>
   <div class="wrap"><p class="posters-hint">Drag or swipe</p></div>
@@ -356,9 +356,9 @@ function buildHome() {
 
 <section class="sec bg-forest sheet">
   <div class="wrap">
-    <div class="bigstat rv"><b>16,000+</b><span>운영사가 지금까지 함께 다녀온 학생 수입니다(운영사 자료 기준). 아래 원칙들은 그 과정에서 하나씩 자리를 잡았습니다.</span></div>
-    <div class="sh"><div class="rv">${eb("Care", "04")}<h2>아이를 혼자<br>보내는 일이라서</h2></div>
-    <p class="rv d1">일정표는 어느 캠프나 비슷합니다. 차이는 한밤중에 아이가 아플 때, 홈스테이와 마음이 안 맞을 때 누가 움직이느냐에서 납니다.</p></div>
+    <div class="bigstat rv"><b>16,000+</b><span>운영사가 지금까지 함께 다녀온 학생 수입니다(운영사 자료 기준).</span></div>
+    <div class="sh"><div class="rv">${eb("Care", "04")}<h2>현지에서 누가<br>아이를 챙기나</h2></div>
+    <p class="rv d1">아이가 아프거나 홈스테이와 문제가 생겼을 때 현지에서 누가 어떻게 움직이는지 적었습니다.</p></div>
     <ul class="sf">${COMMON.safety.map(([t, p], i) => `<li class="rv"><span class="n">${pad(i + 1)}</span><h3>${t}</h3><p>${p}</p></li>`).join("")}</ul>
     <p class="rv" style="margin-top:44px"><a class="more" href="safety.html">신청 절차와 환불 규정까지 보기 <span>→</span></a></p>
   </div>
@@ -366,7 +366,7 @@ function buildHome() {
 
 <section class="sec bg-paper2 sheet">
   <div class="wrap">
-    <div class="sh"><div class="rv">${eb("Postcards", "05")}<h2>다녀온 학생들이<br>남긴 말</h2></div>
+    <div class="sh"><div class="rv">${eb("Postcards", "05")}<h2>다녀온 학생 후기</h2></div>
     <p class="rv d1">운영사에 남겨진 참가 후기를 고치지 않고 옮겼습니다. 이름은 일부 가렸습니다.</p></div>
     <div class="cards">${REVIEWS.map((r, i) => `<figure class="pc rv d${i + 1}"><div class="pc-top"><span class="mono">${r.program}</span><span class="pc-st" aria-hidden="true">${r.camp ? campBy(r.camp).iso : "USA"}</span></div><blockquote><q>${r.text}</q></blockquote><figcaption class="pc-who">${r.who}${r.camp ? `<a href="${r.camp}.html"><span>과정 보기 →</span></a>` : "<span></span>"}</figcaption></figure>`).join("")}</div>
   </div>
@@ -375,20 +375,20 @@ function buildHome() {
 <section class="sec bg-paper sheet">
   <div class="wrap">
     <div class="sh"><div class="rv">${eb("Next gate", "06")}<h2>캠프가 끝난 다음</h2></div>
-    <p class="rv d1">3주를 다녀오면 다음 질문이 생깁니다. 더 길게 가 볼까, 한국에서 영어로 공부해 볼까, 대학은 어디로 갈까. 그 뒤의 길도 같이 안내합니다.</p></div>
+    <p class="rv d1">캠프를 다녀온 뒤 유학이나 진학을 묻는 분이 많습니다. 그다음 과정도 같이 안내합니다.</p></div>
     <div class="gates">${gates.map(([k, h, t, p]) => `<a class="gate rv" href="${h}"><span class="gate-k">GATE<b>${k}</b></span><h3>${t}</h3><p>${p}</p><span class="gate-a" aria-hidden="true">→</span></a>`).join("")}</div>
   </div>
 </section>
 
 <section class="sec bg-card sheet">
   <div class="wrap-n">
-    <div class="sh one"><div class="rv">${eb("FAQ", "07")}<h2>보내기 전에<br>가장 많이 묻는 것</h2></div></div>
+    <div class="sh one"><div class="rv">${eb("FAQ", "07")}<h2>자주 묻는 질문</h2></div></div>
     <div class="rv d1">${faqHtml(COMMON.faq.slice(0, 5))}</div>
     <p class="rv" style="margin-top:36px"><a class="more" href="faq.html">질문 전체 보기 <span>→</span></a></p>
   </div>
 </section>
 
-${ctaBlock(`<em class="serif">Ready to board?</em><br>어디로 갈지 아직 몰라도 됩니다`, "학년과 궁금한 점만 남겨 주세요. 아이에게 맞는 과정과 일정을 확인해서 연락드립니다.")}`;
+${ctaBlock("어디로 갈지 아직 몰라도 됩니다", "학년과 궁금한 점만 남겨 주세요. 아이에게 맞는 과정과 일정을 확인해서 연락드립니다.")}`;
   page({
     file: "index.html",
     title: `${BRAND} | ${SITE.season}방학 해외캠프 · 스쿨링 · 중고등 유학`,
@@ -422,7 +422,7 @@ function buildCamps() {
   </ul>
   <p style="margin-top:34px"><a class="more" href="safety.html#apply">신청 절차 보기 <span>→</span></a></p>
 </div></div></section>
-${ctaBlock(`<em class="serif">Still deciding?</em><br>비교해도 모르겠다면`, "학년, 영어 수준, 비울 수 있는 기간만 알려 주세요. 맞는 과정 한두 개로 좁혀 드립니다.", "추천 받고 싶어요")}`;
+${ctaBlock("비교해도 고르기 어렵다면", "학년, 영어 수준, 비울 수 있는 기간만 알려 주세요. 맞는 과정 한두 개로 좁혀 드립니다.", "추천 받고 싶어요")}`;
   page({ file: "camps.html", title: `${SITE.season}방학 해외캠프 6개 과정 일정·비용 비교 | ${BRAND}`, desc: "캐나다 스쿨링 3주·7주, 뉴질랜드 3~7주, 교토 2주, 말레이시아·필리핀 4주. 기간·대상·참가비·마감일 비교표.", body, crumbs: trail, cur: "camps" });
 }
 
@@ -459,7 +459,7 @@ ${block("Fee", "참가비에 든 것, 안 든 것", `<div class="duo"><div class
 ${c.safety ? block("Safety", "이 과정의 안전 관리", `<div class="box"><ul>${c.safety.map((s) => `<li>${s}</li>`).join("")}</ul></div><p style="margin-top:24px"><a class="more" href="safety.html">공통 안전 원칙과 환불 규정 <span>→</span></a></p>`, "tight") : ""}
 ${block("Q&A", "이 과정에서 자주 나오는 질문", `${faqHtml(faqs)}<p style="margin-top:30px"><a class="more" href="faq.html">질문 전체 보기 <span>→</span></a></p>`, "tight")}
 <section class="blk tight"><div class="wrap"><div class="sh"><div class="rv">${eb("Also boarding", "")}<h2>같이 보면 좋은 과정</h2></div></div><div class="rows">${more.map((x) => `<a class="rowc rv" href="${x.slug}.html"><span class="iso">${x.iso}<small>${fmtBoard(x.depart)} ${wdOf(x.depart)}</small></span><div><h3>${x.name}</h3><p>${x.tag}</p></div><dl><dt>WHEN</dt><dd>${x.period}</dd><dt>WHO</dt><dd>${x.target}</dd></dl><span class="pr">${x.price}<small>${x.air}</small></span><span class="go" aria-hidden="true">→</span></a>`).join("")}</div></div></section>
-${ctaBlock(`<em class="serif">${titleCase(c.city)}, ${titleCase(MON[parts(c.depart)[1] - 1])} ${parts(c.depart)[2]}.</em><br>자리가 있는지부터 확인하세요`, "학년과 연락처를 남기시면 남은 자리와 준비 일정을 알려 드립니다.", c.name)}`;
+${ctaBlock("남은 자리부터 확인해 드립니다", "학년과 연락처를 남기시면 남은 자리와 준비 일정을 알려 드립니다.", c.name)}`;
   page({
     file: `${c.slug}.html`,
     title: `${c.name} | 일정·비용·대상 | ${BRAND}`,
@@ -493,7 +493,7 @@ function buildStudy() {
 </div></section>
 ${block("Which one", "어느 쪽이 맞을까", `<div class="prose"><p><strong>짧게 시작해 보고 싶다면 뉴질랜드입니다.</strong> 연 4텀 학제라 10주 한 텀만 다녀 본 뒤에 이어 갈지 정할 수 있습니다. 유학생 비율을 5% 아래로 유지하는 학교여서 교실에 들어가면 주변이 거의 현지 학생입니다.</p><p><strong>관리가 촘촘한 쪽을 원한다면 캐나다입니다.</strong> 현지 관리 선생님이 법적 가디언을 맡고 매달 리포트를 보냅니다. 과목 선택과 졸업 요건(필수 19학점, 봉사 40시간, OSSLT)까지 챙기기 때문에 졸업과 대학 진학을 목표로 하는 중·상위권 학생에게 권합니다.</p><p>두 곳 모두 겨울캠프가 열리는 학교와 교육청입니다. 결정을 못 하겠다면 <a href="camp-newzealand.html">뉴질랜드 캠프</a>나 <a href="camp-canada-3week.html">캐나다 3주 스쿨링</a>을 먼저 다녀오는 것이 가장 확실한 비교입니다.</p></div>`, "bg-paper sheet")}
 ${block("Steps", "진행 순서", `<ol class="steps line">${STUDY_PROCEDURE.map((s) => `<li><h3>${s}</h3></li>`).join("")}</ol>`, "tight")}
-${ctaBlock(`<em class="serif">One term first.</em><br>한 텀만 먼저 다녀올 수도 있습니다`, "학년과 성적, 생각하는 기간을 알려 주시면 두 나라 가운데 맞는 쪽과 시작 시점을 같이 정합니다.", "추천 받고 싶어요")}`;
+${ctaBlock("한 텀만 먼저 다녀올 수도 있습니다", "학년과 성적, 생각하는 기간을 알려 주시면 두 나라 가운데 맞는 쪽과 시작 시점을 같이 정합니다.", "추천 받고 싶어요")}`;
   page({ file: "study.html", title: `뉴질랜드·캐나다 중고등 유학 비교 — 비용·학제·관리 | ${BRAND}`, desc: "뉴질랜드 Waiuku College 연 3,200만원, 캐나다 나이아가라 교육청 연 4,250만원. 학제·졸업장·관리 방식 비교.", body, crumbs: trail, cur: "study" });
 }
 
@@ -510,7 +510,7 @@ ${block("School", "어떤 학교인가", `<div class="prose"><p>${s.schoolDesc}<
 ${block("Care", "현지에서 누가 챙기나", `<ul class="pts">${s.manage.map((m, i) => `<li style="grid-template-columns:60px 1fr"><span class="n">${pad(i + 1)}</span><p style="grid-column:2;font-size:18px;color:inherit">${m}</p></li>`).join("")}</ul>`, "bg-forest sheet")}
 ${block("Cost", "비용과 학기", `<div class="duo"><div class="box"><h3><i>+</i>${s.price}에 포함</h3><ul>${listItems(s.includes)}</ul></div><div class="box"><h3>Terms</h3><h4>${s.unit}</h4><p>${s.terms}</p></div></div><div class="note"><b>별도 비용</b><span>${s.priceNote}</span><b>방학과 그 뒤</b><span>${s.note}</span></div>`, "bg-paper sheet")}
 ${block("Steps", "진행 순서", `<ol class="steps line">${STUDY_PROCEDURE.map((x) => `<li><h3>${x}</h3></li>`).join("")}</ol><p style="margin-top:34px"><a class="more" href="${s.country === "canada" ? "camp-canada-3week.html" : "camp-newzealand.html"}">먼저 겨울캠프로 다녀와 보기 <span>→</span></a></p>`, "tight")}
-${ctaBlock(`<em class="serif">${s.en}</em><br>성적표부터 같이 보겠습니다`, "학년, 최근 성적, 생각하는 기간을 알려 주세요. 입학 가능한 시점과 준비할 서류를 정리해 드립니다.", s.name)}`;
+${ctaBlock("성적표부터 같이 보겠습니다", "학년, 최근 성적, 생각하는 기간을 알려 주세요. 입학 가능한 시점과 준비할 서류를 정리해 드립니다.", s.name)}`;
   page({ file: `${s.slug}.html`, title: `${s.name} | ${s.en} · ${s.price} | ${BRAND}`, desc: `${s.tag}`.slice(0, 80), body, crumbs: trail, course: s.name, cur: "study" });
 }
 
@@ -537,7 +537,7 @@ ${block("A day", "하루와 방과 후", `<div class="duo"><div class="box"><h3>
 ${block("Colleges", "졸업생이 간 대학", `<ul class="pts">${STPAUL.results.map((r, i) => `<li style="grid-template-columns:60px 1fr"><span class="n">${pad(i + 1)}</span><p style="grid-column:2;font-size:18px;color:inherit">${r}</p></li>`).join("")}</ul><p class="fine">학교 발표 자료 기준입니다.</p>`, "bg-forest sheet")}
 ${block("Q&A", "자주 나오는 질문", faqHtml(faqs), "bg-paper sheet")}
 ${block("Compare", "해외 유학과 견주어 보면", `<div class="prose"><p>집에서 다니기 때문에 홈스테이 적응이나 현지 생활 관리에 드는 부담이 없습니다. 대신 영어를 쓰는 환경은 학교 안으로 한정됩니다. 생활까지 영어권에서 해 보고 싶다면 <a href="study.html">뉴질랜드·캐나다 유학</a>이 맞고, 부모 곁에서 미국 대학 입시를 준비하고 싶다면 이쪽이 맞습니다.</p></div>`, "tight")}
-${ctaBlock(`<em class="serif">Visit first.</em><br>입학 전에 상담부터`, "학년과 영어 수준을 알려 주시면 편입 가능한 학기와 준비 과정을 안내해 드립니다.", STPAUL.name)}`;
+${ctaBlock("입학 전에 상담부터 받으세요", "학년과 영어 수준을 알려 주시면 편입 가능한 학기와 준비 과정을 안내해 드립니다.", STPAUL.name)}`;
   page({ file: "stpaul.html", title: `${STPAUL.name} | 대치동 8~12학년 영어 수업 과정 | ${BRAND}`, desc: "통학하며 다니는 8~12학년 과정. 전 과목 영어 수업, 중2~고2 편입학, 전교 95명, 연 학비 2,540만원.", body, crumbs: trail, course: STPAUL.name, cur: "stpaul", ld: [faqLd(faqs)] });
 }
 
@@ -552,7 +552,7 @@ ${block("About", ELC.name, `<div class="prose"><p>${ELC.intro}</p><p><strong>대
 ${block("How it works", "이 길이 가능한 이유", `<ul class="pts">${ELC.points.map(([t, p], i) => `<li><span class="n">${pad(i + 1)}</span><h3>${t}</h3><p>${p}</p></li>`).join("")}</ul>`, "bg-forest sheet")}
 ${block("Intakes", "연 4회 전형", `<div class="tw"><table class="tb"><thead><tr><th>전형</th><th>입학·개강</th><th>수강 기간</th><th>대학 출발</th></tr></thead><tbody>${ELC.intakes.map((r) => `<tr><th>${r[0]}</th><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join("")}</tbody></table></div>`, "bg-paper sheet")}
 ${block("Admission", "선발 과정과 서류", `<div class="duo"><div class="box"><h3>Process</h3><ul>${ELC.admission.map((x) => `<li>${x}</li>`).join("")}</ul></div><div class="box"><h3>Documents</h3><ul>${ELC.docs.map((x) => `<li>${x}</li>`).join("")}</ul></div></div><div class="note"><b>비용</b><span>${ELC.price}</span></div>`, "tight")}
-${ctaBlock(`<em class="serif">No TOEFL, no SAT.</em><br>지금 성적으로 갈 수 있는 곳부터`, "고3, 재수, 검정고시, 대학 재학 가운데 어디에 해당하는지 알려 주세요. 진학 가능한 대학과 전형을 정리해 드립니다.", ELC.name)}`;
+${ctaBlock("지금 성적으로 갈 수 있는 대학부터", "고3, 재수, 검정고시, 대학 재학 가운데 어디에 해당하는지 알려 주세요. 진학 가능한 대학과 전형을 정리해 드립니다.", ELC.name)}`;
   page({ file: "college.html", title: `토플 없이 미국·캐나다 대학 진학 — 국내 6개월 ESL 과정 | ${BRAND}`, desc: "고3·재수생·검정고시생 대상. 국내 6개월 공인 ESL 뒤 TOEFL·SAT·내신 없이 파트너 대학 진학. 2027년 1월 개강.", body, crumbs: trail, course: ELC.name, cur: "college" });
 }
 
@@ -563,7 +563,7 @@ function buildPathway() {
   const trail = [HOME, { label: "그 밖의 길" }];
   const body = `${pageHero({ trail, kicker: "More gates", h1: "교환학생 · 기숙학교<br>· 입학 컨설팅", lead: "캠프와 관리형 유학 말고도 길이 있습니다. 비용, 기간, 생활 방식이 서로 크게 달라서 하나씩 따로 설명합니다.", art: "globe" })}
 ${PATHWAYS.map((p, i) => block(p.en, p.name, `<p class="mono" style="margin-bottom:18px;opacity:.7">${p.kicker}</p><div class="prose">${p.body.map((t) => `<p>${t}</p>`).join("")}</div>${p.facts.length ? `<div class="box" style="margin-top:30px"><dl style="display:grid;grid-template-columns:minmax(110px,auto) 1fr;gap:14px 24px">${p.facts.map(([k, v]) => `<dt style="font-weight:800;letter-spacing:-.02em">${k}</dt><dd style="color:var(--ink-2)">${v}</dd>`).join("")}</dl></div>` : ""}<p style="margin-top:28px"><a class="btn btn-o btn-s" href="#consult" data-course="${esc(p.name)}">${p.name} 상담 <span class="ar">→</span></a></p>`, i % 2 ? "bg-paper2 sheet" : i ? "bg-paper sheet" : "", p.id)).join("\n")}
-${ctaBlock(`<em class="serif">Not sure yet?</em><br>어느 길인지부터 같이 정합니다`, "학년과 목표, 예산을 알려 주시면 교환학생이 맞는지 유학이 맞는지부터 말씀드립니다.", "추천 받고 싶어요")}`;
+${ctaBlock("어느 길인지부터 같이 정합니다", "학년과 목표, 예산을 알려 주시면 교환학생이 맞는지 유학이 맞는지부터 말씀드립니다.", "추천 받고 싶어요")}`;
   page({ file: "pathway.html", title: `미국 교환학생 · EF Academy · 해외 대학 입학 컨설팅 | ${BRAND}`, desc: "미국 공립 교환학생 1년, EF Academy 기숙학교, 성적표에서 시작하는 대학 컨설팅, 세인트폴 클락.", body, crumbs: trail });
 }
 
@@ -573,12 +573,12 @@ ${ctaBlock(`<em class="serif">Not sure yet?</em><br>어느 길인지부터 같�
 function buildSafety() {
   const trail = [HOME, { label: "안전·운영" }];
   const local = CAMPS.filter((c) => c.safety);
-  const body = `${pageHero({ trail, kicker: "Care & rules", h1: "안전과<br>운영 원칙", lead: "일정표는 어느 캠프나 비슷합니다. 차이는 한밤중에 아이가 아플 때, 홈스테이와 마음이 안 맞을 때 누가 움직이느냐에서 납니다. 그 답을 적어 둡니다.", art: "canada" })}
+  const body = `${pageHero({ trail, kicker: "Care & rules", h1: "안전과<br>운영 원칙", lead: "아이가 아프거나 홈스테이와 문제가 생겼을 때 현지에서 누가 어떻게 움직이는지, 신청·환불 기준은 어떻게 되는지 적었습니다.", art: "canada" })}
 ${block("Care", "여섯 가지 원칙", `<ul class="pts">${COMMON.safety.map(([t, p], i) => `<li><span class="n">${pad(i + 1)}</span><h3>${t}</h3><p>${p}</p></li>`).join("")}</ul>`)}
 ${block("On campus", "단체 숙소 과정의 안전 관리", `<div class="duo">${local.map((c) => `<div class="box"><h3>${c.iso}</h3><h4>${c.short}</h4><ul>${c.safety.map((s) => `<li>${s}</li>`).join("")}</ul></div>`).join("")}</div>`, "bg-paper2 sheet")}
 <section class="blk bg-paper sheet" id="apply"><div class="wrap blk-h"><header class="rv"><span class="serif">Apply</span><h2>신청 절차</h2></header><div class="rv d1"><ol class="steps">${COMMON.steps.map(([t, p]) => `<li><h3>${t}</h3><p>${p}</p></li>`).join("")}</ol><p class="fine">말레이시아·필리핀 과정은 절차가 조금 다릅니다. 각 과정 페이지와 상담에서 안내합니다.</p></div></div></section>
 <section class="blk tight" id="refund"><div class="wrap blk-h"><header class="rv"><span class="serif">Refund</span><h2>환불 규정</h2></header><div class="rv d1"><div class="tw"><table class="tb narrow"><tbody>${COMMON.refund.map(([k, v]) => `<tr><th>${k}</th><td>${v}</td></tr>`).join("")}</tbody></table></div><div class="prose" style="margin-top:22px"><p style="font-size:15.5px">천재지변이나 항공 지연처럼 주관사가 통제할 수 없는 사유에는 별도 기준이 적용됩니다. 말레이시아·필리핀 과정은 운영 규정이 일부 다를 수 있습니다. 계약 전 상담에서 규정 전문을 안내해 드립니다.</p></div></div></div></section>
-${ctaBlock(`<em class="serif">Ask anything.</em><br>걱정되는 점부터 물어보세요`, "알레르기, 복용 중인 약, 아이 성격처럼 미리 알려 주실수록 배정과 관리가 정확해집니다.")}`;
+${ctaBlock("걱정되는 점부터 물어보세요", "알레르기, 복용 중인 약, 아이 성격처럼 미리 알려 주실수록 배정과 관리가 정확해집니다.")}`;
   page({ file: "safety.html", title: `해외캠프 안전 관리 · 신청 절차 · 환불 규정 | ${BRAND}`, desc: "홈스테이 검증, 인솔자와 현지 관리자, 네이버 밴드 공유, 1억원 여행자보험, 3단계 규정, 환불 기준.", body, crumbs: trail, cur: "safety" });
 }
 
@@ -592,7 +592,7 @@ function buildFaq() {
   const body = `${pageHero({ trail, kicker: "Questions", h1: "자주 묻는 질문", lead: "모든 과정에 해당하는 질문을 먼저 두고, 과정마다 답이 달라지는 질문은 아래에 따로 모았습니다.", art: "japan" })}
 <section class="blk"><div class="wrap-n"><div class="sh one"><div class="rv">${eb("Common", "")}<h2>공통 질문</h2></div></div><div class="rv d1">${faqHtml(COMMON.faq)}</div></div></section>
 ${groups.map((c, i) => `<section class="blk${i === 0 ? " bg-paper2 sheet" : " bg-paper2 tight"}"><div class="wrap-n"><div class="sh one"><div class="rv">${eb(c.iso, c.city)}<h2><a href="${c.slug}.html">${c.short}</a></h2></div></div><div class="rv d1">${faqHtml(c.faq)}</div></div></section>`).join("\n")}
-${ctaBlock(`<em class="serif">Not here?</em><br>여기 없는 질문은 상담으로`, "문의 내용에 궁금한 점을 적어 주시면 그 부분부터 답해 드립니다.")}`;
+${ctaBlock("여기 없는 질문은 상담으로 물어보세요", "문의 내용에 궁금한 점을 적어 주시면 그 부분부터 답해 드립니다.")}`;
   page({ file: "faq.html", title: `해외캠프·스쿨링 자주 묻는 질문 | ${BRAND}`, desc: "영어를 못해도 되는지, 홈스테이 배정, 휴대폰, 용돈, 유학 연장까지. 과정별로 답이 다른 질문도 따로 정리.", body, crumbs: trail, cur: "faq", ld: [faqLd(all)] });
 }
 
@@ -602,7 +602,7 @@ function buildAbout() {
 ${block("What we do", "안내하는 방식", `<ul class="pts">${ABOUT.map(([t, p], i) => `<li><span class="n">${pad(i + 1)}</span><h3>${t}</h3><p>${p}</p></li>`).join("")}</ul>`)}
 ${block("Programs", "안내하는 과정", `<ul class="tags">${[...CAMPS.map((c) => [c.short, c.slug + ".html"]), ...STUDY.map((s) => [s.name, s.slug + ".html"]), [STPAUL.name, "stpaul.html"], ["대학 토플면제교육원", "college.html"], ...PATHWAYS.map((p) => [p.name, "pathway.html#" + p.id])].map(([n, h]) => `<li><a href="${h}">${n}</a></li>`).join("")}</ul>`, "bg-forest sheet")}
 ${block("Source", "자료에 대하여", `<div class="prose"><p>이 사이트에 적힌 일정, 비용, 학교 정보는 운영사 자료를 기준으로 합니다. 항공과 현지 사정에 따라 달라질 수 있어 신청 전에 상담에서 최신 내용을 다시 확인해 드립니다. ${SITE.source}.</p><p>문의는 상담 신청 양식이나 화면 아래의 전화 상담 버튼을 이용해 주세요. 개인정보 관련 문의는 ${SITE.privacyEmail} 으로 받습니다.</p></div>`, "bg-paper sheet")}
-${ctaBlock(`<em class="serif">Say hello.</em><br>상담은 부담 없이`, "학년과 궁금한 점만 남겨 주세요. 확인하는 대로 연락드립니다.")}`;
+${ctaBlock("상담은 부담 없이 신청하세요", "학년과 궁금한 점만 남겨 주세요. 확인하는 대로 연락드립니다.")}`;
   page({ file: "about.html", title: `${BRAND} 소개 | ${SITE.tagline}`, desc: "방학 해외캠프에서 중·고등 유학, 대학 진학까지. 학교·교육청과 직접 제휴한 과정만 안내합니다.", body, crumbs: trail });
 }
 
