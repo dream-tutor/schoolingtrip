@@ -27,7 +27,7 @@ const SITE = {
   //   ⚠ 이제 제출하면 실제 시트·메일로 간다. 테스트로 제출하지 말 것(확인은 Image 를 가로채 주소만 볼 것).
   formEndpoint: "https://script.google.com/macros/s/AKfycbwWEdDyQ6kDDqBpTpHKkfOfRyicCRYAj6wivIv3FK4ILzfO5eMWgMRAwZg05DO29dyZ/exec",
   // t.js 추적 키. 공개 전에 전문과외 워커 analytics.js 의 SITES·SITE_ORDER·SITE_GROUPS 에 같은 키를 등록해야 수집된다.
-  trackKey: "",
+  trackKey: "schoolingtrip",
   privacyEmail: "zskykr@naver.com",
   source: "캠프·유학 자료와 사진 출처: 쏠루트 유학",
   operatorCount: "16,000명", // 운영사 누적 참가 학생(운영사 자료 기준)
