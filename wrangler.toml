@@ -1,0 +1,21 @@
+name = "schoolingtrip"
+main = "src/index.js"
+compatibility_date = "2024-04-01"
+
+# 2026-09-22 배포처 = Cloudflare Worker + 정적 에셋(docs/). 철거·자판기·와와가이드·와와레슨과 같은 방식.
+#   `node build.js` 로 docs/ 를 만든 뒤 아래로 올린다(wrangler 는 sangsang-workers 에 설치돼 있어 --config 로 부른다):
+#   npx wrangler deploy --config "<이 파일 절대경로>"
+# 커스텀 도메인은 wrangler 가 배포 때 DNS 까지 만든다 — DNS 토큰이 따로 필요 없다.
+# (Cloudflare Pages 로 잠깐 갔다가 API 로는 DNS 가 자동으로 안 생겨 Worker 로 돌아왔다.)
+routes = [
+  { pattern = "schoolingtrip.com", custom_domain = true },
+  { pattern = "www.schoolingtrip.com", custom_domain = true },
+]
+workers_dev = true
+
+[assets]
+directory = "./docs"
+binding = "ASSETS"
+not_found_handling = "404-page"
+# www → apex 301 을 워커가 먼저 잡아야 해서 항상 워커를 거친다(정적 파일은 그 안에서 ASSETS.fetch 로 낸다)
+run_worker_first = true
