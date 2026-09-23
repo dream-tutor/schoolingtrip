@@ -381,7 +381,13 @@ table{border-collapse:collapse;width:100%}
 .fm-done{padding:60px 30px;text-align:center}
 .fm-done b{display:block;font-size:26px;font-weight:800;letter-spacing:-.04em;margin:16px 0 8px}
 .fm-done .stamp{position:static;margin:0 auto;transform:rotate(-8deg)}
-@media(max-width:560px){.dr{top:auto;height:94svh;width:100%;border-radius:26px 26px 0 0;transform:translateY(100%)}.dr-h{border-radius:26px 26px 0 0;padding:24px 22px 20px}.fm{padding:12px 22px 40px}.dr-h h2{font-size:25px}}
+@media(max-width:560px){.dr{top:auto;height:94svh;width:100%;border-radius:26px 26px 0 0;transform:translateY(100%)}.dr-h{border-radius:26px 26px 0 0;padding:24px 22px 20px}.fm{padding:12px 22px 40px}.dr-h h2{font-size:25px}
+  /* 좁은 화면에서는 두 칸을 나란히 두지 않는다.
+     실측(375px): 2열이면 연락처 칸이 59px(글자 자리 31px)까지 눌려 "1234-5678"이 안 보였다.
+     같은 이유로 영어 수준·해외 경험 선택지("이제 막 배우는 단계")도 잘렸다.
+     서랍 폭은 min(560px,100%) 이라 560px 위에서는 2열로 둬도 연락처 칸이 143px 나온다. */
+  .fm-2{grid-template-columns:1fr}
+  .fm .row select{flex:0 0 84px}}
 
 /* ============================================================
    하위 페이지
