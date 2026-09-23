@@ -533,6 +533,15 @@ table{border-collapse:collapse;width:100%}
 @media(max-width:820px){.vs{grid-template-columns:1fr}}
 .tags{display:flex;flex-wrap:wrap;gap:8px}
 .tags li{font-size:14.5px;font-weight:600;padding:9px 16px;border-radius:999px;background:var(--paper-2)}
+/* 탭 영역 — 소개 페이지 과정 알약 14개(껍데기 43px / 눌리는 곳 17px), 비교표 과정 이름 칸 6개(126~219px / 19px) (2026-09-23)
+   껍데기 안에 inline <a> 하나만 있으면 눌리는 곳이 글자줄뿐이라 손가락으로 놓치기 쉽다.
+   ::after 를 껍데기 전체에 깔아 어디를 눌러도 링크가 열리게 한다. 보이는 건 그대로다.
+   ⚠ :has() 를 쓰지 말 것 — 지원 안 되는 브라우저에서 껍데기에 position 이 안 걸려
+     ::after 가 훨씬 큰 조상 기준으로 퍼지고, 엉뚱한 자리의 클릭을 먹는다. */
+.tags li{position:relative}
+/* .tb tbody th 는 이미 position:sticky 라 relative 를 덮으면 고정 열이 깨진다 — ::after 만 건다 */
+.tags li>a::after,.tb tbody th>a::after{content:"";position:absolute;inset:0}
+.tags li>a:focus-visible,.tb tbody th>a:focus-visible{outline:2px solid var(--tangerine);outline-offset:3px}
 .bg-forest .tags li{background:rgba(245,240,230,.1)}
 .nf{min-height:80svh;display:grid;place-items:center;text-align:center;padding:160px 0 100px}
 .nf b{display:block;font-family:var(--grot);font-weight:800;font-size:clamp(90px,20vw,240px);line-height:.9;color:var(--paper);-webkit-text-stroke:4px var(--ink);paint-order:stroke fill}
