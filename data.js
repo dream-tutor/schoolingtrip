@@ -29,8 +29,8 @@ const SITE = {
   // t.js 추적 키. 공개 전에 전문과외 워커 analytics.js 의 SITES·SITE_ORDER·SITE_GROUPS 에 같은 키를 등록해야 수집된다.
   trackKey: "schoolingtrip",
   // 검색엔진 소유 확인 코드 — 서치콘솔/서치어드바이저에서 받은 값만 넣는다. 비면 메타태그가 안 나간다. 쉼표로 여러 개 가능.
-  verifyGoogle: "",
-  verifyNaver: "",
+  verifyGoogle: "mEH0zkFNumLbFw6uaa-FgW16uJjpvd2DJ8MI4VYbua4",
+  verifyNaver: "580775933f844103c14ab60fd47727fee2c91ca3",
   privacyEmail: "zskykr@naver.com",
   source: "캠프·유학 자료와 사진 출처: 쏠루트 유학",
   operatorCount: "16,000명", // 운영사 누적 참가 학생(운영사 자료 기준)
