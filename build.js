@@ -207,6 +207,7 @@ ${noindex ? `<meta name="robots" content="noindex">` : `<link rel="canonical" hr
 ${(SITE.verifyGoogle || "").split(",").map((c) => c.trim()).filter(Boolean).map((c) => `<meta name="google-site-verification" content="${esc(c)}">`).join("\n")}
 ${(SITE.verifyNaver || "").split(",").map((c) => c.trim()).filter(Boolean).map((c) => `<meta name="naver-site-verification" content="${esc(c)}">`).join("\n")}
 <link rel="icon" href="${FAVICON}">
+<noscript><style>.rv{opacity:1;transform:none}</style></noscript>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -365,7 +366,8 @@ function buildHome() {
     <div class="sh"><div class="rv">${eb("Destinations", "03")}<h2>가는 나라는<br>다섯 곳입니다</h2></div>
     <p class="rv d1">같은 1월인데 나이아가라는 영하, 와이우쿠는 한여름입니다. 학교 일정도 나라마다 다릅니다.</p></div>
   </div>
-  <div class="posters rv d1" tabindex="0" aria-label="나라별 과정. 좌우로 넘겨 보세요">${DESTINATIONS.map(posterCard).join("\n")}</div>
+  <div class="wrap"><p class="hs-hint hs-m">다섯 나라를 옆으로 밀어서 볼 수 있습니다.</p></div>
+  <div class="posters rv d1" tabindex="0" role="region" aria-label="나라별 과정 다섯 장">${DESTINATIONS.map(posterCard).join("\n")}</div>
   <div class="wrap"><p class="posters-hint">Drag or swipe</p></div>
 </section>
 
@@ -422,7 +424,8 @@ ${ctaBlock("어디로 갈지 아직 몰라도 됩니다", "학년만 알려 주�
 function buildCamps() {
   const trail = [HOME, { label: "캠프" }];
   const rows = CAMPS.map((c) => `<a class="rowc rv" href="${c.slug}.html"><span class="iso">${c.iso}<small>${fmtBoard(c.depart)} ${wdOf(c.depart)}</small></span><div><h3>${c.name}${promoOf(c) ? ` <em class="promo-tag" data-promo-until="${promoOf(c).until}">${promoOf(c).badge}</em>` : ""}</h3><p>${c.tag}</p></div><dl><dt>WHEN</dt><dd>${c.period}</dd><dt>WHO</dt><dd>${c.targetLong}</dd><dt>STAY</dt><dd>${c.kind.split(" · ").slice(-1)[0]}</dd></dl>${priceEl("pr", c, `${c.price}<small>${c.air}</small>`, `${(c.promo || {}).priceAfter}<small><s>${c.price}</s> · ${c.air}</small>`)}<span class="go" aria-hidden="true">→</span></a>`).join("\n");
-  const cmp = `<div class="tw rv d1"><table class="tb"><thead><tr><th>과정</th><th>기간</th><th>대상</th><th>정원</th><th>수업</th><th>숙소</th><th>참가비</th><th>신청 마감</th></tr></thead><tbody>${CAMPS.map((c) => `<tr><th><a href="${c.slug}.html">${c.short}</a></th><td>${c.period}</td><td>${c.targetLong}</td><td>${c.capacity}</td><td>${c.schoolShort}</td><td>${c.stayShort}</td><td>${promoOf(c) ? `<span class="has-promo" data-promo-until="${promoOf(c).until}" data-plain="${esc(`<b>${c.priceFull || c.price}</b><br>${c.air}`)}"><b>${promoOf(c).priceAfter}</b><br><s>${c.price}</s> · ${c.air}</span>` : `<b>${c.priceFull || c.price}</b><br>${c.air}`}</td><td>${fmtKo(c.deadline)}</td></tr>`).join("")}</tbody></table></div>`;
+  const cmp = `<p class="hs-hint hs-816">참가비와 신청 마감은 표를 옆으로 밀면 나옵니다.</p>
+  <div class="tw rv d1" tabindex="0" role="region" aria-label="여섯 과정 비교표, 칸 8개"><table class="tb"><thead><tr><th>과정</th><th>기간</th><th>대상</th><th>정원</th><th>수업</th><th>숙소</th><th>참가비</th><th>신청 마감</th></tr></thead><tbody>${CAMPS.map((c) => `<tr><th><a href="${c.slug}.html">${c.short}</a></th><td>${c.period}</td><td>${c.targetLong}</td><td>${c.capacity}</td><td>${c.schoolShort}</td><td>${c.stayShort}</td><td>${promoOf(c) ? `<span class="has-promo" data-promo-until="${promoOf(c).until}" data-plain="${esc(`<b>${c.priceFull || c.price}</b><br>${c.air}`)}"><b>${promoOf(c).priceAfter}</b><br><s>${c.price}</s> · ${c.air}</span>` : `<b>${c.priceFull || c.price}</b><br>${c.air}`}</td><td>${fmtKo(c.deadline)}</td></tr>`).join("")}</tbody></table></div>`;
   const body = `${pageHero({ trail, kicker: "Departures", h1: `${SITE.season},<br>여섯 개 과정`, lead: "스쿨링이 셋, 영어캠프가 둘, 일본어 연수가 하나입니다. 아래 비교표에 기간과 금액을 나란히 놓았습니다.", art: "globe", cta: `<a class="btn btn-k" href="#compare">비교표로 가기 <span class="ar">↓</span></a><a class="btn btn-o" href="#consult">상담 신청</a>` })}
 <section class="sec bg-paper" style="padding-top:40px"><div class="wrap"><div class="rows">${rows}</div></div></section>
 <section class="sec bg-paper2 sheet" id="compare"><div class="wrap">
@@ -497,7 +500,8 @@ function buildStudy() {
 <section class="sec bg-paper" style="padding-top:30px"><div class="wrap"><div class="vs">${vsBox(nz)}${vsBox(ca)}</div></div></section>
 <section class="sec bg-paper2 sheet"><div class="wrap">
   <div class="sh"><div class="rv">${eb("Side by side", "NZL vs CAN")}<h2>두 나라를 한 표에</h2></div><p class="rv d1">연간 비용은 1,050만원 차이가 납니다. 다만 포함된 항목과 관리 방식이 달라서 금액만 놓고 고르기는 어렵습니다.</p></div>
-  <div class="tw rv d1"><table class="tb"><thead><tr><th></th><th>${nz.name}</th><th>${ca.name}</th></tr></thead><tbody>
+  <p class="hs-hint hs-816">캐나다 칸은 표를 옆으로 밀면 나옵니다.</p>
+  <div class="tw rv d1" tabindex="0" role="region" aria-label="뉴질랜드·캐나다 비교표, 칸 3개"><table class="tb"><thead><tr><th></th><th>${nz.name}</th><th>${ca.name}</th></tr></thead><tbody>
     <tr><th>학교</th><td>${nz.en} (공립, Year 9~13)</td><td>${ca.en} 소속 고교 8곳 가운데 배정</td></tr>
     <tr><th>시작 단위</th><td>${nz.unit}. 한 텀만 다녀 볼 수 있습니다</td><td>${ca.unit}</td></tr>
     <tr><th>학기</th><td>${nz.terms}</td><td>${ca.terms}</td></tr>
@@ -567,7 +571,7 @@ function buildCollege() {
 <div class="wrap"><div class="tk rv">${ELC.schedule.map(([k, v], i) => `<div${i === 0 ? ` class="hl"` : ""}><small>${["Open", "Course", "Depart", "Apply", "Seats"][i]}</small><b>${v.replace(/ \(6개월\)/, "")}</b><span>${k}</span></div>`).join("")}</div></div>
 ${block("About", ELC.name, `<div class="prose"><p>${ELC.intro}</p><p><strong>대상</strong> — ${ELC.target}</p><p><strong>위치</strong> — ${ELC.location}</p></div>`)}
 ${block("How it works", "이 길이 가능한 이유", `<ul class="pts">${ELC.points.map(([t, p], i) => `<li><span class="n">${pad(i + 1)}</span><h3>${t}</h3><p>${p}</p></li>`).join("")}</ul>`, "bg-forest sheet")}
-${block("Intakes", "연 4회 전형", `<div class="tw"><table class="tb"><thead><tr><th>전형</th><th>입학·개강</th><th>수강 기간</th><th>대학 출발</th></tr></thead><tbody>${ELC.intakes.map((r) => `<tr><th>${r[0]}</th><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join("")}</tbody></table></div>`, "bg-paper sheet")}
+${block("Intakes", "연 4회 전형", `<p class="hs-hint hs-1096">대학 출발 시기는 표를 옆으로 밀면 나옵니다.</p><div class="tw" tabindex="0" role="region" aria-label="연 4회 전형표, 칸 4개"><table class="tb"><thead><tr><th>전형</th><th>입학·개강</th><th>수강 기간</th><th>대학 출발</th></tr></thead><tbody>${ELC.intakes.map((r) => `<tr><th>${r[0]}</th><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join("")}</tbody></table></div>`, "bg-paper sheet")}
 ${block("Admission", "선발 과정과 서류", `<div class="duo"><div class="box"><h3>Process</h3><ul>${ELC.admission.map((x) => `<li>${x}</li>`).join("")}</ul></div><div class="box"><h3>Documents</h3><ul>${ELC.docs.map((x) => `<li>${x}</li>`).join("")}</ul></div></div><div class="note"><b>비용</b><span>${ELC.price}</span></div>`, "tight")}
 ${ctaBlock("지금 성적으로 갈 수 있는 대학부터", "고3이냐 재수냐 검정고시냐에 따라 길이 다릅니다. 해당되는 쪽으로 대학과 전형을 추려 드리겠습니다.", ELC.name)}`;
   page({ file: "college.html", title: `토플 없이 미국·캐나다 대학 진학 — 국내 6개월 ESL 과정 | ${BRAND}`, desc: "고3·재수생·검정고시생 대상. 국내 6개월 공인 ESL 뒤 TOEFL·SAT·내신 없이 파트너 대학 진학. 2027년 1월 개강.", body, crumbs: trail, course: ELC.name, cur: "college" });

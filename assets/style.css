@@ -564,6 +564,165 @@ table{border-collapse:collapse;width:100%}
   .cta{padding:96px 0 110px}
   .ft{padding:70px 0 110px}
 }
+/* ============================================================
+   옆으로 넘기는 것 — 표시 (2026-09-23)
+   넘칠 내용이 있을 때만 저절로 켜지고, 그쪽 끝에 닿으면 저절로 꺼진다.
+   JS 를 한 줄도 쓰지 않는다. 미디어쿼리로 켜고 끄지도 않는다 —
+   폭 경계로 판단하면 반드시 틀린 자리가 생긴다(표마다 넘치는 폭이 다르다).
+   ============================================================ */
+
+/* 덮개 두 장은 내용과 함께 움직이고(local), 그림자 두 장은 상자에 붙어 있다(scroll).
+   ⚠ 그림자를 radial-gradient(farthest-side …) 로 쓰지 말 것 — 표가 세로로 길면
+     세로 가장자리 쪽 알파가 0 에 가까워져 표 위쪽에서는 아무것도 안 보인다(실측).
+     세로로 균일해야 하므로 linear-gradient 로 둔다.
+   왼쪽 끝이면 덮개가 그림자를 정확히 덮어 안 보이고, 밀면 드러난다.
+   .tb.narrow(세인트폴 학교 개요·환불 규정)처럼 안 넘치는 표는 두 겹이 겹친 채라 조용하다. */
+.tw{
+  --tw-bg:var(--card);
+  --tw-bg0:rgba(255,253,248,0);
+  overscroll-behavior-x:contain;
+  overscroll-behavior-inline:contain;
+  background:
+    linear-gradient(to right,var(--tw-bg) 55%,var(--tw-bg0)) left center/34px 100% no-repeat local,
+    linear-gradient(to left, var(--tw-bg) 55%,var(--tw-bg0)) right center/34px 100% no-repeat local,
+    linear-gradient(to right,rgba(16,35,28,.17),rgba(16,35,28,0)) left center/20px 100% no-repeat scroll,
+    linear-gradient(to left, rgba(16,35,28,.17),rgba(16,35,28,0)) right center/20px 100% no-repeat scroll,
+    var(--tw-bg);
+}
+.tw:focus-visible{outline:2px solid var(--tangerine);outline-offset:3px}
+/* 고정된 첫 열 위에 머리글이 어긋나 보이지 않게 머리줄 첫 칸도 같이 고정한다 */
+.tb thead th:first-child{position:sticky;left:0;background:var(--paper-2);z-index:1}
+
+.posters{overscroll-behavior-x:contain;overscroll-behavior-inline:contain}
+
+/* 안내 한 줄 — .rv 를 붙이지 않는다(그건 app.js 가 .in 을 달아야 보인다).
+   표마다 오른쪽에 무엇이 있는지 말하고, 문장은 끝맺는다. */
+.hs-hint{margin:0 0 9px;font-size:13.5px;line-height:1.5;color:var(--ink-2);display:flex;align-items:center;gap:10px}
+.hs-hint::after{content:"";flex:1 1 auto;height:1px;background:currentColor;opacity:.3}
+/* 표가 .wrap(=100% - 56px) 안에 있으면 뷰포트 816px 부터 760px 표가 다 들어온다 */
+@media(min-width:816px){.hs-hint.hs-816{display:none}}
+/* college 전형표는 두 구간에서만 넘친다(실측).
+   ~815px  .blk-h 1열 → wrap(= 폭 - 56) 이 760 보다 좁아 넘친다
+   816~900 .blk-h 1열 → wrap 이 760 이상이라 다 들어온다 (안내 숨김)
+   901~1095 .blk-h 2열 → 표 칸이 wrap - 230 - 50 이라 다시 넘친다
+   1096px~  표 칸이 760 이상 (안내 숨김) */
+@media(min-width:816px) and (max-width:900px){.hs-hint.hs-1096{display:none}}
+@media(min-width:1096px){.hs-hint.hs-1096{display:none}}
+/* 홈 포스터 띠 위 한글 안내는 모바일에서만. 데스크톱은 띠 아래 'Drag or swipe' 그대로 */
+.hs-hint.hs-m{margin-bottom:14px}
+@media(min-width:761px){.hs-hint.hs-m{display:none}}
+@media(max-width:760px){.posters-hint{display:none}}
+
+/* ============================================================
+   모바일 여백 리듬 (2026-09-23)
+   ⚠ 이 블록은 반드시 파일 맨 끝, @media(prefers-reduced-motion) 앞에 둔다 —
+     앞에 있는 더 좁은 미디어쿼리(520·560·600·820·860·900px)를 소스 순서로 이겨야 한다.
+   데스크톱(≥761px)은 이 블록 밖이라 지금 그대로다.
+   다시 조일 일이 생기면 :root 의 숫자만 고치면 18장에 다 먹는다.
+   ============================================================ */
+
+/* 토큰 기본값 = 지금 데스크톱 값. 미디어쿼리 밖에서 var() 를 써도 조용히 무효가 되지 않게 둔다 */
+:root{--sec-y:120px;--blk-y:96px;--sheet-up:0px;--head-y:64px;--row-y:30px;--card-p:26px;--tight-y:18px;--aft-mobile:34px}
+
+@media(max-width:760px){
+  :root{
+    --sec-y:64px;      /* 섹션 상하 (.sec)        — 하한 56px (.sheet 둥근 모서리 30px) */
+    --blk-y:52px;      /* 본문 블록 상하 (.blk)   — 하한 46px (.tk margin-top:-46px) */
+    --sheet-up:20px;   /* .sheet 가 앞 섹션을 -30px 덮는 만큼 위에 더 주는 값 */
+    --head-y:28px;     /* 섹션 머리 → 본문 */
+    --row-y:18px;      /* 목록 한 줄 상하        — 하한 14px (본문 한 줄 29px) */
+    --card-p:22px;     /* 카드 안쪽 */
+    --tight-y:10px;    /* 라벨 → 값 */
+    --aft-mobile:24px; /* 블록 끝 '더 보기' 줄 위 */
+  }
+
+  /* 히어로 — .pass 의 margin-top:118px 은 건드리지 않는다(초록 pass-2 카드가 41px 겹쳐 있다).
+     ⚠ .hero-art 아래 76px 은 도장(.stamp bottom:-56px, 부모가 -3deg 회전)이
+        검은 마키 띠(.mq, z-index:2)에 닿지 않게 하는 하한이다. 더 줄이면 도장이 잘려 보인다. */
+  .hero{padding-top:88px}          /* 고정 헤더 68px + 20px */
+  .hero-k{margin-bottom:18px}
+  .hero-sub{margin-top:20px}
+  .hero-cta{margin-top:24px}
+  .hero-grid{padding-bottom:40px}
+  .hero-art{padding:20px 0 76px}
+
+  /* 섹션 껍데기 */
+  .sec{padding:var(--sec-y) 0}
+  .sec.sheet{padding-top:calc(var(--sec-y) + var(--sheet-up))}
+  .blk{padding:var(--blk-y) 0}
+  .blk.sheet{padding-top:calc(var(--blk-y) + var(--sheet-up))}
+
+  /* 섹션 머리 — 영문 라벨(.eb .serif)과 번호는 공항 모티프라 크기 그대로 둔다 */
+  .sh{margin-bottom:var(--head-y);gap:14px 60px}
+  .blk-h{gap:var(--head-y) 50px}
+  .blk-h>header .serif{margin-bottom:6px}
+  .eb{margin-bottom:var(--tight-y)}
+  .aft{margin-top:var(--aft-mobile)}
+
+  /* 줄 단위 목록 — padding-block 대신 top/bottom 으로 쓴다(iOS 14.4 이하에서 논리 속성이 무시된다) */
+  .pts li{padding-top:var(--row-y);padding-bottom:var(--row-y)}
+  .sf li{padding-top:var(--row-y);padding-bottom:var(--row-y)}
+  .fd-r{padding:calc(var(--row-y) + 2px) 0;gap:10px}
+  .gate{padding:var(--row-y) 0;gap:10px 18px}
+  .faq summary{padding:var(--row-y) 0}
+  .faq .a{padding-bottom:calc(var(--row-y) + 4px)}
+  .rowc{padding:calc(var(--row-y) + 2px) 0;gap:6px 18px}
+  .board-r{padding-top:var(--row-y);padding-bottom:var(--row-y)}
+  .board-f{margin-top:var(--head-y)}
+  .iti li{padding-top:calc(var(--row-y) - 8px);padding-bottom:calc(var(--row-y) - 8px)}
+  .iti li::before{top:calc(var(--row-y) + 1px)}    /* 줄 padding(--row-y - 8)에 맞춰 점도 같이 올린다 — 날짜 줄과의 관계는 원래대로 */
+  .iti-more{margin-top:12px}
+
+  /* 카드·상자 — .tags li 는 건드리지 않는다(알약 링크가 43px 인데 더 줄면 터치 기준 아래로 내려간다) */
+  .box{padding:var(--card-p)}
+  .box h3{margin-bottom:10px}
+  .duo,.vs{gap:16px}
+  .note{margin-top:var(--card-p);padding:calc(var(--card-p) - 6px) var(--card-p)}
+  .notice{padding:var(--card-p)}
+  .steps{gap:12px}
+  .steps li{padding:var(--card-p) var(--card-p) calc(var(--card-p) + 2px)}
+  .steps li::before{margin-bottom:10px}
+  .steps.line{gap:8px}
+  .steps.line li{padding:calc(var(--card-p) - 6px)}
+  .tk>div{padding:var(--card-p) calc(var(--card-p) - 3px)}
+  .pc{padding:calc(var(--card-p) + 4px) var(--card-p) var(--card-p)}
+  .pc-top{margin-bottom:14px}
+  .pc-who{margin-top:var(--card-p);padding-top:calc(var(--card-p) - 8px)}
+  .cards{gap:18px}
+  .bigstat{margin-bottom:var(--head-y);padding-bottom:24px}
+  .posters{padding-bottom:30px}     /* 30px 아래로는 내리지 않는다 — 카드 그림자 자리 */
+  .shots{margin-top:var(--aft-mobile);gap:20px}
+
+  /* 하위 페이지 머리 — 위 96px 은 고정 헤더 68px + 빵부스러기를 피하는 하한 */
+  .ph{padding:96px 0 var(--blk-y)}
+  .ph-g{gap:26px}
+  .crumbs{margin-bottom:18px}
+  .ph-kind{margin-bottom:14px}
+  .ph .lead{margin-top:18px}
+  .ph-cta{margin-top:24px}
+
+  /* 마무리 — 푸터 아래 96px 은 플로팅 버튼(.fab 높이 50 + bottom 12)을 피하는 하한이다.
+     더 줄이면 '정보 업데이트' 줄과 푸터 출처 한 줄이 버튼에 가린다. */
+  .cta{padding:calc(var(--sec-y) + 8px) 0 calc(var(--sec-y) + 12px)}
+  .cta p{margin:18px auto 26px}
+  .ft{padding:var(--sec-y) 0 96px}
+  .ft-word{margin-bottom:32px}
+  .ft-g{gap:26px}
+  .ft-fine{margin-top:calc(var(--head-y) + 4px);padding-top:18px}
+}
+
+@media(max-width:560px){
+  :root{
+    --sec-y:56px;
+    --blk-y:46px;
+    --sheet-up:22px;
+    --head-y:24px;
+    --row-y:16px;
+    --card-p:19px;
+    --tight-y:10px;
+    --aft-mobile:20px;
+  }
+}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
   .rv{opacity:1;transform:none}
