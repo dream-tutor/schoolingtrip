@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
 Sitemap: https://schoolingtrip.com/sitemap.xml
+Sitemap: https://schoolingtrip.com/rss.xml

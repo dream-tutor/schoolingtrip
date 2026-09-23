@@ -207,6 +207,7 @@ ${noindex ? `<meta name="robots" content="noindex">` : `<link rel="canonical" hr
 ${(SITE.verifyGoogle || "").split(",").map((c) => c.trim()).filter(Boolean).map((c) => `<meta name="google-site-verification" content="${esc(c)}">`).join("\n")}
 ${(SITE.verifyNaver || "").split(",").map((c) => c.trim()).filter(Boolean).map((c) => `<meta name="naver-site-verification" content="${esc(c)}">`).join("\n")}
 <link rel="icon" href="${FAVICON}">
+<link rel="alternate" type="application/rss+xml" title="${esc(BRAND)}" href="${SITE.baseUrl}/rss.xml">
 <noscript><style>.rv{opacity:1;transform:none}</style></noscript>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -669,7 +670,46 @@ h1{font-size:92px;line-height:1.07;letter-spacing:-.055em;font-weight:800;margin
 
 const indexable = PAGES.filter((p) => p.index);
 fs.writeFileSync(path.join(OUT, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${indexable.map((p) => `<url><loc>${absUrl(p.file)}</loc><lastmod>${p.modified}</lastmod><priority>${p.file === "index.html" ? "1.0" : /^camp|^study|^stpaul|^college/.test(p.file) ? "0.8" : "0.6"}</priority></url>`).join("\n")}\n</urlset>\n`);
-fs.writeFileSync(path.join(OUT, "robots.txt"), SITE.domainReady ? `User-agent: *\nAllow: /\nSitemap: ${SITE.baseUrl}/sitemap.xml\n` : `User-agent: *\nDisallow: /\n`);
+fs.writeFileSync(path.join(OUT, "robots.txt"), SITE.domainReady ? `User-agent: *\nAllow: /\nSitemap: ${SITE.baseUrl}/sitemap.xml\nSitemap: ${SITE.baseUrl}/rss.xml\n` : `User-agent: *\nDisallow: /\n`);
+/* RSS — 네이버 서치어드바이저가 사이트맵과 따로 받는 수집 경로다.
+   제목·설명은 구운 HTML 에서 꺼내 쓰므로 페이지를 고치면 RSS 도 같이 맞는다. */
+const rssDate = (ymd) => {
+  const D = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const M = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const d = new Date(ymd + "T09:00:00+09:00");
+  return `${D[d.getUTCDay()]}, ${String(d.getUTCDate()).padStart(2, "0")} ${M[d.getUTCMonth()]} ${d.getUTCFullYear()} 09:00:00 +0900`;
+};
+const pick = (html, re) => { const m = html.match(re); return m ? m[1].trim() : ""; };
+const rssItems = indexable
+  .map((p) => ({
+    url: absUrl(p.file),
+    /* 꼬리의 브랜드만 떼어 낸다 — 홈처럼 브랜드가 앞에 오는 제목도 있어서
+       마지막 칸을 무조건 자르면 제목이 통째로 날아간다(실측). */
+    title: pick(p.html, /<title>([\s\S]*?)<\/title>/).replace(new RegExp("\\s*\\|\\s*" + BRAND + "\\s*$"), ""),
+    desc: pick(p.html, /<meta name="description" content="([^"]*)"/),
+    date: p.modified,
+  }))
+  .sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
+fs.writeFileSync(path.join(OUT, "rss.xml"),
+  `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>${esc(BRAND)} — ${esc(SITE.tagline)}</title>
+  <link>${SITE.baseUrl}/</link>
+  <atom:link href="${SITE.baseUrl}/rss.xml" rel="self" type="application/rss+xml"/>
+  <description>${esc(SITE.season)} 해외캠프·유학 과정 안내. 캐나다 · 뉴질랜드 · 일본 · 말레이시아 · 필리핀.</description>
+  <language>ko</language>
+  <lastBuildDate>${rssDate(rssItems[0] ? rssItems[0].date : todayKst())}</lastBuildDate>
+${rssItems.map((it) => `  <item>
+    <title>${esc(it.title)}</title>
+    <link>${it.url}</link>
+    <guid isPermaLink="true">${it.url}</guid>
+    <pubDate>${rssDate(it.date)}</pubDate>
+    <description>${esc(it.desc)}</description>
+  </item>`).join("\n")}
+</channel>
+</rss>
+`);
 fs.writeFileSync(path.join(OUT, ".nojekyll"), "");
 // CNAME 은 쓰지 않는다 — 2026-09-22 부터 Cloudflare Pages 로 배포한다(커스텀 도메인은 CF 쪽 설정).
 // GitHub Pages 로 되돌릴 일이 생기면 아래 한 줄을 살리고 저장소 Pages 를 다시 켤 것.
