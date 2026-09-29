@@ -1,14 +1,19 @@
 // 스쿨링트립 — 정적 사이트(docs/)를 내보내는 얇은 워커.
-//   하는 일은 셋뿐: www → 대표 도메인 301, /a.html 을 리디렉션 없이 내보내기, 나머지는 에셋 그대로.
+//   하는 일은 셋뿐: 대표 주소(https://schoolingtrip.com)가 아니면 301, /a.html 을 리디렉션 없이 내보내기, 나머지는 에셋 그대로.
 //   내용·SEO 는 전부 build.js 가 docs/ 에 구워 둔다. 여기에 로직을 더 넣지 말 것.
 const CANONICAL_HOST = "schoolingtrip.com";
+const LOCAL_HOSTS = ["localhost", "127.0.0.1"]; // 로컬 확인용 — 넘기지 않는다
 
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
-    if (url.hostname === "www." + CANONICAL_HOST) {
+    // http → https, www·workers.dev 등 대표 도메인이 아닌 호스트 → 대표 도메인 (경로·쿼리는 그대로)
+    // 2026-09-29: 전에는 www 만 넘겨서 http:// 주소와 workers.dev 주소가 본문을 그대로 내보냈다.
+    if (!LOCAL_HOSTS.includes(url.hostname) && (url.protocol !== "https:" || url.hostname !== CANONICAL_HOST)) {
+      url.protocol = "https:";
       url.hostname = CANONICAL_HOST;
+      url.port = "";
       return Response.redirect(url.toString(), 301);
     }
 

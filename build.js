@@ -22,6 +22,7 @@ const josa = (w, a, b) => w + (hasJong(w) ? a : b); // josa("스쿨링트립","�
 const titleCase = (t) => t.toLowerCase().replace(/(^|\s)\S/g, (m) => m.toUpperCase());
 // 한시 할인 — 마감일이 지난 promo 는 빌드가 아예 내보내지 않는다.
 // 이미 배포된 페이지는 app.js 가 data-promo-until 을 보고 data-plain 으로 되돌린다(재빌드를 잊어도 틀린 금액이 안 남게).
+// data-plain 이 없는 요소는 통째로 지워지므로, 라벨과 설명이 나뉜 곳(참가비 안내 .note 의 "할인")은 둘 다에 data-promo-until 을 단다.
 const todayKst = () => new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10);
 const promoOf = (c) => (c.promo && c.promo.until >= todayKst() ? c.promo : null);
 // 할인 중이면 원래 금액에 취소선을 긋고, 아니면 평소 금액 그대로.
@@ -130,7 +131,7 @@ function consultDrawer() {
         <label>해외 경험<select name="해외경험"><option value="">선택</option><option>없음</option><option>가족 여행만</option><option>캠프·어학연수 경험</option><option>해외 거주·유학 경험</option></select></label>
       </div>
       <div><span class="lb">상담 받고 싶은 내용 <em class="sub">여러 개 선택 가능</em></span><div class="chips">${chips.map((v) => `<label><input type="checkbox" name="궁금한점" value="${v}"><span>${v}</span></label>`).join("")}</div></div>
-      <label>문의 내용<textarea name="문의내용" rows="4" placeholder="아이 성격, 복용 중인 약, 알레르기(음식·동물), 형제·자매 동반 여부, 걱정되는 점을 편하게 적어 주세요"></textarea></label>
+      <label>문의 내용 <em class="sub">1,000자까지</em><textarea name="문의내용" rows="4" maxlength="1000" placeholder="아이 성격, 복용 중인 약, 알레르기(음식·동물), 형제·자매 동반 여부, 걱정되는 점을 편하게 적어 주세요"></textarea></label>
       <div>
         <label class="agree"><input type="checkbox" name="개인정보동의" value="동의" checked required><span>개인정보 수집·이용에 동의합니다 <em class="sub">(필수)</em></span></label>
         <details class="agree-more"><summary>수집 항목·이용 목적·보유 기간 보기</summary>
@@ -476,7 +477,7 @@ ${block("Highlights", "이 과정의 뼈대", `<ul class="pts">${c.points.map(([
 ${block("School & stay", "어디서 배우고 어디서 자나", `<div class="duo"><div class="box"><h3>School</h3><h4>${c.school}</h4><p>${c.schoolDesc}</p></div><div class="box"><h3>Stay</h3><h4>${c.kind.split(" · ").slice(-1)[0]}</h4><p>${c.stay}</p></div></div>${c.photos.length ? shots(c.photos) : ""}`)}
 ${block("Good fit", "이런 학생에게 맞습니다", `<ul class="pts">${(CAMP_FIT[c.slug] || []).map((t, i) => `<li style="grid-template-columns:60px 1fr"><span class="n">${pad(i + 1)}</span><p style="grid-column:2;font-size:18.5px;color:inherit">${t}</p></li>`).join("")}</ul>`, "bg-forest sheet")}
 ${iti}
-${block("Fee", "참가비에 든 것, 안 든 것", `<div class="duo"><div class="box"><h3><i>+</i>포함</h3><ul>${listItems(c.includes)}</ul></div><div class="box minus"><h3><i>−</i>불포함</h3><ul>${listItems(c.excludes)}</ul></div></div><div class="note">${promoOf(c) ? `<b>할인</b><span data-promo-until="${promoOf(c).until}">${promoOf(c).detail}</span>` : ""}<b>참가비</b><span>${c.priceFull || c.price} — ${c.priceNote}</span><b>용돈</b><span>${c.pocket}</span><b>그다음</b><span>${c.extend}</span></div>`, iti ? "tight" : "bg-paper sheet")}
+${block("Fee", "참가비에 든 것, 안 든 것", `<div class="duo"><div class="box"><h3><i>+</i>포함</h3><ul>${listItems(c.includes)}</ul></div><div class="box minus"><h3><i>−</i>불포함</h3><ul>${listItems(c.excludes)}</ul></div></div><div class="note">${promoOf(c) ? `<b data-promo-until="${promoOf(c).until}">할인</b><span data-promo-until="${promoOf(c).until}">${promoOf(c).detail}</span>` : ""}<b>참가비</b><span>${c.priceFull || c.price} — ${c.priceNote}</span><b>용돈</b><span>${c.pocket}</span><b>그다음</b><span>${c.extend}</span></div>`, iti ? "tight" : "bg-paper sheet")}
 ${c.safety ? block("Safety", "이 과정의 안전 관리", `<div class="box"><ul>${c.safety.map((s) => `<li>${s}</li>`).join("")}</ul></div><p style="margin-top:24px"><a class="more" href="safety.html">공통 안전 원칙과 환불 규정 <span>→</span></a></p>`, "tight") : ""}
 ${block("Q&A", "이 과정에서 자주 나오는 질문", `${faqHtml(faqs)}<p style="margin-top:30px"><a class="more" href="faq.html">질문 전체 보기 <span>→</span></a></p>`, "tight")}
 <section class="blk tight"><div class="wrap"><div class="sh"><div class="rv">${eb("Also boarding", "")}<h2>같이 보면 좋은 과정</h2></div></div><div class="rows">${more.map((x) => `<a class="rowc rv" href="${x.slug}.html"><span class="iso">${x.iso}<small>${fmtBoard(x.depart)} ${wdOf(x.depart)}</small></span><div><h3>${x.name}</h3><p>${x.tag}</p></div><dl><dt>WHEN</dt><dd>${x.period}</dd><dt>WHO</dt><dd>${x.target}</dd></dl><span class="pr">${x.price}<small>${x.air}</small></span><span class="go" aria-hidden="true">→</span></a>`).join("")}</div></div></section>

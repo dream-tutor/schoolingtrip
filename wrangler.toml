@@ -11,7 +11,9 @@ routes = [
   { pattern = "schoolingtrip.com", custom_domain = true },
   { pattern = "www.schoolingtrip.com", custom_domain = true },
 ]
-workers_dev = true
+# workers.dev 주소(schoolingtrip.zskykr.workers.dev)는 끈다 — 켜 두면 같은 본문이 복제 주소로 나간다(2026-09-29).
+# 끄지 않은 채로 배포돼도 src/index.js 가 대표 도메인이 아닌 호스트를 301 로 넘긴다.
+workers_dev = false
 
 [assets]
 directory = "./docs"

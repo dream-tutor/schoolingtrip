@@ -6,7 +6,21 @@
   <atom:link href="https://schoolingtrip.com/rss.xml" rel="self" type="application/rss+xml"/>
   <description>2027 겨울 해외캠프·유학 과정 안내. 캐나다 · 뉴질랜드 · 일본 · 말레이시아 · 필리핀.</description>
   <language>ko</language>
-  <lastBuildDate>Wed, 23 Sep 2026 09:00:00 +0900</lastBuildDate>
+  <lastBuildDate>Mon, 28 Sep 2026 09:00:00 +0900</lastBuildDate>
+  <item>
+    <title>세인트폴 대치 아카데미 | 대치동 8~12학년 영어 수업 과정</title>
+    <link>https://schoolingtrip.com/stpaul.html</link>
+    <guid isPermaLink="true">https://schoolingtrip.com/stpaul.html</guid>
+    <pubDate>Mon, 28 Sep 2026 09:00:00 +0900</pubDate>
+    <description>통학하며 다니는 8~12학년 과정. 전 과목 영어 수업, 중2~고2 편입학, 전교 95명, 연 학비 2,540만원.</description>
+  </item>
+  <item>
+    <title>뉴질랜드 와이우쿠 3·4·7주 | 일정·비용·대상</title>
+    <link>https://schoolingtrip.com/camp-newzealand.html</link>
+    <guid isPermaLink="true">https://schoolingtrip.com/camp-newzealand.html</guid>
+    <pubDate>Sat, 26 Sep 2026 09:00:00 +0900</pubDate>
+    <description>뉴질랜드 와이우쿠 3·4·7주. 초4 ~ 고2, 3주 690만원 · 4주 810만원 · 7주 1,330만원(항공 별도).</description>
+  </item>
   <item>
     <title>일본 교토 일본어 연수 2주 | 일정·비용·대상</title>
     <link>https://schoolingtrip.com/camp-japan.html</link>
@@ -57,13 +71,6 @@
     <description>캐나다 사립학교 스쿨링 7주. 2027.1.9 ~ 2.27, 초4 ~ 중2, 1,290만원(항공 별도). 사립학교 스쿨링 · 홈스테이.</description>
   </item>
   <item>
-    <title>뉴질랜드 와이우쿠 3·4·7주 | 일정·비용·대상</title>
-    <link>https://schoolingtrip.com/camp-newzealand.html</link>
-    <guid isPermaLink="true">https://schoolingtrip.com/camp-newzealand.html</guid>
-    <pubDate>Mon, 21 Sep 2026 09:00:00 +0900</pubDate>
-    <description>뉴질랜드 와이우쿠 3·4·7주. 초4 ~ 고2, 3주 690만원 · 4주 810만원 · 7주 1,330만원(항공 별도).</description>
-  </item>
-  <item>
     <title>뉴질랜드·캐나다 중고등 유학 비교 — 비용·학제·관리</title>
     <link>https://schoolingtrip.com/study.html</link>
     <guid isPermaLink="true">https://schoolingtrip.com/study.html</guid>
@@ -83,13 +90,6 @@
     <guid isPermaLink="true">https://schoolingtrip.com/study-canada.html</guid>
     <pubDate>Mon, 21 Sep 2026 09:00:00 +0900</pubDate>
     <description>나이아가라 공립 교육청의 고등학교 8곳. 법적 가디언과 월간 리포트가 붙습니다.</description>
-  </item>
-  <item>
-    <title>세인트폴 대치 아카데미 | 대치동 8~12학년 영어 수업 과정</title>
-    <link>https://schoolingtrip.com/stpaul.html</link>
-    <guid isPermaLink="true">https://schoolingtrip.com/stpaul.html</guid>
-    <pubDate>Mon, 21 Sep 2026 09:00:00 +0900</pubDate>
-    <description>통학하며 다니는 8~12학년 과정. 전 과목 영어 수업, 중2~고2 편입학, 전교 95명, 연 학비 2,540만원.</description>
   </item>
   <item>
     <title>토플 없이 미국·캐나다 대학 진학 — 국내 6개월 ESL 과정</title>
