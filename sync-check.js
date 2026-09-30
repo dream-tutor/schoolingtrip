@@ -31,5 +31,7 @@ for (const s of mine.STUDY) {
   if (!o) continue;
   if (!norm(o.price).startsWith(norm(s.price))) say(s.name, "연 비용", s.price, o.price);
 }
-if (!norm(other.STPAUL.price).includes(norm("2,540만원"))) say(mine.STPAUL.name, "연간 학비", mine.STPAUL.price, other.STPAUL.price);
+if (norm(other.STPAUL.price) !== norm(mine.STPAUL.price)) say(mine.STPAUL.name, "연간 학비", mine.STPAUL.price, other.STPAUL.price);
+for (const s of mine.STUDY) { const o = other.STUDY[s.slug]; if (o && ((o.promo && o.promo.ends) || "") !== ((s.promo && s.promo.until) || "")) say(s.name, "할인 마감", (s.promo || {}).until, (o.promo || {}).ends); }
+if (((other.STPAUL.promo && other.STPAUL.promo.ends) || "") !== ((mine.STPAUL.promo && mine.STPAUL.promo.until) || "")) say(mine.STPAUL.name, "할인 마감", (mine.STPAUL.promo || {}).until, (other.STPAUL.promo || {}).ends);
 console.log(diff ? `\n어긋난 곳 ${diff}건 — 운영사 자료 기준으로 맞는 쪽을 확인해 두 사이트를 같이 고칠 것` : "✓ 일정·비용·마감일·정원이 러닝트래블과 일치합니다");

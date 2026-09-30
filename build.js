@@ -25,6 +25,9 @@ const titleCase = (t) => t.toLowerCase().replace(/(^|\s)\S/g, (m) => m.toUpperCa
 // data-plain 이 없는 요소는 통째로 지워지므로, 라벨과 설명이 나뉜 곳(참가비 안내 .note 의 "할인")은 둘 다에 data-promo-until 을 단다.
 const todayKst = () => new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10);
 const promoOf = (c) => (c.promo && c.promo.until >= todayKst() ? c.promo : null);
+// 유학·세인트폴·기숙학교의 한시 안내(등록 할인·장학금) — 라벨+설명 한 쌍으로만 보여 준다(배지·큰 버튼 없음).
+// until 이 지나면 빌드가 내보내지 않고, 올라간 페이지는 app.js 가 data-promo-until 요소(둘 다 data-plain 없음)를 통째로 지운다.
+const promoPair = (p, tags = ["b", "span"]) => (p && p.until >= todayKst() ? `<${tags[0]} data-promo-until="${p.until}">${p.label}</${tags[0]}><${tags[1]} data-promo-until="${p.until}">${p.text} (${p.untilKo}까지)</${tags[1]}>` : "");
 // 할인 중이면 원래 금액에 취소선을 긋고, 아니면 평소 금액 그대로.
 const priceEl = (cls, c, plain, discounted) => {
   const p = promoOf(c);
@@ -306,7 +309,7 @@ function buildHome() {
   const mqItems = ["NIAGARA", "AUCKLAND", "KYOTO", "JOHOR BAHRU", "CLARK"].map((x) => `${x} <i>✈</i>`).join(" ") + ` <em>${SITE.seasonEn.toLowerCase()}</em> <i>✈</i> `;
   const gates = [
     ["A", "study.html", "중·고등 유학", "뉴질랜드 Waiuku College, 캐나다 나이아가라 교육청. 캠프가 열린 바로 그 학교로 이어집니다."],
-    ["B", "stpaul.html", STPAUL.name, "집에서 통학하면서 8~12학년 과정을 전 과목 영어로 공부합니다. 서울 대치동."],
+    ["B", "stpaul.html", STPAUL.name, "집에서 통학하면서 7~12학년 과정을 전 과목 영어로 공부합니다. 서울 대치동."],
     ["C", "college.html", "미국·캐나다 대학 토플면제", "국내 6개월 공인 ESL 과정을 마치고 TOEFL·SAT·내신 없이 진학합니다."],
     ["D", "pathway.html", "교환학생 · 기숙학교 · 컨설팅", "미국 공립 교환학생 1년, EF Academy, 성적표에서 시작하는 대학 입학 컨설팅."],
   ];
@@ -531,7 +534,7 @@ function buildStudyDetail(s) {
 </div></div>
 ${block("School", "어떤 학교인가", `<div class="prose"><p>${s.schoolDesc}</p></div><ul class="pts" style="margin-top:40px">${s.points.map(([t, p], i) => `<li><span class="n">${pad(i + 1)}</span><h3>${t}</h3><p>${p}</p></li>`).join("")}</ul>${s.photos ? shots(s.photos) : ""}`)}
 ${block("Care", "현지에서 누가 챙기나", `<ul class="pts">${s.manage.map((m, i) => `<li style="grid-template-columns:60px 1fr"><span class="n">${pad(i + 1)}</span><p style="grid-column:2;font-size:18px;color:inherit">${m}</p></li>`).join("")}</ul>`, "bg-forest sheet")}
-${block("Cost", "비용과 학기", `<div class="duo"><div class="box"><h3><i>+</i>${s.price}에 포함</h3><ul>${listItems(s.includes)}</ul></div><div class="box"><h3>Terms</h3><h4>${s.unit}</h4><p>${s.terms}</p></div></div><div class="note"><b>별도 비용</b><span>${s.priceNote}</span><b>방학과 그 뒤</b><span>${s.note}</span></div>`, "bg-paper sheet")}
+${block("Cost", "비용과 학기", `<div class="duo"><div class="box"><h3><i>+</i>${s.price}에 포함</h3><ul>${listItems(s.includes)}</ul></div><div class="box"><h3>Terms</h3><h4>${s.unit}</h4><p>${s.terms}</p></div></div><div class="note"><b>별도 비용</b><span>${s.priceNote}</span>${promoPair(s.promo)}<b>방학과 그 뒤</b><span>${s.note}</span></div>`, "bg-paper sheet")}
 ${block("Steps", "진행 순서", `<ol class="steps line">${STUDY_PROCEDURE.map((x) => `<li><h3>${x}</h3></li>`).join("")}</ol><p style="margin-top:34px"><a class="more" href="${s.country === "canada" ? "camp-canada-3week.html" : "camp-newzealand.html"}">먼저 겨울캠프로 다녀와 보기 <span>→</span></a></p>`, "tight")}
 ${ctaBlock("성적표부터 같이 보겠습니다", "지금 성적으로 몇 학년에 들어갈 수 있는지, 서류는 무엇부터 준비해야 하는지 짚어 드리겠습니다.", s.name)}`;
   page({ file: `${s.slug}.html`, title: `${s.name} | ${s.en} · ${s.price} | ${BRAND}`, desc: `${s.tag}`.slice(0, 80), body, crumbs: trail, course: s.name, cur: "study" });
@@ -544,24 +547,26 @@ function buildStpaul() {
   const trail = [HOME, { label: STPAUL.name }];
   const faqs = [
     ["국내 학력으로 인정되나요?", STPAUL.notice],
-    ["몇 학년부터 들어갈 수 있나요?", `${STPAUL.target}. ${STPAUL.intake}이며 학년당 12~22명 규모입니다.`],
+    ["몇 학년부터 들어갈 수 있나요?", `${STPAUL.target}. ${STPAUL.intake}이며 학년당 12~22명 규모입니다. 12학년만 다니고 졸업하는 형태는 대학 지원 일정과 겹쳐, 고3은 상담에서 남은 기간부터 확인합니다.`],
+    ["입학 전형은 어떻게 되나요?", "원서와 성적표를 내고 영어·수학 시험을 본 뒤 영어 인터뷰를 합니다. 학년은 한국 학년 그대로가 아니라 시험 결과에 따라 배정될 수 있습니다."],
+    ["TOEFL·SAT 수업은 꼭 들어야 하나요?", "선택입니다. 정규 수업은 월~금 9시부터 15시 5분까지이고, TOEFL반과 SAT I반은 방과 후 시험 대비반으로 따로 돕니다."],
     ["기숙사가 있나요?", "없습니다. 통학제 학교이고, 집이 멀어 통학이 어려우면 학교 근처 학사를 이용할 수 있습니다."],
   ];
   const body = `${pageHero({ trail, kicker: "SPASS · Seoul", h1: STPAUL.name, lead: STPAUL.tag, art: "seoul", iso: "SEL", bgiso: "SPA", cta: `<a class="btn btn-t" href="#consult">입학 상담 신청 <span class="ar">→</span></a>` })}
 <div class="wrap"><div class="tk rv" style="grid-template-columns:repeat(4,minmax(0,1fr))">
-  <div><small>Who</small><b>중2 ~ 고2 편입학</b><span>고3은 상담 후 결정</span></div>
-  <div><small>Intake</small><b>2월 · 8월 학기</b><span>학년당 12~22명</span></div>
+  <div><small>Who</small><b>7~12학년 나이</b><span>중1~고3 편입학</span></div>
+  <div><small>Intake</small><b>8월 · 1월 학기</b><span>2학기 2027년 1월 25일 시작</span></div>
   <div><small>Size</small><b>전교 95명</b><span>전 과목 영어 수업</span></div>
-  <div class="hl"><small>Tuition</small><b>2,540만원</b><span>연간 학비</span></div>
+  <div class="hl"><small>Tuition</small><b>2,920만원</b><span>연간 학비 · 첫해 관리비 480만원 별도</span></div>
 </div></div>
 <section class="blk"><div class="wrap"><div class="notice rv"><b>먼저 알아 두실 것</b><p>${STPAUL.notice}</p></div></div></section>
 ${block("Facts", "학교 개요", `<div class="tw"><table class="tb narrow"><tbody>${STPAUL.facts.map(([k, v]) => `<tr><th>${k}</th><td>${v}</td></tr>`).join("")}</tbody></table></div>`, "tight")}
-${block("A day", "하루와 방과 후", `<div class="duo"><div class="box"><h3>Schedule</h3><h4>9시부터 6교시</h4><p>${STPAUL.daily}</p></div><div class="box"><h3>Clubs</h3><h4>20개가 넘는 클럽</h4><p>${STPAUL.clubs}</p></div></div><div class="note"><b>진학 상담</b><span>${STPAUL.counseling}</span><b>학비</b><span>${STPAUL.price}. ${STPAUL.priceNote}</span></div>`, "bg-paper2 sheet")}
+${block("A day", "하루와 방과 후", `<div class="duo"><div class="box"><h3>Schedule</h3><h4>9시부터 6교시</h4><p>${STPAUL.daily}</p></div><div class="box"><h3>Clubs</h3><h4>20개가 넘는 클럽</h4><p>${STPAUL.clubs}</p></div></div><div class="note"><b>진학 상담</b><span>${STPAUL.counseling}</span><b>학비</b><span>${STPAUL.price}. ${STPAUL.priceNote}</span>${promoPair(STPAUL.promo)}</div>`, "bg-paper2 sheet")}
 ${block("Colleges", "졸업생이 간 대학", `<ul class="pts">${STPAUL.results.map((r, i) => `<li style="grid-template-columns:60px 1fr"><span class="n">${pad(i + 1)}</span><p style="grid-column:2;font-size:18px;color:inherit">${r}</p></li>`).join("")}</ul><p class="fine">학교 발표 자료 기준입니다.</p>`, "bg-forest sheet")}
 ${block("Q&A", "자주 나오는 질문", faqHtml(faqs), "bg-paper sheet")}
 ${block("Compare", "해외 유학과 견주어 보면", `<div class="prose"><p>집에서 다니기 때문에 홈스테이 적응이나 현지 생활 관리에 드는 부담이 없습니다. 대신 영어를 쓰는 환경은 학교 안으로 한정됩니다. 생활까지 영어권에서 해 보고 싶다면 <a href="study.html">뉴질랜드·캐나다 유학</a>이 맞고, 부모 곁에서 미국 대학 입시를 준비하고 싶다면 이쪽이 맞습니다.</p></div>`, "tight")}
 ${ctaBlock("입학 전에 상담부터 받으세요", "편입은 학기마다 자리가 정해져 있습니다. 학년과 영어 수준을 보고 가능한 시점을 알려 드리겠습니다.", STPAUL.name)}`;
-  page({ file: "stpaul.html", title: `${STPAUL.name} | 대치동 8~12학년 영어 수업 과정 | ${BRAND}`, desc: "통학하며 다니는 8~12학년 과정. 전 과목 영어 수업, 중2~고2 편입학, 전교 95명, 연 학비 2,540만원.", body, crumbs: trail, course: STPAUL.name, cur: "stpaul", ld: [faqLd(faqs)] });
+  page({ file: "stpaul.html", title: `${STPAUL.name} | 대치동 7~12학년 영어 수업 과정 | ${BRAND}`, desc: "통학하며 다니는 7~12학년 과정. 전 과목 영어 수업, 8월·1월 학기, 전교 95명, 연 학비 2,920만원.", body, crumbs: trail, course: STPAUL.name, cur: "stpaul", ld: [faqLd(faqs)] });
 }
 
 // ============================================================
@@ -585,9 +590,9 @@ ${ctaBlock("지금 성적으로 갈 수 있는 대학부터", "고3이냐 재수
 function buildPathway() {
   const trail = [HOME, { label: "그 밖의 길" }];
   const body = `${pageHero({ trail, kicker: "More gates", h1: "교환학생 · 기숙학교<br>· 입학 컨설팅", lead: "캠프와 관리형 유학 말고도 길이 있습니다. 비용도 기간도 생활 방식도 서로 많이 달라 하나씩 따로 봐야 합니다.", art: "globe" })}
-${PATHWAYS.map((p, i) => block(p.en, p.name, `<p class="mono" style="margin-bottom:18px;opacity:.7">${p.kicker}</p><div class="prose">${p.body.map((t) => `<p>${t}</p>`).join("")}</div>${p.facts.length ? `<div class="box" style="margin-top:30px"><dl style="display:grid;grid-template-columns:minmax(110px,auto) 1fr;gap:14px 24px">${p.facts.map(([k, v]) => `<dt style="font-weight:800;letter-spacing:-.02em">${k}</dt><dd style="color:var(--ink-2)">${v}</dd>`).join("")}</dl></div>` : ""}<p style="margin-top:28px"><a class="btn btn-o btn-s" href="#consult" data-course="${esc(p.name)}">${p.name} 상담 <span class="ar">→</span></a></p>`, i % 2 ? "bg-paper2 sheet" : i ? "bg-paper sheet" : "", p.id)).join("\n")}
+${PATHWAYS.map((p, i) => block(p.en, p.name, `<p class="mono" style="margin-bottom:18px;opacity:.7">${p.kicker}</p><div class="prose">${p.body.map((t) => `<p>${t}</p>`).join("")}</div>${p.facts.length ? `<div class="box" style="margin-top:30px"><dl style="display:grid;grid-template-columns:minmax(110px,auto) 1fr;gap:14px 24px">${p.facts.map(([k, v]) => `<dt style="font-weight:800;letter-spacing:-.02em">${k}</dt><dd style="color:var(--ink-2)">${v}</dd>`).join("")}${promoPair(p.promo, ["dt", "dd"])}</dl></div>` : ""}<p style="margin-top:28px"><a class="btn btn-o btn-s" href="#consult" data-course="${esc(p.name)}">${p.name} 상담 <span class="ar">→</span></a></p>`, i % 2 ? "bg-paper2 sheet" : i ? "bg-paper sheet" : "", p.id)).join("\n")}
 ${ctaBlock("어느 길인지부터 같이 정합니다", "교환학생이 맞는지 유학이 맞는지, 그것부터 말씀드리겠습니다.", "추천 받고 싶어요")}`;
-  page({ file: "pathway.html", title: `미국 교환학생 · EF Academy · 해외 대학 입학 컨설팅 | ${BRAND}`, desc: "미국 공립 교환학생 1년, EF Academy 기숙학교, 성적표에서 시작하는 대학 컨설팅, 세인트폴 클락.", body, crumbs: trail });
+  page({ file: "pathway.html", title: `미국 교환학생 · EF Academy · 해외 대학 입학 컨설팅 | ${BRAND}`, desc: "미국 공립 교환학생 1년, 캘리포니아·뉴욕 사립 기숙학교 EF Academy, 성적표에서 시작하는 대학 컨설팅, 세인트폴 클락.", body, crumbs: trail });
 }
 
 // ============================================================
