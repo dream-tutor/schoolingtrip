@@ -557,7 +557,7 @@ function buildStpaul() {
   <div><small>Who</small><b>7~12학년 나이</b><span>중1~고3 편입학</span></div>
   <div><small>Intake</small><b>8월 · 1월 학기</b><span>2학기 2027년 1월 25일 시작</span></div>
   <div><small>Size</small><b>전교 95명</b><span>전 과목 영어 수업</span></div>
-  <div class="hl"><small>Tuition</small><b>2,920만원</b><span>연간 학비 · 첫해 관리비 480만원 별도</span></div>
+  <div class="hl"><small>Tuition</small><b>2,920만원</b><span>연간 학비</span></div>
 </div></div>
 <section class="blk"><div class="wrap"><div class="notice rv"><b>먼저 알아 두실 것</b><p>${STPAUL.notice}</p></div></div></section>
 ${block("Facts", "학교 개요", `<div class="tw"><table class="tb narrow"><tbody>${STPAUL.facts.map(([k, v]) => `<tr><th>${k}</th><td>${v}</td></tr>`).join("")}</tbody></table></div>`, "tight")}
