@@ -216,7 +216,9 @@ ${noindex ? `<meta name="robots" content="noindex">` : `<link rel="canonical" hr
 <meta name="theme-color" content="#f5f0e6">
 ${(SITE.verifyGoogle || "").split(",").map((c) => c.trim()).filter(Boolean).map((c) => `<meta name="google-site-verification" content="${esc(c)}">`).join("\n")}
 ${(SITE.verifyNaver || "").split(",").map((c) => c.trim()).filter(Boolean).map((c) => `<meta name="naver-site-verification" content="${esc(c)}">`).join("\n")}
-<link rel="icon" href="${FAVICON}">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="alternate" type="application/rss+xml" title="${esc(BRAND)}" href="${SITE.baseUrl}/rss.xml">
 <noscript><style>.rv{opacity:1;transform:none}</style></noscript>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -663,6 +665,8 @@ build404();
 
 for (const f of fs.readdirSync(OUT)) if (f.endsWith(".html")) fs.unlinkSync(path.join(OUT, f));
 PAGES.forEach((p) => fs.writeFileSync(path.join(OUT, p.file), p.html));
+// 파비콘 파일 — 네이버·구글은 data: 주소로 넣은 아이콘을 수집하지 못해 검색·광고에 지구본으로 나온다(2026-10-01). 실제 파일을 루트에 둔다
+for (const f of fs.readdirSync(path.join(__dirname, "favicon"))) fs.copyFileSync(path.join(__dirname, "favicon", f), path.join(OUT, f));
 fs.copyFileSync(path.join(ASSETS, "style.css"), path.join(OUT, "style.css"));
 fs.copyFileSync(path.join(ASSETS, "app.js"), path.join(OUT, "app.js"));
 for (const f of fs.readdirSync(path.join(ASSETS, "img"))) fs.copyFileSync(path.join(ASSETS, "img", f), path.join(OUT, "img", f));
