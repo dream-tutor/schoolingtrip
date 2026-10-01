@@ -395,7 +395,7 @@ function buildHome() {
 <section class="sec bg-paper2 sheet">
   <div class="wrap">
     <div class="sh"><div class="rv">${eb("Postcards", "05")}<h2>다녀온 학생 후기</h2></div>
-    <p class="rv d1">운영사에 남은 후기를 원문 그대로 실었습니다. 이름은 일부 가렸습니다.</p></div>
+    <p class="rv d1">운영사에 남은 후기를 간추렸습니다. 이름은 일부 가렸습니다.</p></div>
     <div class="cards">${REVIEWS.map((r, i) => `<figure class="pc rv d${i + 1}"><div class="pc-top"><span class="mono">${r.program}</span><span class="pc-st" aria-hidden="true">${r.camp ? campBy(r.camp).iso : "USA"}</span></div><blockquote><q>${r.text}</q></blockquote><figcaption class="pc-who">${r.who}${r.camp ? `<a href="${r.camp}.html"><span>과정 보기 →</span></a>` : "<span></span>"}</figcaption></figure>`).join("")}</div>
   </div>
 </section>
