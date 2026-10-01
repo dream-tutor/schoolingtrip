@@ -181,7 +181,7 @@ function footer(dateLabel) {
       <div><h3>Next gate</h3><ul><li><a href="study.html">중·고등 유학 안내</a></li>${STUDY.map((s) => `<li><a href="${s.slug}.html">${s.name}</a></li>`).join("")}<li><a href="stpaul.html">${STPAUL.name}</a></li><li><a href="college.html">대학 토플면제교육원</a></li><li><a href="pathway.html">교환학생 · 기숙학교 · 컨설팅</a></li></ul></div>
       <div><h3>Info</h3><ul><li><a href="safety.html">안전·운영 원칙</a></li><li><a href="safety.html#refund">환불 규정</a></li><li><a href="faq.html">자주 묻는 질문</a></li><li><a href="about.html">${BRAND} 소개</a></li></ul></div>
     </div>
-    <p class="ft-fine">${josa(BRAND, "은", "는")} 해외캠프와 유학 과정을 안내하고 상담을 연결하는 페이지입니다. 일정과 비용은 항공·현지 사정에 따라 달라질 수 있습니다. 문의는 상담 신청 양식을 이용해 주세요.<br>${SITE.source}<span class="ft-date">정보 업데이트 ${dateLabel}</span></p>
+    <p class="ft-fine">${josa(BRAND, "은", "는")} 해외캠프와 유학 과정을 안내하고 상담을 연결하는 페이지입니다. 일정과 비용은 항공·현지 사정에 따라 달라질 수 있습니다. 문의는 상담 신청 양식을 이용해 주세요.<br>${SITE.source}<br>광고전화는 정중히 사절합니다.<span class="ft-date">정보 업데이트 ${dateLabel}</span></p>
   </div>
 </footer>`;
 }
