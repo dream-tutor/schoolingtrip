@@ -315,7 +315,7 @@ function buildHome() {
   const mqItems = ["NIAGARA", "AUCKLAND", "KYOTO", "JOHOR BAHRU", "CLARK"].map((x) => `${x} <i>✈</i>`).join(" ") + ` <em>${SITE.seasonEn.toLowerCase()}</em> <i>✈</i> `;
   const gates = [
     ["A", "study.html", "중·고등 유학", "뉴질랜드 Waiuku College, 캐나다 나이아가라 교육청. 캠프가 열린 바로 그 학교로 이어집니다."],
-    ["B", "stpaul.html", STPAUL.name, "집에서 통학하면서 7~12학년 과정을 전 과목 영어로 공부합니다. 서울 대치동."],
+    ["B", "stpaul.html", STPAUL.name, "집에서 통학하면서 8~12학년 과정을 전 과목 영어로 공부합니다. 서울 대치동."],
     ["C", "college.html", "미국·캐나다 대학 토플면제", "국내 6개월 공인 ESL 과정을 마치고 TOEFL·SAT·내신 없이 진학합니다."],
     ["D", "pathway.html", "교환학생 · 기숙학교 · 컨설팅", "미국 공립 교환학생 1년, EF Academy, 성적표에서 시작하는 대학 입학 컨설팅."],
   ];
@@ -560,7 +560,7 @@ function buildStpaul() {
   ];
   const body = `${pageHero({ trail, kicker: "SPASS · Seoul", h1: STPAUL.name, lead: `${promoChip(STPAUL.promo)}${STPAUL.tag}`, art: "seoul", iso: "SEL", bgiso: "SPA", cta: `<a class="btn btn-t" href="#consult">입학 상담 신청 <span class="ar">→</span></a>` })}
 <div class="wrap"><div class="tk c4 rv">
-  <div><small>Who</small><b>7~12학년 나이</b><span>중1~고3 편입학</span></div>
+  <div><small>Who</small><b>8~12학년 나이</b><span>중2~고3 편입학</span></div>
   <div><small>Intake</small><b>8월 · 1월 학기</b><span>2학기 2027년 1월 25일 시작</span></div>
   <div><small>Size</small><b>전교 95명</b><span>전 과목 영어 수업</span></div>
   <div class="hl"><small>Tuition</small><b>2,920만원</b><span>연간 학비</span>${promoLine(STPAUL.promo)}</div>
@@ -572,7 +572,7 @@ ${block("Colleges", "졸업생이 간 대학", `<ul class="pts">${STPAUL.results
 ${block("Q&A", "자주 나오는 질문", faqHtml(faqs), "bg-paper sheet")}
 ${block("Compare", "해외 유학과 견주어 보면", `<div class="prose"><p>집에서 다니기 때문에 홈스테이 적응이나 현지 생활 관리에 드는 부담이 없습니다. 대신 영어를 쓰는 환경은 학교 안으로 한정됩니다. 생활까지 영어권에서 해 보고 싶다면 <a href="study.html">뉴질랜드·캐나다 유학</a>이 맞고, 부모 곁에서 미국 대학 입시를 준비하고 싶다면 이쪽이 맞습니다.</p></div>`, "tight")}
 ${ctaBlock("입학 전에 상담부터 받으세요", "편입은 학기마다 자리가 정해져 있습니다. 학년과 영어 수준을 보고 가능한 시점을 알려 드리겠습니다.", STPAUL.name)}`;
-  page({ file: "stpaul.html", title: `${STPAUL.name} | 대치동 7~12학년 영어 수업 과정 | ${BRAND}`, desc: "통학하며 다니는 7~12학년 과정. 전 과목 영어 수업, 8월·1월 학기, 전교 95명, 연 학비 2,920만원.", body, crumbs: trail, course: STPAUL.name, cur: "stpaul", ld: [faqLd(faqs)] });
+  page({ file: "stpaul.html", title: `${STPAUL.name} | 대치동 8~12학년 영어 수업 과정 | ${BRAND}`, desc: "통학하며 다니는 8~12학년 과정. 전 과목 영어 수업, 8월·1월 학기, 전교 95명, 연 학비 2,920만원.", body, crumbs: trail, course: STPAUL.name, cur: "stpaul", ld: [faqLd(faqs)] });
 }
 
 // ============================================================
