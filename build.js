@@ -25,9 +25,15 @@ const titleCase = (t) => t.toLowerCase().replace(/(^|\s)\S/g, (m) => m.toUpperCa
 // data-plain 이 없는 요소는 통째로 지워지므로, 라벨과 설명이 나뉜 곳(참가비 안내 .note 의 "할인")은 둘 다에 data-promo-until 을 단다.
 const todayKst = () => new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10);
 const promoOf = (c) => (c.promo && c.promo.until >= todayKst() ? c.promo : null);
-// 유학·세인트폴·기숙학교의 한시 안내(등록 할인·장학금) — 라벨+설명 한 쌍으로만 보여 준다(배지·큰 버튼 없음).
+// 유학·세인트폴·기숙학교의 한시 안내(등록 할인·장학금) — 자세한 설명은 라벨+설명 한 쌍(promoPair)이 맡는다.
 // until 이 지나면 빌드가 내보내지 않고, 올라간 페이지는 app.js 가 data-promo-until 요소(둘 다 data-plain 없음)를 통째로 지운다.
 const promoPair = (p, tags = ["b", "span"]) => (p && p.until >= todayKst() ? `<${tags[0]} data-promo-until="${p.until}">${p.label}</${tags[0]}><${tags[1]} data-promo-until="${p.until}">${p.text} (${p.untilKo}까지)</${tags[1]}>` : "");
+// 그 과정의 페이지에서만 눈에 띄게(2026-10-01 사장님 지시 "해당 페이지에서") — 홈·허브·비교 페이지에는 쓰지 않는다.
+//   promoChip: 히어로 lead 앞 / 블록 머리의 탠저린 알약.  promoLine: 요약 패스(.tk) 강조 칸의 탠저린 한 줄.
+//   문구는 promo.badge. 금액 칸은 건드리지 않는다(data-plain 없음 → 기한 뒤 요소째 사라진다).
+const promoLive = (p) => !!(p && p.badge && p.until >= todayKst());
+const promoChip = (p) => (promoLive(p) ? `<span class="promo-chip" data-promo-until="${p.until}">${p.badge}</span>` : "");
+const promoLine = (p) => (promoLive(p) ? `<span data-promo-until="${p.until}">${p.badge}</span>` : "");
 // 할인 중이면 원래 금액에 취소선을 긋고, 아니면 평소 금액 그대로.
 const priceEl = (cls, c, plain, discounted) => {
   const p = promoOf(c);
@@ -525,12 +531,12 @@ ${ctaBlock("한 텀만 먼저 다녀올 수도 있습니다", "뉴질랜드는 1
 
 function buildStudyDetail(s) {
   const trail = [HOME, { label: "유학", href: "study.html" }, { label: s.name }];
-  const body = `${pageHero({ trail, kicker: `Study abroad · ${s.en}`, h1: s.name, lead: s.tag, art: s.country, iso: s.iso, bgiso: s.iso, cta: `<a class="btn btn-t" href="#consult">이 과정 상담 신청 <span class="ar">→</span></a><a class="btn btn-o" href="study.html">두 나라 비교</a>` })}
-<div class="wrap"><div class="tk rv" style="grid-template-columns:repeat(4,minmax(0,1fr))">
+  const body = `${pageHero({ trail, kicker: `Study abroad · ${s.en}`, h1: s.name, lead: `${promoChip(s.promo)}${s.tag}`, art: s.country, iso: s.iso, bgiso: s.iso, cta: `<a class="btn btn-t" href="#consult">이 과정 상담 신청 <span class="ar">→</span></a><a class="btn btn-o" href="study.html">두 나라 비교</a>` })}
+<div class="wrap"><div class="tk c4 rv">
   <div><small>Who</small><b>${s.target.split(" (")[0].split(".")[0]}</b><span>${s.target.includes("(") ? s.target.slice(s.target.indexOf("(") + 1).replace(/\).*$/, "") : ""}</span></div>
   <div><small>Start</small><b>${s.unit}</b></div>
   <div><small>Diploma</small><b>${s.diploma.split(" (")[0]}</b><span>${s.diploma.includes("(") ? s.diploma.slice(s.diploma.indexOf("(") + 1, -1) : ""}</span></div>
-  <div class="hl"><small>Cost</small><b>${s.price}</b><span>항공·비자·용돈 별도</span></div>
+  <div class="hl"><small>Cost</small><b>${s.price}</b><span>항공·비자·용돈 별도</span>${promoLine(s.promo)}</div>
 </div></div>
 ${block("School", "어떤 학교인가", `<div class="prose"><p>${s.schoolDesc}</p></div><ul class="pts" style="margin-top:40px">${s.points.map(([t, p], i) => `<li><span class="n">${pad(i + 1)}</span><h3>${t}</h3><p>${p}</p></li>`).join("")}</ul>${s.photos ? shots(s.photos) : ""}`)}
 ${block("Care", "현지에서 누가 챙기나", `<ul class="pts">${s.manage.map((m, i) => `<li style="grid-template-columns:60px 1fr"><span class="n">${pad(i + 1)}</span><p style="grid-column:2;font-size:18px;color:inherit">${m}</p></li>`).join("")}</ul>`, "bg-forest sheet")}
@@ -552,12 +558,12 @@ function buildStpaul() {
     ["TOEFL·SAT 수업은 꼭 들어야 하나요?", "선택입니다. 정규 수업은 월~금 9시부터 15시 5분까지이고, TOEFL반과 SAT I반은 방과 후 시험 대비반으로 따로 돕니다."],
     ["기숙사가 있나요?", "없습니다. 통학제 학교이고, 집이 멀어 통학이 어려우면 학교 근처 학사를 이용할 수 있습니다."],
   ];
-  const body = `${pageHero({ trail, kicker: "SPASS · Seoul", h1: STPAUL.name, lead: STPAUL.tag, art: "seoul", iso: "SEL", bgiso: "SPA", cta: `<a class="btn btn-t" href="#consult">입학 상담 신청 <span class="ar">→</span></a>` })}
-<div class="wrap"><div class="tk rv" style="grid-template-columns:repeat(4,minmax(0,1fr))">
+  const body = `${pageHero({ trail, kicker: "SPASS · Seoul", h1: STPAUL.name, lead: `${promoChip(STPAUL.promo)}${STPAUL.tag}`, art: "seoul", iso: "SEL", bgiso: "SPA", cta: `<a class="btn btn-t" href="#consult">입학 상담 신청 <span class="ar">→</span></a>` })}
+<div class="wrap"><div class="tk c4 rv">
   <div><small>Who</small><b>7~12학년 나이</b><span>중1~고3 편입학</span></div>
   <div><small>Intake</small><b>8월 · 1월 학기</b><span>2학기 2027년 1월 25일 시작</span></div>
   <div><small>Size</small><b>전교 95명</b><span>전 과목 영어 수업</span></div>
-  <div class="hl"><small>Tuition</small><b>2,920만원</b><span>연간 학비</span></div>
+  <div class="hl"><small>Tuition</small><b>2,920만원</b><span>연간 학비</span>${promoLine(STPAUL.promo)}</div>
 </div></div>
 <section class="blk"><div class="wrap"><div class="notice rv"><b>먼저 알아 두실 것</b><p>${STPAUL.notice}</p></div></div></section>
 ${block("Facts", "학교 개요", `<div class="tw"><table class="tb narrow"><tbody>${STPAUL.facts.map(([k, v]) => `<tr><th>${k}</th><td>${v}</td></tr>`).join("")}</tbody></table></div>`, "tight")}
@@ -590,7 +596,7 @@ ${ctaBlock("지금 성적으로 갈 수 있는 대학부터", "고3이냐 재수
 function buildPathway() {
   const trail = [HOME, { label: "그 밖의 길" }];
   const body = `${pageHero({ trail, kicker: "More gates", h1: "교환학생 · 기숙학교<br>· 입학 컨설팅", lead: "캠프와 관리형 유학 말고도 길이 있습니다. 비용도 기간도 생활 방식도 서로 많이 달라 하나씩 따로 봐야 합니다.", art: "globe" })}
-${PATHWAYS.map((p, i) => block(p.en, p.name, `<p class="mono" style="margin-bottom:18px;opacity:.7">${p.kicker}</p><div class="prose">${p.body.map((t) => `<p>${t}</p>`).join("")}</div>${p.facts.length ? `<div class="box" style="margin-top:30px"><dl style="display:grid;grid-template-columns:minmax(110px,auto) 1fr;gap:14px 24px">${p.facts.map(([k, v]) => `<dt style="font-weight:800;letter-spacing:-.02em">${k}</dt><dd style="color:var(--ink-2)">${v}</dd>`).join("")}${promoPair(p.promo, ["dt", "dd"])}</dl></div>` : ""}<p style="margin-top:28px"><a class="btn btn-o btn-s" href="#consult" data-course="${esc(p.name)}">${p.name} 상담 <span class="ar">→</span></a></p>`, i % 2 ? "bg-paper2 sheet" : i ? "bg-paper sheet" : "", p.id)).join("\n")}
+${PATHWAYS.map((p, i) => block(p.en, p.name, `<p class="mono" style="margin-bottom:18px;opacity:.7">${p.kicker}</p>${promoLive(p.promo) ? `<p data-promo-until="${p.promo.until}">${promoChip(p.promo)}</p>` : ""}<div class="prose">${p.body.map((t) => `<p>${t}</p>`).join("")}</div>${p.facts.length ? `<div class="box" style="margin-top:30px"><dl style="display:grid;grid-template-columns:minmax(110px,auto) 1fr;gap:14px 24px">${p.facts.map(([k, v]) => `<dt style="font-weight:800;letter-spacing:-.02em">${k}</dt><dd style="color:var(--ink-2)">${v}</dd>`).join("")}${promoPair(p.promo, ["dt", "dd"])}</dl></div>` : ""}<p style="margin-top:28px"><a class="btn btn-o btn-s" href="#consult" data-course="${esc(p.name)}">${p.name} 상담 <span class="ar">→</span></a></p>`, i % 2 ? "bg-paper2 sheet" : i ? "bg-paper sheet" : "", p.id)).join("\n")}
 ${ctaBlock("어느 길인지부터 같이 정합니다", "교환학생이 맞는지 유학이 맞는지, 그것부터 말씀드리겠습니다.", "추천 받고 싶어요")}`;
   page({ file: "pathway.html", title: `미국 교환학생 · EF Academy · 해외 대학 입학 컨설팅 | ${BRAND}`, desc: "미국 공립 교환학생 1년, 캘리포니아·뉴욕 사립 기숙학교 EF Academy, 성적표에서 시작하는 대학 컨설팅, 세인트폴 클락.", body, crumbs: trail });
 }

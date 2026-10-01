@@ -218,7 +218,9 @@ table{border-collapse:collapse;width:100%}
 .promo-chip{display:inline-flex;align-items:center;font-size:13.5px;font-weight:700;letter-spacing:-.01em;background:var(--tangerine);color:#fff;padding:6px 15px;border-radius:999px;margin-bottom:16px}
 .ph .lead .promo-chip{margin-bottom:14px}
 .ph .lead{display:flex;flex-direction:column;align-items:flex-start}
-.tk .hl.has-promo small{color:var(--tangerine-2);font-weight:700}
+.tk .hl.has-promo small,.tk .hl span[data-promo-until]{color:var(--tangerine-2);font-weight:700}
+/* 유학·세인트폴 요약 패스: 금액은 그대로 두고 그 아래 한 줄만 더한다(기한 뒤 app.js 가 그 줄만 지운다) */
+.tk .hl span[data-promo-until]{margin-top:8px;line-height:1.4}
 .tk .hl.has-promo s{font-size:13px}
 
 /* ---------- 목적별 고르기 ---------- */
@@ -412,6 +414,8 @@ table{border-collapse:collapse;width:100%}
 
 /* 요약 패스 */
 .tk{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));background:var(--card);border-radius:24px;box-shadow:0 30px 60px -40px rgba(16,35,28,.5),0 0 0 1px var(--line-2);margin-top:-46px;position:relative;z-index:3}
+/* 칸이 4개인 패스(유학·세인트폴). 인라인 style 로 두면 아래 1000px 규칙을 이겨 모바일에서도 4칸으로 눌린다 — 반드시 클래스로 */
+.tk.c4{grid-template-columns:repeat(4,minmax(0,1fr))}
 .tk>div{padding:26px 26px 24px;border-left:2px dashed var(--line);position:relative}
 .tk>div:first-child{border-left:0}
 .tk>div+div::before,.tk>div+div::after{content:"";position:absolute;left:-11px;width:20px;height:20px;border-radius:50%;background:var(--paper)}
@@ -420,7 +424,7 @@ table{border-collapse:collapse;width:100%}
 .tk b{display:block;font-size:19px;font-weight:800;letter-spacing:-.03em;line-height:1.35}
 .tk span{display:block;font-size:13px;color:var(--ink-2);margin-top:4px;line-height:1.5}
 .tk .hl b{color:var(--tangerine-2);font-size:24px}
-@media(max-width:1000px){.tk{grid-template-columns:1fr 1fr}.tk>div{border-left:0;border-top:2px dashed var(--line)}.tk>div:nth-child(-n+2){border-top:0}.tk>div:nth-child(even){border-left:2px dashed var(--line)}.tk>div::before,.tk>div::after{display:none}.tk>div:last-child:nth-child(odd){grid-column:1/-1}}
+@media(max-width:1000px){.tk,.tk.c4{grid-template-columns:1fr 1fr}.tk>div{border-left:0;border-top:2px dashed var(--line)}.tk>div:nth-child(-n+2){border-top:0}.tk>div:nth-child(even){border-left:2px dashed var(--line)}.tk>div::before,.tk>div::after{display:none}.tk>div:last-child:nth-child(odd){grid-column:1/-1}}
 @media(max-width:520px){.tk>div{padding:20px 18px}.tk b{font-size:17px}}
 
 /* 본문 블록 */
