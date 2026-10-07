@@ -116,7 +116,7 @@ function ctaBlock(title, text, course) {
 }
 
 function consultDrawer() {
-  const campOpts = CAMPS.map((c) => `<option value="${esc(c.name)}">${c.name}</option>`).join("");
+  const campOpts = CAMPS.map((c) => `<option value="${esc(c.name)}"${c.country === "japan" ? ' data-lang="일본어"' : ""}>${c.name}</option>`).join("");
   const nextOpts = [...STUDY.map((s) => s.name), STPAUL.name, ELC.name, ...PATHWAYS.map((p) => p.name)].map((n) => `<option value="${esc(n)}">${n}</option>`).join("");
   const chips = ["일정·비용", "현지 학교 수업", "홈스테이·숙소", "인솔·현지 관리", "항공·출국 준비", "유학 연계"];
   return `<div class="ov" id="consultOv" aria-hidden="true">
@@ -136,7 +136,7 @@ function consultDrawer() {
       <div><span class="lb">학년</span><div class="row"><select name="학교급" aria-label="학교급" style="flex:1"><option value="">선택</option><option>초등</option><option>중등</option><option>고등</option><option>기타</option></select><select name="학년수" aria-label="학년" style="flex:1" disabled><option value="">학년</option></select></div></div>
       <label>관심 과정<select name="관심과정"><option value="">선택해 주세요</option><optgroup label="${SITE.season} 캠프">${campOpts}</optgroup><optgroup label="유학·진학">${nextOpts}</optgroup><option value="여름캠프 사전 상담">여름캠프 사전 상담</option><option value="추천 받고 싶어요">추천 받고 싶어요</option></select></label>
       <div class="fm-2">
-        <label>영어 수준<select name="영어수준"><option value="">선택</option><option>이제 막 배우는 단계</option><option>짧은 문장으로 대화</option><option>일상 대화 가능</option><option>자유롭게 대화</option></select></label>
+        <label><span id="langLab">외국어 수준</span><select name="영어수준"><option value="">선택</option><option>이제 막 배우는 단계</option><option>짧은 문장으로 대화</option><option>일상 대화 가능</option><option>자유롭게 대화</option></select></label>
         <label>해외 경험<select name="해외경험"><option value="">선택</option><option>없음</option><option>가족 여행만</option><option>캠프·어학연수 경험</option><option>해외 거주·유학 경험</option></select></label>
       </div>
       <div><span class="lb">상담 받고 싶은 내용 <em class="sub">여러 개 선택 가능</em></span><div class="chips">${chips.map((v) => `<label><input type="checkbox" name="궁금한점" value="${v}"><span>${v}</span></label>`).join("")}</div></div>
@@ -145,7 +145,7 @@ function consultDrawer() {
         <label class="agree"><input type="checkbox" name="개인정보동의" value="동의" checked required><span>개인정보 수집·이용에 동의합니다 <em class="sub">(필수)</em></span></label>
         <details class="agree-more"><summary>수집 항목·이용 목적·보유 기간 보기</summary>
           <ul>
-            <li><b>수집 항목</b>학생 이름, 연락처, 학년, 관심 과정, 영어 수준, 해외 경험, 상담 희망 내용, 문의 내용, 접수 시각과 접수한 페이지 주소</li>
+            <li><b>수집 항목</b>학생 이름, 연락처, 학년, 관심 과정, 외국어 수준, 해외 경험, 상담 희망 내용, 문의 내용, 접수 시각과 접수한 페이지 주소</li>
             <li><b>이용 목적</b>캠프·유학 상담 안내와 연락</li>
             <li><b>보유 기간</b>상담이 끝난 뒤 6개월 이내에 파기</li>
             <li><b>저장·전달</b>접수 내용은 구글 스프레드시트에 저장되고 상담 담당자 메일로 전달됩니다. 전달 항목은 위 수집 항목과 같습니다.</li>

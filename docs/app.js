@@ -95,6 +95,14 @@
   /* 상담 서랍 */
   var ov = $("#consultOv"), form = $("#consultForm"), fab = $("#fab");
   var lastFocus = null;
+  // 언어 수준 칸 이름을 관심 과정에 맞춘다 — 일본 캠프는 일본어, 다른 과정은 영어, 미선택·추천은 외국어 (2026-10-07)
+  function syncLang() {
+    var sel = form && form.elements["관심과정"], lab = $("#langLab");
+    if (!sel || !lab) return;
+    var o = sel.options[sel.selectedIndex], v = sel.value;
+    lab.textContent = (o && o.getAttribute("data-lang") ? o.getAttribute("data-lang") : (!v || v === "추천 받고 싶어요" ? "외국어" : "영어")) + " 수준";
+  }
+  if (form && form.elements["관심과정"]) form.elements["관심과정"].addEventListener("change", syncLang);
   function openConsult(preset) {
     if (!ov) return;
     lastFocus = d.activeElement;
@@ -102,6 +110,7 @@
       var sel = form.elements["관심과정"];
       if (sel) for (var k = 0; k < sel.options.length; k++) if (sel.options[k].value === preset) sel.selectedIndex = k;
     }
+    syncLang();
     ov.classList.add("on"); ov.setAttribute("aria-hidden", "false");
     d.body.style.overflow = "hidden";
     if (fab) fab.classList.add("hide");
@@ -158,7 +167,7 @@
       var level = f.get("학교급") || "", gnum = f.get("학년수") || "";
       var grade = level === "기타" ? "기타" : (level + " " + gnum).trim();
       var NL = String.fromCharCode(10), rows = [];
-      if (f.get("영어수준")) rows.push("영어 수준: " + f.get("영어수준"));
+      if (f.get("영어수준")) rows.push((($("#langLab") || {}).textContent || "외국어 수준") + ": " + f.get("영어수준"));
       if (f.get("해외경험")) rows.push("해외 경험: " + f.get("해외경험"));
       if (f.getAll("궁금한점").length) rows.push("상담 희망 내용: " + f.getAll("궁금한점").join(", "));
       var free = (f.get("문의내용") || "").trim();

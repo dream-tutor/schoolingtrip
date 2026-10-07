@@ -117,9 +117,9 @@
         <div><span class="lb">연락처 <b class="req">*</b></span><div class="row"><select name="연락처앞" aria-label="연락처 앞자리"><option>010</option><option>011</option><option>016</option><option>017</option><option>018</option><option>019</option></select><input type="tel" name="연락처" required inputmode="numeric" placeholder="1234-5678" aria-label="연락처 뒷자리"></div></div>
       </div>
       <div><span class="lb">학년</span><div class="row"><select name="학교급" aria-label="학교급" style="flex:1"><option value="">선택</option><option>초등</option><option>중등</option><option>고등</option><option>기타</option></select><select name="학년수" aria-label="학년" style="flex:1" disabled><option value="">학년</option></select></div></div>
-      <label>관심 과정<select name="관심과정"><option value="">선택해 주세요</option><optgroup label="2027 겨울 캠프"><option value="말레이시아 래플즈 영어캠프 4주">말레이시아 래플즈 영어캠프 4주</option><option value="필리핀 클락 1:1 영어캠프 4주">필리핀 클락 1:1 영어캠프 4주</option><option value="캐나다 공립학교 스쿨링 3주">캐나다 공립학교 스쿨링 3주</option><option value="캐나다 사립학교 스쿨링 7주">캐나다 사립학교 스쿨링 7주</option><option value="뉴질랜드 와이우쿠 3·4·7주">뉴질랜드 와이우쿠 3·4·7주</option><option value="일본 교토 일본어 연수 2주">일본 교토 일본어 연수 2주</option></optgroup><optgroup label="유학·진학"><option value="뉴질랜드 중·고등 유학">뉴질랜드 중·고등 유학</option><option value="캐나다 관리형 중·고등 유학">캐나다 관리형 중·고등 유학</option><option value="세인트폴 대치 아카데미">세인트폴 대치 아카데미</option><option value="미국·캐나다 대학 토플면제교육원">미국·캐나다 대학 토플면제교육원</option><option value="미국 교환학생">미국 교환학생</option><option value="미국 사립 기숙학교 EF Academy">미국 사립 기숙학교 EF Academy</option><option value="해외 대학 입학 컨설팅">해외 대학 입학 컨설팅</option><option value="세인트폴 아메리칸 스쿨 클락">세인트폴 아메리칸 스쿨 클락</option></optgroup><option value="여름캠프 사전 상담">여름캠프 사전 상담</option><option value="추천 받고 싶어요">추천 받고 싶어요</option></select></label>
+      <label>관심 과정<select name="관심과정"><option value="">선택해 주세요</option><optgroup label="2027 겨울 캠프"><option value="말레이시아 래플즈 영어캠프 4주">말레이시아 래플즈 영어캠프 4주</option><option value="필리핀 클락 1:1 영어캠프 4주">필리핀 클락 1:1 영어캠프 4주</option><option value="캐나다 공립학교 스쿨링 3주">캐나다 공립학교 스쿨링 3주</option><option value="캐나다 사립학교 스쿨링 7주">캐나다 사립학교 스쿨링 7주</option><option value="뉴질랜드 와이우쿠 3·4·7주">뉴질랜드 와이우쿠 3·4·7주</option><option value="일본 교토 일본어 연수 2주" data-lang="일본어">일본 교토 일본어 연수 2주</option></optgroup><optgroup label="유학·진학"><option value="뉴질랜드 중·고등 유학">뉴질랜드 중·고등 유학</option><option value="캐나다 관리형 중·고등 유학">캐나다 관리형 중·고등 유학</option><option value="세인트폴 대치 아카데미">세인트폴 대치 아카데미</option><option value="미국·캐나다 대학 토플면제교육원">미국·캐나다 대학 토플면제교육원</option><option value="미국 교환학생">미국 교환학생</option><option value="미국 사립 기숙학교 EF Academy">미국 사립 기숙학교 EF Academy</option><option value="해외 대학 입학 컨설팅">해외 대학 입학 컨설팅</option><option value="세인트폴 아메리칸 스쿨 클락">세인트폴 아메리칸 스쿨 클락</option></optgroup><option value="여름캠프 사전 상담">여름캠프 사전 상담</option><option value="추천 받고 싶어요">추천 받고 싶어요</option></select></label>
       <div class="fm-2">
-        <label>영어 수준<select name="영어수준"><option value="">선택</option><option>이제 막 배우는 단계</option><option>짧은 문장으로 대화</option><option>일상 대화 가능</option><option>자유롭게 대화</option></select></label>
+        <label><span id="langLab">외국어 수준</span><select name="영어수준"><option value="">선택</option><option>이제 막 배우는 단계</option><option>짧은 문장으로 대화</option><option>일상 대화 가능</option><option>자유롭게 대화</option></select></label>
         <label>해외 경험<select name="해외경험"><option value="">선택</option><option>없음</option><option>가족 여행만</option><option>캠프·어학연수 경험</option><option>해외 거주·유학 경험</option></select></label>
       </div>
       <div><span class="lb">상담 받고 싶은 내용 <em class="sub">여러 개 선택 가능</em></span><div class="chips"><label><input type="checkbox" name="궁금한점" value="일정·비용"><span>일정·비용</span></label><label><input type="checkbox" name="궁금한점" value="현지 학교 수업"><span>현지 학교 수업</span></label><label><input type="checkbox" name="궁금한점" value="홈스테이·숙소"><span>홈스테이·숙소</span></label><label><input type="checkbox" name="궁금한점" value="인솔·현지 관리"><span>인솔·현지 관리</span></label><label><input type="checkbox" name="궁금한점" value="항공·출국 준비"><span>항공·출국 준비</span></label><label><input type="checkbox" name="궁금한점" value="유학 연계"><span>유학 연계</span></label></div></div>
@@ -128,7 +128,7 @@
         <label class="agree"><input type="checkbox" name="개인정보동의" value="동의" checked required><span>개인정보 수집·이용에 동의합니다 <em class="sub">(필수)</em></span></label>
         <details class="agree-more"><summary>수집 항목·이용 목적·보유 기간 보기</summary>
           <ul>
-            <li><b>수집 항목</b>학생 이름, 연락처, 학년, 관심 과정, 영어 수준, 해외 경험, 상담 희망 내용, 문의 내용, 접수 시각과 접수한 페이지 주소</li>
+            <li><b>수집 항목</b>학생 이름, 연락처, 학년, 관심 과정, 외국어 수준, 해외 경험, 상담 희망 내용, 문의 내용, 접수 시각과 접수한 페이지 주소</li>
             <li><b>이용 목적</b>캠프·유학 상담 안내와 연락</li>
             <li><b>보유 기간</b>상담이 끝난 뒤 6개월 이내에 파기</li>
             <li><b>저장·전달</b>접수 내용은 구글 스프레드시트에 저장되고 상담 담당자 메일로 전달됩니다. 전달 항목은 위 수집 항목과 같습니다.</li>
@@ -149,6 +149,6 @@
   </div>
 </div>
 <script defer src="https://xn--vb0by3y5wigqb.com/t.js" data-site="schoolingtrip"></script>
-<script defer src="app.js?v=41c8a2b9"></script>
+<script defer src="app.js?v=c71bd1f8"></script>
 </body>
 </html>
