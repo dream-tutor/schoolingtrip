@@ -6,13 +6,34 @@
   <atom:link href="https://schoolingtrip.com/rss.xml" rel="self" type="application/rss+xml"/>
   <description>2027 겨울 해외캠프·유학 과정 안내. 캐나다 · 뉴질랜드 · 일본 · 말레이시아 · 필리핀.</description>
   <language>ko</language>
-  <lastBuildDate>Wed, 07 Oct 2026 09:00:00 +0900</lastBuildDate>
+  <lastBuildDate>Sun, 11 Oct 2026 09:00:00 +0900</lastBuildDate>
+  <item>
+    <title>해외캠프 안전 관리 · 신청 절차 · 환불 규정</title>
+    <link>https://schoolingtrip.com/safety.html</link>
+    <guid isPermaLink="true">https://schoolingtrip.com/safety.html</guid>
+    <pubDate>Sun, 11 Oct 2026 09:00:00 +0900</pubDate>
+    <description>홈스테이 검증, 인솔자와 현지 관리자, 네이버 밴드 공유, 1억원 여행자보험, 3단계 규정, 환불 기준.</description>
+  </item>
+  <item>
+    <title>스쿨링트립 | 2027 겨울방학 해외캠프 · 스쿨링 · 중고등 유학</title>
+    <link>https://schoolingtrip.com/</link>
+    <guid isPermaLink="true">https://schoolingtrip.com/</guid>
+    <pubDate>Fri, 09 Oct 2026 09:00:00 +0900</pubDate>
+    <description>캐나다·뉴질랜드 스쿨링, 교토 일본어 연수, 말레이시아·필리핀 영어캠프. 2027 겨울 여섯 과정의 일정과 비용.</description>
+  </item>
   <item>
     <title>캐나다 사립학교 스쿨링 7주 | 일정·비용·대상</title>
     <link>https://schoolingtrip.com/camp-canada-7week.html</link>
     <guid isPermaLink="true">https://schoolingtrip.com/camp-canada-7week.html</guid>
     <pubDate>Wed, 07 Oct 2026 09:00:00 +0900</pubDate>
     <description>캐나다 사립학교 스쿨링 7주. 2027.1.9 ~ 2.27, 초4 ~ 중2, 1,290만원(항공 별도). 사립학교 스쿨링 · 홈스테이.</description>
+  </item>
+  <item>
+    <title>스쿨링 뜻, 영어캠프와 다른 점</title>
+    <link>https://schoolingtrip.com/term-schooling.html</link>
+    <guid isPermaLink="true">https://schoolingtrip.com/term-schooling.html</guid>
+    <pubDate>Sun, 04 Oct 2026 09:00:00 +0900</pubDate>
+    <description>스쿨링 뜻, 영어캠프와 다른 점, 버디와 시간표, 스쿨링 과정 세 곳(캐나다 3주·7주, 뉴질랜드) 안내.</description>
   </item>
   <item>
     <title>캐나다 공립학교 스쿨링 3주 | 일정·비용·대상</title>
@@ -43,6 +64,13 @@
     <description>방학 해외캠프에서 중·고등 유학, 대학 진학까지. 학교·교육청과 직접 제휴한 과정만 안내합니다.</description>
   </item>
   <item>
+    <title>해외캠프·유학 용어 풀이</title>
+    <link>https://schoolingtrip.com/terms.html</link>
+    <guid isPermaLink="true">https://schoolingtrip.com/terms.html</guid>
+    <pubDate>Fri, 02 Oct 2026 09:00:00 +0900</pubDate>
+    <description>스쿨링, ESOL, 버디, 가디언, UM 서비스, NCEA, OSSD. 해외캠프·유학 안내문에 나오는 용어 풀이.</description>
+  </item>
+  <item>
     <title>2027 겨울방학 해외캠프 6개 과정 일정·비용 비교</title>
     <link>https://schoolingtrip.com/camps.html</link>
     <guid isPermaLink="true">https://schoolingtrip.com/camps.html</guid>
@@ -64,6 +92,13 @@
     <description>통학하며 다니는 8~12학년 과정. 전 과목 영어 수업, 8월·1월 학기, 전교 95명, 연 학비 2,920만원.</description>
   </item>
   <item>
+    <title>해외캠프·유학 가이드</title>
+    <link>https://schoolingtrip.com/guide.html</link>
+    <guid isPermaLink="true">https://schoolingtrip.com/guide.html</guid>
+    <pubDate>Sun, 27 Sep 2026 09:00:00 +0900</pubDate>
+    <description>해외캠프·스쿨링·중고등 유학 가이드. 첫 캠프 학년, 총비용, 홈스테이, 항공, 환불, 학년별 과정.</description>
+  </item>
+  <item>
     <title>뉴질랜드 와이우쿠 3·4·7주 | 일정·비용·대상</title>
     <link>https://schoolingtrip.com/camp-newzealand.html</link>
     <guid isPermaLink="true">https://schoolingtrip.com/camp-newzealand.html</guid>
@@ -76,13 +111,6 @@
     <guid isPermaLink="true">https://schoolingtrip.com/camp-japan.html</guid>
     <pubDate>Wed, 23 Sep 2026 09:00:00 +0900</pubDate>
     <description>일본 교토 일본어 연수 2주. 2027.2.14 ~ 2.27 · 13박 14일, 중2 ~ 고2, 594만원(왕복 항공 포함).</description>
-  </item>
-  <item>
-    <title>스쿨링트립 | 2027 겨울방학 해외캠프 · 스쿨링 · 중고등 유학</title>
-    <link>https://schoolingtrip.com/</link>
-    <guid isPermaLink="true">https://schoolingtrip.com/</guid>
-    <pubDate>Mon, 21 Sep 2026 09:00:00 +0900</pubDate>
-    <description>캐나다·뉴질랜드 스쿨링, 교토 일본어 연수, 말레이시아·필리핀 영어캠프. 2027 겨울 여섯 과정의 일정과 비용.</description>
   </item>
   <item>
     <title>필리핀 클락 1:1 영어캠프 4주 | 일정·비용·대상</title>
@@ -113,18 +141,18 @@
     <description>고3·재수생·검정고시생 대상. 국내 6개월 공인 ESL 뒤 TOEFL·SAT·내신 없이 파트너 대학 진학. 2027년 1월 개강.</description>
   </item>
   <item>
-    <title>해외캠프 안전 관리 · 신청 절차 · 환불 규정</title>
-    <link>https://schoolingtrip.com/safety.html</link>
-    <guid isPermaLink="true">https://schoolingtrip.com/safety.html</guid>
-    <pubDate>Mon, 21 Sep 2026 09:00:00 +0900</pubDate>
-    <description>홈스테이 검증, 인솔자와 현지 관리자, 네이버 밴드 공유, 1억원 여행자보험, 3단계 규정, 환불 기준.</description>
-  </item>
-  <item>
     <title>해외캠프·스쿨링 자주 묻는 질문</title>
     <link>https://schoolingtrip.com/faq.html</link>
     <guid isPermaLink="true">https://schoolingtrip.com/faq.html</guid>
     <pubDate>Mon, 21 Sep 2026 09:00:00 +0900</pubDate>
     <description>영어를 못해도 되는지, 홈스테이 배정, 휴대폰, 용돈, 유학 연장까지. 과정별로 답이 다른 질문도 따로 정리.</description>
+  </item>
+  <item>
+    <title>첫 해외캠프, 몇 학년부터 보낼 수 있나</title>
+    <link>https://schoolingtrip.com/ask-first-age.html</link>
+    <guid isPermaLink="true">https://schoolingtrip.com/ask-first-age.html</guid>
+    <pubDate>Mon, 21 Sep 2026 09:00:00 +0900</pubDate>
+    <description>해외캠프 첫 참가 학년, 과정별 대상 학년표, 초3·초4가 갈 수 있는 과정, 보내기 전 확인할 세 가지, 무료 상담.</description>
   </item>
 </channel>
 </rss>

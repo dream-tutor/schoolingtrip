@@ -541,6 +541,18 @@ table{border-collapse:collapse;width:100%}
 .vs dl{display:grid;grid-template-columns:86px 1fr;gap:10px 16px;font-size:15.5px;margin:16px 0 24px;line-height:1.6}
 .vs dt{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;color:var(--ink-2);padding-top:4px}
 @media(max-width:820px){.vs{grid-template-columns:1fr}}
+/* 글 목록 줄 — 가이드 허브·'이어서 볼 글'·과정 페이지의 '더 자세히'. 줄 전체가 링크다 */
+.lk{border-bottom:1.5px solid var(--ink)}
+.lk-r{display:grid;grid-template-columns:150px minmax(0,1fr) 28px;gap:6px 26px;align-items:baseline;padding:22px 0;border-top:1px solid var(--line);transition:padding .35s var(--ease),background .3s}
+.lk-r:first-child{border-top:1.5px solid var(--ink)}
+.lk-r:hover{padding-left:14px;padding-right:14px;background:var(--butter)}
+.lk-k{font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--ink-2);text-transform:uppercase;line-height:1.5}
+.lk-r h3{font-size:19.5px;font-weight:800;letter-spacing:-.035em;line-height:1.4}
+.lk-r p{font-size:15px;color:var(--ink-2);margin-top:3px;line-height:1.6}
+.lk-a{justify-self:end;font-size:20px;transition:transform .35s var(--ease)}
+.lk-r:hover .lk-a{transform:translateX(4px)}
+.lk-r:focus-visible{outline:2px solid var(--tangerine);outline-offset:3px}
+@media(max-width:760px){.lk-r{grid-template-columns:minmax(0,1fr) 22px;gap:3px 14px;padding:17px 0}.lk-k{grid-column:1/-1;font-size:11px}.lk-r h3{font-size:17.5px}.lk-r p{font-size:14.5px}}
 .tags{display:flex;flex-wrap:wrap;gap:8px}
 .tags li{font-size:14.5px;font-weight:600;padding:9px 16px;border-radius:999px;background:var(--paper-2)}
 /* 탭 영역 — 소개 페이지 과정 알약 14개(껍데기 43px / 눌리는 곳 17px), 비교표 과정 이름 칸 6개(126~219px / 19px) (2026-09-23)

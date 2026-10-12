@@ -6,6 +6,7 @@ const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
 const { SITE, CAMPS, CAMP_FIT, ABOUT, DESTINATIONS, FINDER, COMMON, STUDY, STUDY_PROCEDURE, STPAUL, ELC, PATHWAYS, REVIEWS } = require("./data.js");
+const ARTICLES = require("./content");
 
 const OUT = path.join(__dirname, "docs");
 const ASSETS = path.join(__dirname, "assets");
@@ -96,6 +97,7 @@ const NAV = [
   ["stpaul.html", "세인트폴 대치", "In Seoul", "stpaul"],
   ["college.html", "대학 진학", "College", "college"],
   ["safety.html", "안전·운영", "Care", "safety"],
+  ["guide.html", "가이드", "Guide", "guide"],
   ["faq.html", "FAQ", "Questions", "faq"],
 ];
 const absUrl = (file) => `${SITE.baseUrl}/${file === "index.html" ? "" : file}`;
@@ -179,7 +181,7 @@ function footer(dateLabel) {
       </div>
       <div><h3>Camps</h3><ul>${CAMPS.map((c) => `<li><a href="${c.slug}.html">${c.short}</a></li>`).join("")}<li><a href="camps.html#compare">여섯 과정 비교</a></li></ul></div>
       <div><h3>Next gate</h3><ul><li><a href="study.html">중·고등 유학 안내</a></li>${STUDY.map((s) => `<li><a href="${s.slug}.html">${s.name}</a></li>`).join("")}<li><a href="stpaul.html">${STPAUL.name}</a></li><li><a href="college.html">대학 토플면제교육원</a></li><li><a href="pathway.html">교환학생 · 기숙학교 · 컨설팅</a></li></ul></div>
-      <div><h3>Info</h3><ul><li><a href="safety.html">안전·운영 원칙</a></li><li><a href="safety.html#refund">환불 규정</a></li><li><a href="faq.html">자주 묻는 질문</a></li><li><a href="about.html">${BRAND} 소개</a></li></ul></div>
+      <div><h3>Info</h3><ul><li><a href="safety.html">안전·운영 원칙</a></li><li><a href="safety.html#refund">환불 규정</a></li><li><a href="guide.html">캠프·유학 가이드</a></li><li><a href="terms.html">용어 풀이</a></li><li><a href="faq.html">자주 묻는 질문</a></li><li><a href="about.html">${BRAND} 소개</a></li></ul></div>
     </div>
     <p class="ft-fine">${josa(BRAND, "은", "는")} 해외캠프와 유학 과정을 안내하고 상담을 연결하는 페이지입니다. 일정과 비용은 항공·현지 사정에 따라 달라질 수 있습니다. 문의는 상담 신청 양식을 이용해 주세요.<br>${SITE.source}<br>광고전화는 정중히 사절합니다.<span class="ft-date">정보 업데이트 ${dateLabel}</span></p>
   </div>
@@ -414,7 +416,7 @@ function buildHome() {
   <div class="wrap-n">
     <div class="sh one"><div class="rv">${eb("FAQ", "07")}<h2>자주 묻는 질문</h2></div></div>
     <div class="rv d1">${faqHtml(COMMON.faq.slice(0, 5))}</div>
-    <p class="rv" style="margin-top:36px"><a class="more" href="faq.html">질문 전체 보기 <span>→</span></a></p>
+    <p class="rv" style="margin-top:36px"><a class="more" href="faq.html">질문 전체 보기 <span>→</span></a> &nbsp; <a class="more" href="guide.html">질문별 긴 글은 가이드 <span>→</span></a></p>
   </div>
 </section>
 
@@ -490,6 +492,7 @@ ${block("Good fit", "이런 학생에게 맞습니다", `<ul class="pts">${(CAMP
 ${iti}
 ${block("Fee", "참가비에 든 것, 안 든 것", `<div class="duo"><div class="box"><h3><i>+</i>포함</h3><ul>${listItems(c.includes)}</ul></div><div class="box minus"><h3><i>−</i>불포함</h3><ul>${listItems(c.excludes)}</ul></div></div><div class="note">${promoOf(c) ? `<b data-promo-until="${promoOf(c).until}">할인</b><span data-promo-until="${promoOf(c).until}">${promoOf(c).detail}</span>` : ""}<b>참가비</b><span>${c.priceFull || c.price} — ${c.priceNote}</span><b>용돈</b><span>${c.pocket}</span><b>그다음</b><span>${c.extend}</span></div>`, iti ? "tight" : "bg-paper sheet")}
 ${c.safety ? block("Safety", "이 과정의 안전 관리", `<div class="box"><ul>${c.safety.map((s) => `<li>${s}</li>`).join("")}</ul></div><p style="margin-top:24px"><a class="more" href="safety.html">공통 안전 원칙과 환불 규정 <span>→</span></a></p>`, "tight") : ""}
+${kidsBlock(c.slug, `${c.short} 더 자세히`)}
 ${block("Q&A", "이 과정에서 자주 나오는 질문", `${faqHtml(faqs)}<p style="margin-top:30px"><a class="more" href="faq.html">질문 전체 보기 <span>→</span></a></p>`, "tight")}
 <section class="blk tight"><div class="wrap"><div class="sh"><div class="rv">${eb("Also boarding", "")}<h2>같이 보면 좋은 과정</h2></div></div><div class="rows">${more.map((x) => `<a class="rowc rv" href="${x.slug}.html"><span class="iso">${x.iso}<small>${fmtBoard(x.depart)} ${wdOf(x.depart)}</small></span><div><h3>${x.name}</h3><p>${x.tag}</p></div><dl><dt>WHEN</dt><dd>${x.period}</dd><dt>WHO</dt><dd>${x.target}</dd></dl><span class="pr">${x.price}<small>${x.air}</small></span><span class="go" aria-hidden="true">→</span></a>`).join("")}</div></div></section>
 ${ctaBlock("남은 자리부터 확인해 드립니다", "정원이 학년별로 나뉘어 있는 과정이 있습니다. 연락처를 남겨 주시면 지금 상황을 확인해 드리겠습니다.", c.name)}`;
@@ -527,6 +530,7 @@ function buildStudy() {
 </div></section>
 ${block("Which one", "어느 쪽이 맞을까", `<div class="prose"><p><strong>짧게 시작해 보고 싶다면 뉴질랜드입니다.</strong> 연 4텀 학제라 10주 한 텀만 다녀 본 뒤에 이어 갈지 정할 수 있습니다. 유학생 비율을 5% 아래로 유지하는 학교여서 교실에 들어가면 주변이 거의 현지 학생입니다.</p><p><strong>관리가 촘촘한 쪽을 원한다면 캐나다입니다.</strong> 현지 관리 선생님이 법적 가디언을 맡고 매달 리포트를 보냅니다. 과목 선택과 졸업 요건(필수 19학점, 봉사 40시간, OSSLT)까지 챙기기 때문에 졸업과 대학 진학을 목표로 하는 중·상위권 학생에게 권합니다.</p><p>두 곳 모두 겨울캠프가 열리는 학교와 교육청입니다. 결정을 못 하겠다면 <a href="camp-newzealand.html">뉴질랜드 캠프</a>나 <a href="camp-canada-3week.html">캐나다 3주 스쿨링</a>을 먼저 다녀오는 것이 가장 확실한 비교입니다.</p></div>`, "bg-paper sheet")}
 ${block("Steps", "진행 순서", `<ol class="steps line">${STUDY_PROCEDURE.map((s) => `<li><h3>${s}</h3></li>`).join("")}</ol>`, "tight")}
+${kidsBlock("study", "유학 준비, 더 자세히")}
 ${ctaBlock("한 텀만 먼저 다녀올 수도 있습니다", "뉴질랜드는 10주 단위라 한 텀 해 보고 결정해도 됩니다. 성적과 학년을 보고 시작 시점을 같이 잡겠습니다.", "추천 받고 싶어요")}`;
   page({ file: "study.html", title: `뉴질랜드·캐나다 중고등 유학 비교 — 비용·학제·관리 | ${BRAND}`, desc: "뉴질랜드 Waiuku College 연 3,200만원, 캐나다 나이아가라 교육청 연 4,250만원. 학제·졸업장·관리 방식 비교.", body, crumbs: trail, cur: "study" });
 }
@@ -544,6 +548,7 @@ ${block("School", "어떤 학교인가", `<div class="prose"><p>${s.schoolDesc}<
 ${block("Care", "현지에서 누가 챙기나", `<ul class="pts">${s.manage.map((m, i) => `<li style="grid-template-columns:60px 1fr"><span class="n">${pad(i + 1)}</span><p style="grid-column:2;font-size:18px;color:inherit">${m}</p></li>`).join("")}</ul>`, "bg-forest sheet")}
 ${block("Cost", "비용과 학기", `<div class="duo"><div class="box"><h3><i>+</i>${s.price}에 포함</h3><ul>${listItems(s.includes)}</ul></div><div class="box"><h3>Terms</h3><h4>${s.unit}</h4><p>${s.terms}</p></div></div><div class="note"><b>별도 비용</b><span>${s.priceNote}</span>${promoPair(s.promo)}<b>방학과 그 뒤</b><span>${s.note}</span></div>`, "bg-paper sheet")}
 ${block("Steps", "진행 순서", `<ol class="steps line">${STUDY_PROCEDURE.map((x) => `<li><h3>${x}</h3></li>`).join("")}</ol><p style="margin-top:34px"><a class="more" href="${s.country === "canada" ? "camp-canada-3week.html" : "camp-newzealand.html"}">먼저 겨울캠프로 다녀와 보기 <span>→</span></a></p>`, "tight")}
+${kidsBlock("study", "유학 준비, 더 자세히")}
 ${ctaBlock("성적표부터 같이 보겠습니다", "지금 성적으로 몇 학년에 들어갈 수 있는지, 서류는 무엇부터 준비해야 하는지 짚어 드리겠습니다.", s.name)}`;
   page({ file: `${s.slug}.html`, title: `${s.name} | ${s.en} · ${s.price} | ${BRAND}`, desc: `${s.tag}`.slice(0, 80), body, crumbs: trail, course: s.name, cur: "study" });
 }
@@ -573,6 +578,7 @@ ${block("A day", "하루와 방과 후", `<div class="duo"><div class="box"><h3>
 ${block("Colleges", "졸업생이 간 대학", `<ul class="pts">${STPAUL.results.map((r, i) => `<li style="grid-template-columns:60px 1fr"><span class="n">${pad(i + 1)}</span><p style="grid-column:2;font-size:18px;color:inherit">${r}</p></li>`).join("")}</ul><p class="fine">학교 발표 자료 기준입니다.</p>`, "bg-forest sheet")}
 ${block("Q&A", "자주 나오는 질문", faqHtml(faqs), "bg-paper sheet")}
 ${block("Compare", "해외 유학과 견주어 보면", `<div class="prose"><p>집에서 다니기 때문에 홈스테이 적응이나 현지 생활 관리에 드는 부담이 없습니다. 대신 영어를 쓰는 환경은 학교 안으로 한정됩니다. 생활까지 영어권에서 해 보고 싶다면 <a href="study.html">뉴질랜드·캐나다 유학</a>이 맞고, 부모 곁에서 미국 대학 입시를 준비하고 싶다면 이쪽이 맞습니다.</p></div>`, "tight")}
+${kidsBlock("stpaul", `${STPAUL.name} 더 자세히`)}
 ${ctaBlock("입학 전에 상담부터 받으세요", "편입은 학기마다 자리가 정해져 있습니다. 학년과 영어 수준을 보고 가능한 시점을 알려 드리겠습니다.", STPAUL.name)}`;
   page({ file: "stpaul.html", title: `${STPAUL.name} | 대치동 8~12학년 영어 수업 과정 | ${BRAND}`, desc: "통학하며 다니는 8~12학년 과정. 전 과목 영어 수업, 8월·1월 학기, 전교 95명, 연 학비 2,920만원.", body, crumbs: trail, course: STPAUL.name, cur: "stpaul", ld: [faqLd(faqs)] });
 }
@@ -588,6 +594,7 @@ ${block("About", ELC.name, `<div class="prose"><p>${ELC.intro}</p><p><strong>대
 ${block("How it works", "이 길이 가능한 이유", `<ul class="pts">${ELC.points.map(([t, p], i) => `<li><span class="n">${pad(i + 1)}</span><h3>${t}</h3><p>${p}</p></li>`).join("")}</ul>`, "bg-forest sheet")}
 ${block("Intakes", "연 4회 전형", `<p class="hs-hint hs-1096">대학 출발 시기는 표를 옆으로 밀면 나옵니다.</p><div class="tw" tabindex="0" role="region" aria-label="연 4회 전형표, 칸 4개"><table class="tb"><thead><tr><th>전형</th><th>입학·개강</th><th>수강 기간</th><th>대학 출발</th></tr></thead><tbody>${ELC.intakes.map((r) => `<tr><th>${r[0]}</th><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join("")}</tbody></table></div>`, "bg-paper sheet")}
 ${block("Admission", "선발 과정과 서류", `<div class="duo"><div class="box"><h3>Process</h3><ul>${ELC.admission.map((x) => `<li>${x}</li>`).join("")}</ul></div><div class="box"><h3>Documents</h3><ul>${ELC.docs.map((x) => `<li>${x}</li>`).join("")}</ul></div></div><div class="note"><b>비용</b><span>${ELC.price}</span></div>`, "tight")}
+${kidsBlock("college", "대학 진학, 더 자세히")}
 ${ctaBlock("지금 성적으로 갈 수 있는 대학부터", "고3이냐 재수냐 검정고시냐에 따라 길이 다릅니다. 해당되는 쪽으로 대학과 전형을 추려 드리겠습니다.", ELC.name)}`;
   page({ file: "college.html", title: `토플 없이 미국·캐나다 대학 진학 — 국내 6개월 ESL 과정 | ${BRAND}`, desc: "고3·재수생·검정고시생 대상. 국내 6개월 공인 ESL 뒤 TOEFL·SAT·내신 없이 파트너 대학 진학. 2027년 1월 개강.", body, crumbs: trail, course: ELC.name, cur: "college" });
 }
@@ -599,6 +606,7 @@ function buildPathway() {
   const trail = [HOME, { label: "그 밖의 길" }];
   const body = `${pageHero({ trail, kicker: "More gates", h1: "교환학생 · 기숙학교<br>· 입학 컨설팅", lead: "캠프와 관리형 유학 말고도 길이 있습니다. 비용도 기간도 생활 방식도 서로 많이 달라 하나씩 따로 봐야 합니다.", art: "globe" })}
 ${PATHWAYS.map((p, i) => block(p.en, p.name, `<p class="mono" style="margin-bottom:18px;opacity:.7">${p.kicker}</p>${promoLive(p.promo) ? `<p data-promo-until="${p.promo.until}">${promoChip(p.promo)}</p>` : ""}<div class="prose">${p.body.map((t) => `<p>${t}</p>`).join("")}</div>${p.facts.length ? `<div class="box" style="margin-top:30px"><dl style="display:grid;grid-template-columns:minmax(110px,auto) 1fr;gap:14px 24px">${p.facts.map(([k, v]) => `<dt style="font-weight:800;letter-spacing:-.02em">${k}</dt><dd style="color:var(--ink-2)">${v}</dd>`).join("")}${promoPair(p.promo, ["dt", "dd"])}</dl></div>` : ""}<p style="margin-top:28px"><a class="btn btn-o btn-s" href="#consult" data-course="${esc(p.name)}">${p.name} 상담 <span class="ar">→</span></a></p>`, i % 2 ? "bg-paper2 sheet" : i ? "bg-paper sheet" : "", p.id)).join("\n")}
+${kidsBlock("pathway", "길마다 더 자세히", "bg-paper sheet")}
 ${ctaBlock("어느 길인지부터 같이 정합니다", "교환학생이 맞는지 유학이 맞는지, 그것부터 말씀드리겠습니다.", "추천 받고 싶어요")}`;
   page({ file: "pathway.html", title: `미국 교환학생 · EF Academy · 해외 대학 입학 컨설팅 | ${BRAND}`, desc: "미국 공립 교환학생 1년, 캘리포니아·뉴욕 사립 기숙학교 EF Academy, 성적표에서 시작하는 대학 컨설팅, 세인트폴 클락.", body, crumbs: trail });
 }
@@ -648,6 +656,152 @@ function build404() {
 }
 
 // ============================================================
+// 글 페이지 (content/pages-*.js) — 질문형 가이드·과정별 세부·비교·유학 세부·학년별·용어
+//   원고 규칙은 content/WRITING.md. 틀·링크·검사는 전부 여기서 한다.
+// ============================================================
+const KIDS = (parent) => ARTICLES.filter((a) => a.parent === parent);
+const artFile = (a) => `${a.slug}.html`;
+const GROUP_LABEL = { ask: "가이드", camp: "과정 세부", pick: "고르기", study: "유학", stpaul: STPAUL.name, college: "대학 진학", path: "그 밖의 길", grade: "학년별", term: "용어" };
+// 가이드 허브의 묶음 순서
+const ASK_TOPICS = ["처음 정할 때", "현지 생활", "돈·서류·항공", "나라와 수업"];
+
+// {{camp-malaysia.price}} 같은 토큰 — 참가비·기간·마감일은 data.js 값을 그대로 끌어온다(시즌이 바뀌어도 글이 어긋나지 않게).
+const TOKEN_SRC = () => {
+  const m = {};
+  CAMPS.forEach((c) => (m[c.slug] = { ...c, deadlineKo: fmtKo(c.deadline), departKo: fmtKo(c.depart), backKo: fmtKo(c.back), priceAll: c.priceFull || c.price }));
+  STUDY.forEach((s) => (m[s.slug] = s));
+  m.stpaul = STPAUL;
+  m.college = { ...ELC, open: ELC.schedule[0][1], seats: ELC.schedule[4][1] };
+  m.site = { season: SITE.season, brand: BRAND };
+  return m;
+};
+let TOK = null;
+const tokErrors = [];
+function fill(s, where) {
+  if (typeof s !== "string") return s;
+  TOK = TOK || TOKEN_SRC();
+  return s.replace(/\{\{\s*([a-z0-9-]+)\.([A-Za-z]+)\s*\}\}/g, (all, k, f) => {
+    const v = TOK[k] && TOK[k][f];
+    if (typeof v !== "string") { tokErrors.push(`${where}: 알 수 없는 토큰 ${all}`); return all; }
+    return v;
+  });
+}
+const deepFill = (v, where) => (typeof v === "string" ? fill(v, where) : Array.isArray(v) ? v.map((x) => deepFill(x, where)) : v && typeof v === "object" ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, k === "slug" || k === "related" || k === "camps" || k === "parent" || k === "_file" ? x : deepFill(x, where)])) : v);
+
+const linkRows = (list) => `<div class="lk">${list.map((x) => `<a class="lk-r rv" href="${x.href}"><span class="lk-k">${x.k}</span><div><h3>${x.t}</h3>${x.d ? `<p>${x.d}</p>` : ""}</div><span class="lk-a" aria-hidden="true">→</span></a>`).join("")}</div>`;
+const artRow = (a) => ({ href: artFile(a), k: a.topic || GROUP_LABEL[a.group] || "", t: a.title, d: a.desc });
+const campRows = (slugs) => `<div class="rows">${slugs.map(campBy).filter(Boolean).map((x) => `<a class="rowc rv" href="${x.slug}.html"><span class="iso">${x.iso}<small>${fmtBoard(x.depart)} ${wdOf(x.depart)}</small></span><div><h3>${x.name}</h3><p>${x.tag}</p></div><dl><dt>WHEN</dt><dd>${x.period}</dd><dt>WHO</dt><dd>${x.target}</dd><dt>APPLY BY</dt><dd data-deadline="${x.deadline}" data-closed="마감 · 문의">${fmtKo(x.deadline)}</dd></dl><span class="pr">${x.price}<small>${x.air}</small></span><span class="go" aria-hidden="true">→</span></a>`).join("")}</div>`;
+// 부모 페이지(과정·유학·세인트폴·대학 진학)에 붙는 '더 자세히' 블록
+const kidsBlock = (parent, h2 = "더 자세히 보기", cls = "tight") => {
+  const k = KIDS(parent);
+  return k.length ? block("Read more", h2, linkRows(k.map(artRow)), cls) : "";
+};
+
+function secInner(s) {
+  const gap = (h) => (h ? ` style="margin-top:34px"` : "");
+  let h = "";
+  if (s.p) h += `<div class="prose">${s.p.map((t) => `<p>${t}</p>`).join("")}</div>`;
+  if (s.table) h += `<div class="tw"${gap(h)}${s.table.narrow ? "" : ` tabindex="0" role="region" aria-label="${esc(s.table.label || s.h2)} 표, 칸 ${s.table.head.length}개"`}><table class="tb${s.table.narrow ? " narrow" : ""}"><thead><tr>${s.table.head.map((x) => `<th>${x}</th>`).join("")}</tr></thead><tbody>${s.table.rows.map((r) => `<tr>${r.map((x, i) => (i === 0 ? `<th>${x}</th>` : `<td>${x}</td>`)).join("")}</tr>`).join("")}</tbody></table></div>`;
+  if (s.pts) h += `<ul class="pts"${gap(h)}>${s.pts.map(([t, p], i) => `<li><span class="n">${pad(i + 1)}</span><h3>${t}</h3><p>${p}</p></li>`).join("")}</ul>`;
+  if (s.duo) h += `<div class="duo"${gap(h)}>${s.duo.map(([t, items]) => `<div class="box"><h4>${t}</h4><ul>${items.map((x) => `<li>${x}</li>`).join("")}</ul></div>`).join("")}</div>`;
+  if (s.list) h += `<div class="box"${gap(h)}><ul>${s.list.map((x) => `<li>${x}</li>`).join("")}</ul></div>`;
+  if (s.steps) h += `<ol class="steps"${gap(h)}>${s.steps.map(([t, p]) => `<li><h3>${t}</h3>${p ? `<p>${p}</p>` : ""}</li>`).join("")}</ol>`;
+  if (s.note) h += `<div class="note">${s.note.map(([k, v]) => `<b>${k}</b><span>${v}</span>`).join("")}</div>`;
+  if (s.after) h += `<div class="prose"${gap(h)}>${s.after.map((t) => `<p>${t}</p>`).join("")}</div>`;
+  return h;
+}
+
+function articleTrail(a) {
+  const t = [HOME];
+  if (a.group === "camp") { const c = campBy(a.parent); t.push({ label: "캠프", href: "camps.html" }, { label: c.short, href: `${c.slug}.html` }); }
+  else if (a.group === "study") t.push({ label: "유학", href: "study.html" });
+  else if (a.group === "stpaul") t.push({ label: STPAUL.name, href: "stpaul.html" });
+  else if (a.group === "college") t.push({ label: "대학 진학", href: "college.html" });
+  else if (a.group === "path") t.push({ label: "그 밖의 길", href: "pathway.html" });
+  else if (a.group === "term") t.push({ label: "가이드", href: "guide.html" }, { label: "용어 풀이", href: "terms.html" });
+  else t.push({ label: "가이드", href: "guide.html" });
+  t.push({ label: a.crumb || a.title });
+  return t;
+}
+const CUR_OF = { ask: "guide", pick: "guide", grade: "guide", term: "guide", camp: "camps", study: "study", stpaul: "stpaul", college: "college", path: "" };
+
+function buildArticle(raw) {
+  const a = deepFill(raw, raw.slug);
+  const trail = articleTrail(a);
+  const bySlug = (s) => ARTICLES.find((x) => x.slug === s);
+  // 관련 글 — 원고가 적은 것 + 같은 부모·같은 묶음에서 채워 넷까지
+  const rel = [];
+  const push = (x) => { if (x && x.href && !rel.some((r) => r.href === x.href) && x.href !== artFile(a)) rel.push(x); };
+  (a.related || []).forEach((s) => {
+    const art = bySlug(s);
+    if (art) return push(artRow(deepFill(art, art.slug)));
+    const c = campBy(s);
+    if (c) return push({ href: `${c.slug}.html`, k: "캠프", t: c.name, d: c.tag });
+    const st = STUDY.find((x) => x.slug === s);
+    if (st) return push({ href: `${st.slug}.html`, k: "유학", t: st.name, d: st.tag });
+    const fixed = { camps: ["캠프", `${SITE.season} 여섯 과정 비교`, "기간·대상·참가비·마감일을 한 표에 놓았습니다."], study: ["유학", "뉴질랜드·캐나다 중고등 유학", "학제·졸업장·관리 방식·연 비용 비교."], stpaul: ["서울", STPAUL.name, STPAUL.tag], college: ["대학 진학", ELC.name, ELC.tag], pathway: ["그 밖의 길", "교환학생 · 기숙학교 · 입학 컨설팅", "미국 교환학생 1년, EF Academy, 대학 입학 컨설팅."], safety: ["안전·운영", "안전 원칙 · 신청 절차 · 환불 규정", "홈스테이 검증, 인솔자, 보험, 환불 기준."], faq: ["FAQ", "자주 묻는 질문", "공통 질문과 과정별 질문."], guide: ["가이드", "캠프·유학 가이드 전체", "학부모가 자주 묻는 질문별 글 모음."], terms: ["용어", "용어 풀이", "스쿨링·ESOL·가디언처럼 낯선 말 풀이."] }[s];
+    if (fixed) return push({ href: `${s}.html`, k: fixed[0], t: fixed[1], d: fixed[2] });
+    if (process.env.CHECK_FILE && PLAN.has(s)) return;
+    relErrors.push(`${a.slug}: related '${s}' 를 찾을 수 없음`);
+  });
+  const pool = ARTICLES.filter((x) => x.slug !== a.slug && (a.parent ? x.parent === a.parent : x.group === a.group && x.topic === a.topic));
+  const start = pool.length ? seedHash(a.slug) % pool.length : 0;
+  for (let i = 0; i < pool.length && rel.length < 4; i++) { const x = pool[(start + i) % pool.length]; push(artRow(deepFill(x, x.slug))); }
+
+  const cls = (i) => (i === 0 ? "" : i % 2 ? "bg-paper2 sheet" : "bg-paper sheet");
+  const secs = a.sections.map((s, i) => block(s.en, s.h2, secInner(s), cls(i))).join("\n");
+  let n = a.sections.length;
+  const campsBlk = a.camps && a.camps.length ? `<section class="blk ${cls(n++)}"><div class="wrap"><div class="sh one"><div class="rv">${eb("Departures", "")}<h2>${a.campsTitle || "해당하는 과정"}</h2></div></div>${campRows(a.camps)}</div></section>` : "";
+  const faqBlk = a.faq && a.faq.length ? block("Q&A", "같이 나오는 질문", faqHtml(a.faq), cls(n++)) : "";
+  const relBlk = rel.length ? `<section class="blk ${cls(n++)}"><div class="wrap"><div class="sh one"><div class="rv">${eb("Keep reading", "")}<h2>이어서 볼 글</h2></div></div>${linkRows(rel)}</div></section>` : "";
+  const [ct, cp] = a.cta || ["궁금한 점은 상담에서 답합니다", "학년과 걱정되는 부분을 적어 주시면 그 부분부터 말씀드리겠습니다."];
+  const course = a.course || (a.group === "camp" ? campBy(a.parent).name : "");
+  const body = `${pageHero({ trail, kicker: a.kicker, h1: a.h1, lead: a.lead, art: a.art || "globe", cta: `<a class="btn btn-t" href="#consult"${course ? ` data-course="${esc(course)}"` : ""}>상담 신청 <span class="ar">→</span></a>${a.group === "camp" ? `<a class="btn btn-o" href="${a.parent}.html">${campBy(a.parent).short} 전체 보기</a>` : ""}` })}
+${secs}
+${campsBlk}
+${faqBlk}
+${relBlk}
+${ctaBlock(ct, cp, course)}`;
+  const { published, modified } = pageDates(artFile(a));
+  const ld = [{ "@context": "https://schema.org", "@type": "Article", headline: a.title, description: a.desc, datePublished: published, dateModified: modified, inLanguage: "ko-KR", author: { "@type": "Organization", name: BRAND, url: SITE.baseUrl + "/" }, publisher: { "@type": "Organization", name: BRAND, url: SITE.baseUrl + "/" }, mainEntityOfPage: absUrl(artFile(a)) }];
+  if (a.faq && a.faq.length) ld.push(faqLd(a.faq));
+  page({ file: artFile(a), title: `${a.title} | ${BRAND}`, desc: a.desc, body, crumbs: trail, course, cur: CUR_OF[a.group] || "", ld });
+}
+const relErrors = [];
+const PLAN = new Set(fs.existsSync(path.join(__dirname, "content", "plan.json")) ? require("./content/plan.json") : []);
+
+// 가이드 허브 — 질문형 글·고르기·학년별을 한 장에
+function buildGuideHub() {
+  const trail = [HOME, { label: "가이드" }];
+  const A = ARTICLES.map((x) => deepFill(x, x.slug));
+  const ask = A.filter((x) => x.group === "ask");
+  const topics = [...ASK_TOPICS, ...[...new Set(ask.map((x) => x.topic))].filter((t) => !ASK_TOPICS.includes(t))].filter((t) => ask.some((x) => x.topic === t));
+  const sec = (en, h2, list, i, sub = "") => (list.length ? `<section class="blk${i === 0 ? "" : i % 2 ? " bg-paper2 sheet" : " bg-paper sheet"}"><div class="wrap"><div class="sh${sub ? "" : " one"}"><div class="rv">${eb(en, pad(i + 1))}<h2>${h2}</h2></div>${sub ? `<p class="rv d1">${sub}</p>` : ""}</div>${linkRows(list.map((x) => ({ ...artRow(x), k: x.kicker })))}</div></section>` : "");
+  const EN = ["Before you decide", "Life abroad", "Money & papers", "Countries & classes", "More"];
+  let i = 0;
+  const blocks = topics.map((t, k) => sec(EN[k] || "More", t, ask.filter((x) => x.topic === t), i++));
+  blocks.push(sec("Pick one", "조건으로 고르기", A.filter((x) => x.group === "pick"), i++, "예산, 비울 수 있는 기간, 출발 달, 학교급으로 여섯 과정을 좁힙니다."));
+  blocks.push(sec("By grade", "학년별로 보기", A.filter((x) => x.group === "grade"), i++));
+  const terms = A.filter((x) => x.group === "term");
+  const termBlk = terms.length ? `<section class="blk ${i % 2 ? "bg-paper2 sheet" : "bg-paper sheet"}"><div class="wrap blk-h"><header class="rv"><span class="serif">Glossary</span><h2>낯선 말 풀이</h2></header><div class="rv d1"><ul class="tags">${terms.map((x) => `<li><a href="${artFile(x)}">${x.crumb || x.title}</a></li>`).join("")}</ul><p style="margin-top:28px"><a class="more" href="terms.html">용어 풀이 전체 <span>→</span></a></p></div></div></section>` : "";
+  const body = `${pageHero({ trail, kicker: "Guide", h1: "캠프·유학<br>가이드", lead: "몇 학년부터 보낼 수 있는지, 참가비 말고 얼마가 더 드는지, 아이가 아프면 누가 병원에 데려가는지. 상담에서 자주 나오는 질문과 그 답입니다.", art: "globe", cta: `<a class="btn btn-t" href="#consult">상담 신청 <span class="ar">→</span></a><a class="btn btn-o" href="faq.html">짧은 답은 FAQ</a>` })}
+${blocks.join("\n")}
+${termBlk}
+${ctaBlock("글에 없는 상황이라면", "아이 학년과 사정을 적어 주시면 해당되는 과정과 준비 순서를 말씀드리겠습니다.", "추천 받고 싶어요")}`;
+  page({ file: "guide.html", title: `해외캠프·유학 가이드 | ${BRAND}`, desc: "해외캠프·스쿨링·중고등 유학 가이드. 첫 캠프 학년, 총비용, 홈스테이, 항공, 환불, 학년별 과정.", body, crumbs: trail, cur: "guide" });
+}
+
+function buildTermsHub() {
+  const terms = ARTICLES.filter((x) => x.group === "term").map((x) => deepFill(x, x.slug));
+  if (!terms.length) return;
+  const trail = [HOME, { label: "가이드", href: "guide.html" }, { label: "용어 풀이" }];
+  const body = `${pageHero({ trail, kicker: "Glossary", h1: "용어 풀이", lead: "안내문과 상담에서 설명 없이 지나가기 쉬운 말들입니다. 스쿨링, ESOL, 가디언, UM 서비스처럼 처음 들으면 막히는 것부터 풀었습니다.", art: "newzealand" })}
+<section class="blk"><div class="wrap">${linkRows(terms.map((x) => ({ href: artFile(x), k: x.kicker, t: x.crumb || x.title, d: x.desc })))}</div></section>
+${ctaBlock("안내문에 모르는 말이 있다면", "문의 내용 칸에 그대로 적어 주세요. 그 과정에서는 어떤 뜻으로 쓰이는지 답하겠습니다.")}`;
+  page({ file: "terms.html", title: `해외캠프·유학 용어 풀이 | ${BRAND}`, desc: "스쿨링, ESOL, 버디, 가디언, UM 서비스, NCEA, OSSD. 해외캠프·유학 안내문에 나오는 용어 풀이.", body, crumbs: trail, cur: "guide" });
+}
+
+// ============================================================
 // 실행
 // ============================================================
 buildHome();
@@ -661,7 +815,11 @@ buildPathway();
 buildSafety();
 buildFaq();
 buildAbout();
+ARTICLES.forEach(buildArticle);
+if (ARTICLES.length) { buildGuideHub(); buildTermsHub(); }
 build404();
+require("./check-content.js")({ PAGES, ARTICLES, tokErrors, relErrors, BRAND });
+if (process.env.CHECK_FILE) { console.log(`(검사만 — ${process.env.CHECK_FILE}, docs/ 는 그대로)`); process.exit(process.exitCode || 0); }
 
 for (const f of fs.readdirSync(OUT)) if (f.endsWith(".html")) fs.unlinkSync(path.join(OUT, f));
 PAGES.forEach((p) => fs.writeFileSync(path.join(OUT, p.file), p.html));
@@ -685,7 +843,7 @@ h1{font-size:92px;line-height:1.07;letter-spacing:-.055em;font-weight:800;margin
 <div class="strip"><b>${SITE.seasonEn}</b>${DESTINATIONS.map((d) => d.iso).join(" <i>✈</i> ")}</div></body></html>`);
 
 const indexable = PAGES.filter((p) => p.index);
-fs.writeFileSync(path.join(OUT, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${indexable.map((p) => `<url><loc>${absUrl(p.file)}</loc><lastmod>${p.modified}</lastmod><priority>${p.file === "index.html" ? "1.0" : /^camp|^study|^stpaul|^college/.test(p.file) ? "0.8" : "0.6"}</priority></url>`).join("\n")}\n</urlset>\n`);
+fs.writeFileSync(path.join(OUT, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${indexable.map((p) => `<url><loc>${absUrl(p.file)}</loc><lastmod>${p.modified}</lastmod><priority>${p.file === "index.html" ? "1.0" : /^(camp-[a-z]+(-[0-9]week)?|camps|study|study-newzealand|study-canada|stpaul|college|guide)\.html$/.test(p.file) ? "0.8" : "0.6"}</priority></url>`).join("\n")}\n</urlset>\n`);
 fs.writeFileSync(path.join(OUT, "robots.txt"), SITE.domainReady ? `User-agent: *\nAllow: /\nSitemap: ${SITE.baseUrl}/sitemap.xml\nSitemap: ${SITE.baseUrl}/rss.xml\n` : `User-agent: *\nDisallow: /\n`);
 /* RSS — 네이버 서치어드바이저가 사이트맵과 따로 받는 수집 경로다.
    제목·설명은 구운 HTML 에서 꺼내 쓰므로 페이지를 고치면 RSS 도 같이 맞는다. */
