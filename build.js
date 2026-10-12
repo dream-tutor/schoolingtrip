@@ -688,7 +688,7 @@ function fill(s, where) {
 }
 const deepFill = (v, where) => (typeof v === "string" ? fill(v, where) : Array.isArray(v) ? v.map((x) => deepFill(x, where)) : v && typeof v === "object" ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, k === "slug" || k === "related" || k === "camps" || k === "parent" || k === "_file" ? x : deepFill(x, where)])) : v);
 
-const linkRows = (list) => `<div class="lk">${list.map((x) => `<a class="lk-r rv" href="${x.href}"><span class="lk-k">${x.k}</span><div><h3>${x.t}</h3>${x.d ? `<p>${x.d}</p>` : ""}</div><span class="lk-a" aria-hidden="true">→</span></a>`).join("")}</div>`;
+const linkRows = (list, cls = "") => `<div class="lk${cls ? " " + cls : ""}">${list.map((x) => `<a class="lk-r rv" href="${x.href}"><span class="lk-k">${x.k}</span><div><h3>${x.t}</h3>${x.d ? `<p>${x.d}</p>` : ""}</div><span class="lk-a" aria-hidden="true">→</span></a>`).join("")}</div>`;
 const artRow = (a) => ({ href: artFile(a), k: a.topic || GROUP_LABEL[a.group] || "", t: a.title, d: a.desc });
 const campRows = (slugs) => `<div class="rows">${slugs.map(campBy).filter(Boolean).map((x) => `<a class="rowc rv" href="${x.slug}.html"><span class="iso">${x.iso}<small>${fmtBoard(x.depart)} ${wdOf(x.depart)}</small></span><div><h3>${x.name}</h3><p>${x.tag}</p></div><dl><dt>WHEN</dt><dd>${x.period}</dd><dt>WHO</dt><dd>${x.target}</dd><dt>APPLY BY</dt><dd data-deadline="${x.deadline}" data-closed="마감 · 문의">${fmtKo(x.deadline)}</dd></dl><span class="pr">${x.price}<small>${x.air}</small></span><span class="go" aria-hidden="true">→</span></a>`).join("")}</div>`;
 // 부모 페이지(과정·유학·세인트폴·대학 진학)에 붙는 '더 자세히' 블록
@@ -776,7 +776,7 @@ function buildGuideHub() {
   const A = ARTICLES.map((x) => deepFill(x, x.slug));
   const ask = A.filter((x) => x.group === "ask");
   const topics = [...ASK_TOPICS, ...[...new Set(ask.map((x) => x.topic))].filter((t) => !ASK_TOPICS.includes(t))].filter((t) => ask.some((x) => x.topic === t));
-  const sec = (en, h2, list, i, sub = "") => (list.length ? `<section class="blk${i === 0 ? "" : i % 2 ? " bg-paper2 sheet" : " bg-paper sheet"}"><div class="wrap"><div class="sh${sub ? "" : " one"}"><div class="rv">${eb(en, pad(i + 1))}<h2>${h2}</h2></div>${sub ? `<p class="rv d1">${sub}</p>` : ""}</div>${linkRows(list.map((x) => ({ ...artRow(x), k: x.kicker })))}</div></section>` : "");
+  const sec = (en, h2, list, i, sub = "") => (list.length ? `<section class="blk${i === 0 ? "" : i % 2 ? " bg-paper2 sheet" : " bg-paper sheet"}"><div class="wrap"><div class="sh${sub ? "" : " one"}"><div class="rv">${eb(en, pad(i + 1))}<h2>${h2}</h2></div>${sub ? `<p class="rv d1">${sub}</p>` : ""}</div>${linkRows(list.map((x) => ({ ...artRow(x), k: x.kicker })), "lk-hub")}</div></section>` : "");
   const EN = ["Before you decide", "Life abroad", "Money & papers", "Countries & classes", "More"];
   let i = 0;
   const blocks = topics.map((t, k) => sec(EN[k] || "More", t, ask.filter((x) => x.topic === t), i++));

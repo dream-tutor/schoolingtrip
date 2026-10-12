@@ -31,7 +31,8 @@ module.exports = function check({ PAGES, ARTICLES, tokErrors, relErrors, BRAND }
   const err = [], warn = [];
   const files = new Set(PAGES.map((p) => p.file));
   // 한 파일만 검사할 때는 아직 안 쓰인 글(plan.json)로 가는 링크를 허용한다
-  if (process.env.CHECK_FILE) for (const s of require("./content/plan.json")) files.add(s + ".html");
+  //   (용어 허브 terms.html 은 용어 글이 있어야 생기므로 같이 허용)
+  if (process.env.CHECK_FILE) for (const s of [...require("./content/plan.json"), "terms", "guide"]) files.add(s + ".html");
   const seen = new Set();
   const builtin = new Set(PAGES.map((p) => p.file.replace(/\.html$/, "")).filter((s) => !ARTICLES.some((a) => a.slug === s)));
 

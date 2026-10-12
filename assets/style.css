@@ -552,7 +552,9 @@ table{border-collapse:collapse;width:100%}
 .lk-a{justify-self:end;font-size:20px;transition:transform .35s var(--ease)}
 .lk-r:hover .lk-a{transform:translateX(4px)}
 .lk-r:focus-visible{outline:2px solid var(--tangerine);outline-offset:3px}
-@media(max-width:760px){.lk-r{grid-template-columns:minmax(0,1fr) 22px;gap:3px 14px;padding:17px 0}.lk-k{grid-column:1/-1;font-size:11px}.lk-r h3{font-size:17.5px}.lk-r p{font-size:14.5px}}
+@media(max-width:760px){.lk-r{grid-template-columns:minmax(0,1fr) 22px;gap:3px 14px;padding:17px 0}.lk-k{grid-column:1/-1;font-size:11px}.lk-r h3{font-size:17.5px}.lk-r p{font-size:14.5px}
+  /* 가이드 허브는 줄이 일흔 개가 넘는다 — 폰에서는 제목만 보여 길이를 줄인다(설명은 글 안에 있다) */
+  .lk-hub .lk-r p,.lk-hub .lk-k{display:none}.lk-hub .lk-r{padding:14px 0}}
 .tags{display:flex;flex-wrap:wrap;gap:8px}
 .tags li{font-size:14.5px;font-weight:600;padding:9px 16px;border-radius:999px;background:var(--paper-2)}
 /* 탭 영역 — 소개 페이지 과정 알약 14개(껍데기 43px / 눌리는 곳 17px), 비교표 과정 이름 칸 6개(126~219px / 19px) (2026-09-23)
