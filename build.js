@@ -482,7 +482,7 @@ function buildCamp(c) {
   <div><small>Who</small><b>${c.target}</b><span>${c.targetLong}</span></div>
   <div><small>Seats</small><b>${c.capacity.split(" (")[0]}</b><span>${c.capacity.includes("(") ? c.capacity.slice(c.capacity.indexOf("(") + 1, -1) : c.route}</span>${c.seats ? `<span class="seat">남은 자리 ${c.seats.short} (${c.seats.asOf} 기준)</span>` : ""}</div>
   ${promoOf(c)
-    ? `<div class="hl has-promo" data-promo-until="${promoOf(c).until}" data-plain="${esc(`<small>Fee</small><b>${c.price}</b><span>${c.priceFull ? c.priceFull + " · " : ""}${c.air}</span>`)}"><small>Fee · ${promoOf(c).badge}</small><b>${promoOf(c).priceAfter}</b><span>${promoOf(c).priceFullAfter ? promoOf(c).priceFullAfter + " · " : ""}<s>${c.price}</s> · ${c.air}</span></div>`
+    ? `<div class="hl has-promo" data-promo-until="${promoOf(c).until}" data-plain="${esc(`<small>Fee</small><b>${c.price}</b><span>${c.priceFull ? c.priceFull + " · " : ""}${c.air}</span>`)}"><small>Fee · ${promoOf(c).badge}</small><b>${promoOf(c).priceAfter}</b><span>${promoOf(c).priceFullAfter ? `${promoOf(c).priceFullAfter}<br><s>${c.priceFull || c.price}</s>` : `<s>${c.price}</s>`} · ${c.air}</span></div>`
     : `<div class="hl"><small>Fee</small><b>${c.price}</b><span>${c.priceFull ? c.priceFull + " · " : ""}${c.air}</span></div>`}
   <div><small>Apply by</small><b data-deadline="${c.deadline}" data-closed="마감 · 잔여석 문의">${fmtKo(c.deadline)}</b><span>신청 마감일</span></div>
 </div></div>
