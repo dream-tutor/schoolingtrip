@@ -24,6 +24,10 @@ for (const c of mine.CAMPS) {
   if (koDate(o.deadline) !== c.deadline) say(c.name, "신청 마감", c.deadline, o.deadline);
   if (firstDot(o.periodShort) !== c.depart) say(c.name, "출발일", c.depart, o.periodShort);
   if (norm(c.capacity).replace(/명/g, "") !== norm(o.capacity).replace(/명/g, "")) say(c.name, "정원", c.capacity, o.capacity);
+  // 캠프 한시 할인(마감일·할인가)과 남은 자리도 양쪽이 같아야 한다
+  if (((c.promo && c.promo.until) || "") !== ((o.promo && o.promo.ends) || "")) say(c.name, "할인 마감", (c.promo || {}).until, (o.promo || {}).ends);
+  if (c.promo && o.promo && norm(c.promo.priceFullAfter || c.promo.priceAfter) !== norm(o.promo.priceAfter)) say(c.name, "할인가", c.promo.priceFullAfter || c.promo.priceAfter, o.promo.priceAfter);
+  if (norm(JSON.stringify(c.seats || null)) !== norm(JSON.stringify(o.seats || null))) say(c.name, "남은 자리", JSON.stringify(c.seats || null), JSON.stringify(o.seats || null));
 }
 for (const k of Object.keys(other.CAMPS)) if (!mine.CAMPS.some((c) => c.ref === k)) say(other.CAMPS[k].name, "과정", "없음", "러닝트래블에만 있음");
 for (const s of mine.STUDY) {

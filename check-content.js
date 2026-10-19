@@ -25,7 +25,7 @@ const TONE = [
   [/초개인화|솔루션|니즈|인사이트|레버리지/, "번역투"],
 ];
 // 금액·기간은 토큰으로({{camp-x.price}}) — 숫자를 직접 적으면 시즌이 바뀔 때 어긋난다
-const RAW_FACT = /(?<![\d,])(599|594|890|1,290|690|810|1,330|3,200|4,250|2,920)만원/;
+const RAW_FACT = /(?<![\d,])(599|594|890|1,290|690|810|1,190|3,200|4,250|2,920)만원/;
 
 module.exports = function check({ PAGES, ARTICLES, tokErrors, relErrors, BRAND }) {
   const err = [], warn = [];

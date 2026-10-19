@@ -222,6 +222,9 @@ table{border-collapse:collapse;width:100%}
 /* 유학·세인트폴 요약 패스: 금액은 그대로 두고 그 아래 한 줄만 더한다(기한 뒤 app.js 가 그 줄만 지운다) */
 .tk .hl span[data-promo-until]{margin-top:8px;line-height:1.4}
 .tk .hl.has-promo s{font-size:13px}
+/* 남은 자리(캐나다 7주 등) — 요약 패스·비교표 정원 칸 아래 한 줄 */
+.tk span.seat,.tb .seat{display:block;margin-top:8px;color:var(--tangerine-2);font-weight:700;line-height:1.4}
+.tb .seat{font-size:13px;margin-top:4px}
 
 /* ---------- 목적별 고르기 ---------- */
 .fd{border-bottom:1px solid var(--line)}
