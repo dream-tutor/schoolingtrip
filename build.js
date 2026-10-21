@@ -294,7 +294,7 @@ function boardRow(c) {
   <span class="b-name">${c.name}${extra}</span>
   <span class="b-meta"><span class="b-c">${c.weeks}</span><span class="b-c">${c.target}</span></span>
   ${priceEl("b-price", c, `${c.price}<small>${c.air}</small>`, `${(c.promo || {}).priceAfter}<small><s>${c.price}</s> · ${c.air}</small>`)}
-  <span class="b-st" data-deadline="${c.deadline}" data-closed="마감 · 문의">모집 중<br>${fmtMd(c.deadline)} 마감</span>
+  ${c.closed ? `<span class="b-st end">모집 마감</span>` : `<span class="b-st" data-deadline="${c.deadline}" data-closed="마감 · 문의">모집 중<br>${fmtMd(c.deadline)} 마감</span>`}
 </a>`;
 }
 const BOARD = () => `<div class="board rv d1">
@@ -440,7 +440,7 @@ function buildCamps() {
   const trail = [HOME, { label: "캠프" }];
   const rows = CAMPS.map((c) => `<a class="rowc rv" href="${c.slug}.html"><span class="iso">${c.iso}<small>${fmtBoard(c.depart)} ${wdOf(c.depart)}</small></span><div><h3>${c.name}${promoOf(c) ? ` <em class="promo-tag" data-promo-until="${promoOf(c).until}">${promoOf(c).badge}</em>` : ""}</h3><p>${c.tag}</p></div><dl><dt>WHEN</dt><dd>${c.period}</dd><dt>WHO</dt><dd>${c.targetLong}</dd><dt>STAY</dt><dd>${c.kind.split(" · ").slice(-1)[0]}</dd></dl>${priceEl("pr", c, `${c.price}<small>${c.air}</small>`, `${(c.promo || {}).priceAfter}<small><s>${c.price}</s> · ${c.air}</small>`)}<span class="go" aria-hidden="true">→</span></a>`).join("\n");
   const cmp = `<p class="hs-hint hs-816">참가비와 신청 마감은 표를 옆으로 밀면 나옵니다.</p>
-  <div class="tw rv d1" tabindex="0" role="region" aria-label="여섯 과정 비교표, 칸 8개"><table class="tb"><thead><tr><th>과정</th><th>기간</th><th>대상</th><th>정원</th><th>수업</th><th>숙소</th><th>참가비</th><th>신청 마감</th></tr></thead><tbody>${CAMPS.map((c) => `<tr><th><a href="${c.slug}.html">${c.short}</a></th><td>${c.period}</td><td>${c.targetLong}</td><td>${c.capacity}${c.seats ? `<small class="seat">남은 자리 ${c.seats.short} (${c.seats.asOf} 기준)</small>` : ""}</td><td>${c.schoolShort}</td><td>${c.stayShort}</td><td>${promoOf(c) ? `<span class="has-promo" data-promo-until="${promoOf(c).until}" data-plain="${esc(`<b>${c.priceFull || c.price}</b><br>${c.air}`)}"><b>${promoOf(c).priceFullAfter || promoOf(c).priceAfter}</b><br><s>${c.priceFull || c.price}</s> · ${c.air}</span>` : `<b>${c.priceFull || c.price}</b><br>${c.air}`}</td><td>${fmtKo(c.deadline)}</td></tr>`).join("")}</tbody></table></div>`;
+  <div class="tw rv d1" tabindex="0" role="region" aria-label="여섯 과정 비교표, 칸 8개"><table class="tb"><thead><tr><th>과정</th><th>기간</th><th>대상</th><th>정원</th><th>수업</th><th>숙소</th><th>참가비</th><th>신청 마감</th></tr></thead><tbody>${CAMPS.map((c) => `<tr><th><a href="${c.slug}.html">${c.short}</a></th><td>${c.period}</td><td>${c.targetLong}</td><td>${c.capacity}${c.seats ? `<small class="seat">남은 자리 ${c.seats.short} (${c.seats.asOf} 기준)</small>` : ""}</td><td>${c.schoolShort}</td><td>${c.stayShort}</td><td>${promoOf(c) ? `<span class="has-promo" data-promo-until="${promoOf(c).until}" data-plain="${esc(`<b>${c.priceFull || c.price}</b><br>${c.air}`)}"><b>${promoOf(c).priceFullAfter || promoOf(c).priceAfter}</b><br><s>${c.priceFull || c.price}</s> · ${c.air}</span>` : `<b>${c.priceFull || c.price}</b><br>${c.air}`}</td><td>${c.closed ? "<b>모집 마감</b>" : fmtKo(c.deadline)}</td></tr>`).join("")}</tbody></table></div>`;
   const body = `${pageHero({ trail, kicker: "Departures", h1: `${SITE.season},<br>여섯 개 과정`, lead: "스쿨링이 셋, 영어캠프가 둘, 일본어 연수가 하나입니다. 아래 비교표에 기간과 금액을 나란히 놓았습니다.", art: "globe", cta: `<a class="btn btn-k" href="#compare">비교표로 가기 <span class="ar">↓</span></a><a class="btn btn-o" href="#consult">상담 신청</a>` })}
 <section class="sec bg-paper" style="padding-top:40px"><div class="wrap"><div class="rows">${rows}</div></div></section>
 <section class="sec bg-paper2 sheet" id="compare"><div class="wrap">
@@ -476,7 +476,7 @@ function buildCamp(c) {
   const rank = (x) => (x.country === c.country ? 0 : x.cat === c.cat ? 1 : 2);
   const more = rest.map((x, i) => [rank(x), i, x]).sort((a, b) => a[0] - b[0] || a[1] - b[1]).slice(0, 2).map((t) => t[2]);
   const iti = c.schedule ? block("Itinerary", "날짜별 일정", `<div class="iti"><ol>${c.schedule.map(([d, w, t]) => `<li${/토|일/.test(w) && !/~/.test(w) ? ` class="we"` : ""}><span class="d">${d}${w ? `<small>${w}</small>` : ""}</span><span>${esc(t)}</span></li>`).join("")}</ol><p class="iti-more"><button type="button" class="btn btn-o btn-s">일정 전체 펼치기 ↓</button></p></div><p class="fine">현지 학교와 날씨 사정으로 순서가 바뀔 수 있습니다.</p>`, "bg-paper sheet") : "";
-  const body = `${pageHero({ trail, kicker: `${c.kindEn} · ${DESTINATIONS.find((d) => d.key === c.country).en}`, h1: c.name, lead: `${promoOf(c) ? `<span class="promo-chip" data-promo-until="${promoOf(c).until}">${promoOf(c).badge} · ${promoOf(c).cond}</span>` : ""}${c.tag}`, art: c.country, iso: c.iso, bgiso: c.iso, cta: `<a class="btn btn-t" href="#consult">이 과정 상담 신청 <span class="ar">→</span></a><a class="btn btn-o" href="camps.html#compare">다른 과정과 비교</a>` })}
+  const body = `${pageHero({ trail, kicker: `${c.kindEn} · ${DESTINATIONS.find((d) => d.key === c.country).en}`, h1: c.name, lead: `${promoOf(c) ? `<span class="promo-chip" data-promo-until="${promoOf(c).until}">${promoOf(c).badge} · ${promoOf(c).cond}</span>` : ""}${c.closed ? `<span class="promo-chip closed">모집 마감</span>` : ""}${c.tag}`, art: c.country, iso: c.iso, bgiso: c.iso, cta: `<a class="btn btn-t" href="#consult">이 과정 상담 신청 <span class="ar">→</span></a><a class="btn btn-o" href="camps.html#compare">다른 과정과 비교</a>` })}
 <div class="wrap"><div class="tk rv">
   <div><small>When</small><b>${c.weeks}</b><span>${c.period}</span></div>
   <div><small>Who</small><b>${c.target}</b><span>${c.targetLong}</span></div>
@@ -484,13 +484,13 @@ function buildCamp(c) {
   ${promoOf(c)
     ? `<div class="hl has-promo" data-promo-until="${promoOf(c).until}" data-plain="${esc(`<small>Fee</small><b>${c.price}</b><span>${c.priceFull ? c.priceFull + " · " : ""}${c.air}</span>`)}"><small>Fee · ${promoOf(c).badge}</small><b>${promoOf(c).priceAfter}</b><span>${promoOf(c).priceFullAfter ? `${promoOf(c).priceFullAfter}<br><s>${c.priceFull || c.price}</s>` : `<s>${c.price}</s>`} · ${c.air}</span></div>`
     : `<div class="hl"><small>Fee</small><b>${c.price}</b><span>${c.priceFull ? c.priceFull + " · " : ""}${c.air}</span></div>`}
-  <div><small>Apply by</small><b data-deadline="${c.deadline}" data-closed="마감 · 잔여석 문의">${fmtKo(c.deadline)}</b><span>신청 마감일</span></div>
+  ${c.closed ? `<div><small>Apply by</small><b>모집 마감</b><span>${SITE.season} 모집 종료</span></div>` : `<div><small>Apply by</small><b data-deadline="${c.deadline}" data-closed="마감 · 잔여석 문의">${fmtKo(c.deadline)}</b><span>신청 마감일</span></div>`}
 </div></div>
 ${block("Highlights", "이 과정의 뼈대", `<ul class="pts">${c.points.map(([t, p], i) => `<li><span class="n">${pad(i + 1)}</span><h3>${t}</h3><p>${p}</p></li>`).join("")}</ul>`)}
 ${block("School & stay", "어디서 배우고 어디서 자나", `<div class="duo"><div class="box"><h3>School</h3><h4>${c.school}</h4><p>${c.schoolDesc}</p></div><div class="box"><h3>Stay</h3><h4>${c.kind.split(" · ").slice(-1)[0]}</h4><p>${c.stay}</p></div></div>${c.photos.length ? shots(c.photos) : ""}`)}
 ${block("Good fit", "이런 학생에게 맞습니다", `<ul class="pts">${(CAMP_FIT[c.slug] || []).map((t, i) => `<li style="grid-template-columns:60px 1fr"><span class="n">${pad(i + 1)}</span><p style="grid-column:2;font-size:18.5px;color:inherit">${t}</p></li>`).join("")}</ul>`, "bg-forest sheet")}
 ${iti}
-${block("Fee", "참가비에 든 것, 안 든 것", `<div class="duo"><div class="box"><h3><i>+</i>포함</h3><ul>${listItems(c.includes)}</ul></div><div class="box minus"><h3><i>−</i>불포함</h3><ul>${listItems(c.excludes)}</ul></div></div><div class="note">${promoOf(c) ? `<b data-promo-until="${promoOf(c).until}">할인</b><span data-promo-until="${promoOf(c).until}">${promoOf(c).detail}</span>` : ""}${c.seats ? `<b>남은 자리</b><span>${c.seats.text} (${c.seats.asOf} 기준). ${c.seats.note}</span>` : ""}<b>참가비</b><span>${c.priceFull || c.price} — ${c.priceNote}</span><b>용돈</b><span>${c.pocket}</span><b>그다음</b><span>${c.extend}</span></div>`, iti ? "tight" : "bg-paper sheet")}
+${block("Fee", "참가비에 든 것, 안 든 것", `<div class="duo"><div class="box"><h3><i>+</i>포함</h3><ul>${listItems(c.includes)}</ul></div><div class="box minus"><h3><i>−</i>불포함</h3><ul>${listItems(c.excludes)}</ul></div></div><div class="note">${c.closed ? `<b>모집</b><span>${c.closedNote}</span>` : ""}${promoOf(c) ? `<b data-promo-until="${promoOf(c).until}">할인</b><span data-promo-until="${promoOf(c).until}">${promoOf(c).detail}</span>` : ""}${c.seats ? `<b>남은 자리</b><span>${c.seats.text} (${c.seats.asOf} 기준). ${c.seats.note}</span>` : ""}<b>참가비</b><span>${c.priceFull || c.price} — ${c.priceNote}</span><b>용돈</b><span>${c.pocket}</span><b>그다음</b><span>${c.extend}</span></div>`, iti ? "tight" : "bg-paper sheet")}
 ${c.safety ? block("Safety", "이 과정의 안전 관리", `<div class="box"><ul>${c.safety.map((s) => `<li>${s}</li>`).join("")}</ul></div><p style="margin-top:24px"><a class="more" href="safety.html">공통 안전 원칙과 환불 규정 <span>→</span></a></p>`, "tight") : ""}
 ${kidsBlock(c.slug, `${c.short} 더 자세히`)}
 ${block("Q&A", "이 과정에서 자주 나오는 질문", `${faqHtml(faqs)}<p style="margin-top:30px"><a class="more" href="faq.html">질문 전체 보기 <span>→</span></a></p>`, "tight")}
@@ -668,7 +668,8 @@ const ASK_TOPICS = ["처음 정할 때", "현지 생활", "돈·서류·항공",
 // {{camp-malaysia.price}} 같은 토큰 — 참가비·기간·마감일은 data.js 값을 그대로 끌어온다(시즌이 바뀌어도 글이 어긋나지 않게).
 const TOKEN_SRC = () => {
   const m = {};
-  CAMPS.forEach((c) => (m[c.slug] = { ...c, deadlineKo: fmtKo(c.deadline), departKo: fmtKo(c.depart), backKo: fmtKo(c.back), priceAll: c.priceFull || c.price }));
+  // 모집 마감한 과정(closed)은 deadlineKo 가 '모집 마감', applyNote 가 마감 문장이 된다 — 글에서 신청 마감을 말할 땐 문장 토큰 applyNote 를 쓸 것
+  CAMPS.forEach((c) => (m[c.slug] = { ...c, applyNote: c.closed ? `${SITE.season} 모집은 마감되었습니다.` : `신청 마감은 ${fmtKo(c.deadline)}입니다.`, deadlineKo: c.closed ? "모집 마감" : fmtKo(c.deadline), departKo: fmtKo(c.depart), backKo: fmtKo(c.back), priceAll: c.priceFull || c.price }));
   STUDY.forEach((s) => (m[s.slug] = s));
   m.stpaul = STPAUL;
   m.college = { ...ELC, open: ELC.schedule[0][1], seats: ELC.schedule[4][1] };
@@ -690,7 +691,7 @@ const deepFill = (v, where) => (typeof v === "string" ? fill(v, where) : Array.i
 
 const linkRows = (list, cls = "") => `<div class="lk${cls ? " " + cls : ""}">${list.map((x) => `<a class="lk-r rv" href="${x.href}"><span class="lk-k">${x.k}</span><div><h3>${x.t}</h3>${x.d ? `<p>${x.d}</p>` : ""}</div><span class="lk-a" aria-hidden="true">→</span></a>`).join("")}</div>`;
 const artRow = (a) => ({ href: artFile(a), k: a.topic || GROUP_LABEL[a.group] || "", t: a.title, d: a.desc });
-const campRows = (slugs) => `<div class="rows">${slugs.map(campBy).filter(Boolean).map((x) => `<a class="rowc rv" href="${x.slug}.html"><span class="iso">${x.iso}<small>${fmtBoard(x.depart)} ${wdOf(x.depart)}</small></span><div><h3>${x.name}</h3><p>${x.tag}</p></div><dl><dt>WHEN</dt><dd>${x.period}</dd><dt>WHO</dt><dd>${x.target}</dd><dt>APPLY BY</dt><dd data-deadline="${x.deadline}" data-closed="마감 · 문의">${fmtKo(x.deadline)}</dd></dl><span class="pr">${x.price}<small>${x.air}</small></span><span class="go" aria-hidden="true">→</span></a>`).join("")}</div>`;
+const campRows = (slugs) => `<div class="rows">${slugs.map(campBy).filter(Boolean).map((x) => `<a class="rowc rv" href="${x.slug}.html"><span class="iso">${x.iso}<small>${fmtBoard(x.depart)} ${wdOf(x.depart)}</small></span><div><h3>${x.name}</h3><p>${x.tag}</p></div><dl><dt>WHEN</dt><dd>${x.period}</dd><dt>WHO</dt><dd>${x.target}</dd><dt>APPLY BY</dt>${x.closed ? `<dd>모집 마감</dd>` : `<dd data-deadline="${x.deadline}" data-closed="마감 · 문의">${fmtKo(x.deadline)}</dd>`}</dl><span class="pr">${x.price}<small>${x.air}</small></span><span class="go" aria-hidden="true">→</span></a>`).join("")}</div>`;
 // 부모 페이지(과정·유학·세인트폴·대학 진학)에 붙는 '더 자세히' 블록
 const kidsBlock = (parent, h2 = "더 자세히 보기", cls = "tight") => {
   const k = KIDS(parent);

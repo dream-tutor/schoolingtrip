@@ -217,6 +217,7 @@ table{border-collapse:collapse;width:100%}
 .promo-tag{font-style:normal;font-size:12.5px;font-weight:700;letter-spacing:-.01em;background:var(--tangerine);color:#fff;padding:3px 9px;border-radius:999px;vertical-align:middle;white-space:nowrap}
 .promo-chip{display:inline-flex;align-items:center;font-size:13.5px;font-weight:700;letter-spacing:-.01em;background:var(--tangerine);color:#fff;padding:6px 15px;border-radius:999px;margin-bottom:16px}
 .ph .lead .promo-chip{margin-bottom:14px}
+.promo-chip.closed{background:var(--ink-2)}
 .ph .lead{display:flex;flex-direction:column;align-items:flex-start}
 .tk .hl.has-promo small,.tk .hl span[data-promo-until]{color:var(--tangerine-2);font-weight:700}
 /* 유학·세인트폴 요약 패스: 금액은 그대로 두고 그 아래 한 줄만 더한다(기한 뒤 app.js 가 그 줄만 지운다) */

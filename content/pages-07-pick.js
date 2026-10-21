@@ -591,7 +591,7 @@ module.exports = [
           ],
         },
         after: [
-          `<a href="camp-japan.html">교토 일본어 연수</a>는 2월 과정인데도 신청 마감이 여섯 과정 가운데 가장 이른 축에 듭니다. 출발이 늦다고 신청도 늦게 해도 되는 것은 아닙니다.`,
+          `<a href="camp-japan.html">교토 일본어 연수</a>의 {{camp-japan.applyNote}} 이번 겨울 2월을 현지에서 보내는 과정으로 지금 신청할 수 있는 것은 <a href="camp-newzealand.html">뉴질랜드 4주</a>입니다.`,
         ],
       },
       {
