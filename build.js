@@ -674,6 +674,9 @@ const TOKEN_SRC = () => {
   m.stpaul = STPAUL;
   m.college = { ...ELC, open: ELC.schedule[0][1], seats: ELC.schedule[4][1] };
   m.site = { season: SITE.season, brand: BRAND };
+  // EF 장학금 문장 (data.js PATHWAYS ef promo). 기한이 지나면 빈 문자열이 되어 그 문단이 빠진다 — 글에서는 {{ef.promoNote}} 로 쓴다.
+  const efp = (PATHWAYS.find((p) => p.id === "ef") || {}).promo;
+  m.ef = { promoNote: promoLive(efp) ? efp.text : "" };
   return m;
 };
 let TOK = null;
@@ -701,7 +704,7 @@ const kidsBlock = (parent, h2 = "더 자세히 보기", cls = "tight") => {
 function secInner(s) {
   const gap = (h) => (h ? ` style="margin-top:34px"` : "");
   let h = "";
-  if (s.p) h += `<div class="prose">${s.p.map((t) => `<p>${t}</p>`).join("")}</div>`;
+  if (s.p) h += `<div class="prose">${s.p.filter((t) => t).map((t) => `<p>${t}</p>`).join("")}</div>`;
   if (s.table) h += `<div class="tw"${gap(h)}${s.table.narrow ? "" : ` tabindex="0" role="region" aria-label="${esc(s.table.label || s.h2)} 표, 칸 ${s.table.head.length}개"`}><table class="tb${s.table.narrow ? " narrow" : ""}"><thead><tr>${s.table.head.map((x) => `<th>${x}</th>`).join("")}</tr></thead><tbody>${s.table.rows.map((r) => `<tr>${r.map((x, i) => (i === 0 ? `<th>${x}</th>` : `<td>${x}</td>`)).join("")}</tr>`).join("")}</tbody></table></div>`;
   if (s.pts) h += `<ul class="pts"${gap(h)}>${s.pts.map(([t, p], i) => `<li><span class="n">${pad(i + 1)}</span><h3>${t}</h3><p>${p}</p></li>`).join("")}</ul>`;
   if (s.duo) h += `<div class="duo"${gap(h)}>${s.duo.map(([t, items]) => `<div class="box"><h4>${t}</h4><ul>${items.map((x) => `<li>${x}</li>`).join("")}</ul></div>`).join("")}</div>`;
