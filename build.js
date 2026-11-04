@@ -522,17 +522,17 @@ function buildStudy() {
     <tr><th>시작 단위</th><td>${nz.unit}. 한 텀만 다녀 볼 수 있습니다</td><td>${ca.unit}</td></tr>
     <tr><th>학기</th><td>${nz.terms}</td><td>${ca.terms}</td></tr>
     <tr><th>졸업장</th><td>${nz.diploma}</td><td>${ca.diploma}</td></tr>
-    <tr><th>연 비용</th><td><b>${nz.price}</b></td><td><b>${ca.price}</b> (9학년 이상)</td></tr>
+    <tr><th>연 비용</th><td><b>${nz.price}</b></td><td><b>${ca.price}</b> (중3 이상 · 그 아래 연 3,600만원)</td></tr>
     <tr><th>포함</th><td>${nz.includes}</td><td>${ca.includes}</td></tr>
     <tr><th>관리</th><td>학교 국제학생 담당 선생님 + 홈스테이 관리자</td><td>법적 가디언을 맡는 현지 관리 선생님, 월 1회 리포트</td></tr>
     <tr><th>방학</th><td>현지 여름방학(12~1월)에 귀국 또는 체류 선택</td><td>여름방학(약 2개월)에 귀국, 겨울방학은 호스트 가족과</td></tr>
   </tbody></table></div>
 </div></section>
-${block("Which one", "어느 쪽이 맞을까", `<div class="prose"><p><strong>짧게 시작해 보고 싶다면 뉴질랜드입니다.</strong> 연 4텀 학제라 10주 한 텀만 다녀 본 뒤에 이어 갈지 정할 수 있습니다. 유학생 비율을 5% 아래로 유지하는 학교여서 교실에 들어가면 주변이 거의 현지 학생입니다.</p><p><strong>관리가 촘촘한 쪽을 원한다면 캐나다입니다.</strong> 현지 관리 선생님이 법적 가디언을 맡고 매달 리포트를 보냅니다. 과목 선택과 졸업 요건(필수 19학점, 봉사 40시간, OSSLT)까지 챙기기 때문에 졸업과 대학 진학을 목표로 하는 중·상위권 학생에게 권합니다.</p><p>두 곳 모두 겨울캠프가 열리는 학교와 교육청입니다. 결정을 못 하겠다면 <a href="camp-newzealand.html">뉴질랜드 캠프</a>나 <a href="camp-canada-3week.html">캐나다 3주 스쿨링</a>을 먼저 다녀오는 것이 가장 확실한 비교입니다.</p></div>`, "bg-paper sheet")}
+${block("Which one", "어느 쪽이 맞을까", `<div class="prose"><p><strong>짧게 시작해 보고 싶다면 뉴질랜드입니다.</strong> 연 4텀 학제라 10주 한 텀만 다녀 본 뒤에 이어 갈지 정할 수 있습니다. 유학생 비율을 5% 아래로 유지하는 학교여서 교실에 들어가면 주변이 거의 현지 학생입니다.</p><p><strong>관리가 촘촘한 쪽을 원한다면 캐나다입니다.</strong> 현지 관리 선생님이 법적 가디언을 맡고 매달 리포트를 보냅니다. 과목 선택과 졸업 요건(필수 19학점, 봉사 40시간, OSSLT)까지 챙기기 때문에 졸업과 대학 진학을 목표로 하는 학생에게 맞고, 성적·영어보다 성실하게 해 내는 태도가 중요합니다.</p><p>두 곳 모두 겨울캠프가 열리는 학교와 교육청입니다. 결정을 못 하겠다면 <a href="camp-newzealand.html">뉴질랜드 캠프</a>나 <a href="camp-canada-3week.html">캐나다 3주 스쿨링</a>을 먼저 다녀오는 것이 가장 확실한 비교입니다.</p></div>`, "bg-paper sheet")}
 ${block("Steps", "진행 순서", `<ol class="steps line">${STUDY_PROCEDURE.map((s) => `<li><h3>${s}</h3></li>`).join("")}</ol>`, "tight")}
 ${kidsBlock("study", "유학 준비, 더 자세히")}
 ${ctaBlock("한 텀만 먼저 다녀올 수도 있습니다", "뉴질랜드는 10주 단위라 한 텀 해 보고 결정해도 됩니다. 성적과 학년을 보고 시작 시점을 같이 잡겠습니다.", "추천 받고 싶어요")}`;
-  page({ file: "study.html", title: `뉴질랜드·캐나다 중고등 유학 비교 — 비용·학제·관리 | ${BRAND}`, desc: "뉴질랜드 Waiuku College 연 3,200만원, 캐나다 나이아가라 교육청 연 4,250만원. 학제·졸업장·관리 방식 비교.", body, crumbs: trail, cur: "study" });
+  page({ file: "study.html", title: `뉴질랜드·캐나다 중고등 유학 비교 — 비용·학제·관리 | ${BRAND}`, desc: "뉴질랜드 Waiuku College 연 3,200만원, 캐나다 나이아가라 교육청 연 3,700만원. 학제·졸업장·관리 방식 비교.", body, crumbs: trail, cur: "study" });
 }
 
 function buildStudyDetail(s) {
