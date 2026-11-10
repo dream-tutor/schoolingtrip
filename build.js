@@ -268,6 +268,15 @@ function rootLinks(html) {
     .replace(/(?<![\w-])(href|src)="(?!(?:https?:)?\/\/|\/|#|tel:|mailto:|data:|javascript:)([^"]*)"/g, '$1="/$2"')
     .replace(/(?<![\w-])href="\/index\.html(?=["#])/g, 'href="/');
 }
+/* 홈 첫 화면의 출발 시기 — CAMPS 출발일에서 달을 모은다('2027년 1월과 2월에'). 손으로 '1월'이라 적었다가
+   2월 14일 출발인 교토와 어긋났다(2026-11-10 점검). 해가 둘로 갈리면 시즌 이름으로. */
+function departWhen() {
+  const ym = [...new Set(CAMPS.map((c) => c.depart.slice(0, 7)))].sort();
+  const years = [...new Set(ym.map((s) => s.slice(0, 4)))];
+  if (years.length !== 1) return `${SITE.season}방학에`;
+  const ms = ym.map((s) => `${+s.slice(5)}월`);
+  return `${years[0]}년 ${ms.length === 1 ? ms[0] : ms.slice(0, -1).join("·") + "과 " + ms[ms.length - 1]}에`;
+}
 
 // 하위 페이지 머리
 function pageHero({ trail, kicker, h1, lead, art, iso, cta = "", bgiso = "" }) {
@@ -336,7 +345,7 @@ function buildHome() {
     <div>
       <div class="hero-k"><span class="dot" aria-hidden="true"></span><span class="mono">Now boarding — ${SITE.seasonEn}</span><span class="mono" style="opacity:.55">Seoul → 5 countries · 6 departures</span></div>
       <h1><span class="l"><span>겨울방학 동안만,</span></span><span class="l"><span>다른 나라 학생으로</span></span><span class="l"><span><em>just for winter.</em></span></span></h1>
-      <p class="hero-sub">캐나다와 뉴질랜드는 현지 학교에 그대로 들어갑니다. 말레이시아와 필리핀은 영어 수업을 종일 듣고, 교토는 일본어 연수입니다. 2027년 1월, 여섯 편이 출발합니다.</p>
+      <p class="hero-sub">캐나다와 뉴질랜드는 현지 학교에 그대로 들어갑니다. 말레이시아와 필리핀은 영어 수업을 종일 듣고, 교토는 일본어 연수입니다. ${departWhen()} 여섯 편이 출발합니다.</p>
       <div class="hero-cta"><a class="btn btn-k" href="#departures">출발 일정 보기 <span class="ar">↓</span></a><a class="btn btn-o" href="#consult">상담 신청</a></div>
     </div>
     <div class="hero-art" aria-label="출발 과정 미리 보기">
