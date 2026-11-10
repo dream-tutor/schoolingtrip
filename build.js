@@ -258,7 +258,15 @@ ${consultDrawer()}
 ${SITE.trackKey ? `<script defer src="https://xn--vb0by3y5wigqb.com/t.js" data-site="${esc(SITE.trackKey)}"></script>\n` : ""}<script defer src="app.js?v=${JS_VER}"></script>
 </body>
 </html>`;
-  PAGES.push({ file, html, modified, index });
+  PAGES.push({ file, html: file === "404.html" ? rootLinks(html) : html, modified, index });
+}
+/* 404 는 워커가 어느 깊이의 없는 주소(/a/b/c)에도 같은 파일을 내준다 — 상대경로면 style.css·app.js·홈 링크가
+   /a/b/… 로 풀려 다시 404 가 된다. 404 만 루트 기준(/)으로 바꾼다(카네기 site 1 rootLinks 와 같은 방식).
+   <base href> 는 #consult 앵커를 홈으로 튕겨 상담 창이 안 열리므로 쓰지 않는다. 홈은 /index.html(301) 대신 / 로. */
+function rootLinks(html) {
+  return html
+    .replace(/(?<![\w-])(href|src)="(?!(?:https?:)?\/\/|\/|#|tel:|mailto:|data:|javascript:)([^"]*)"/g, '$1="/$2"')
+    .replace(/(?<![\w-])href="\/index\.html(?=["#])/g, 'href="/');
 }
 
 // 하위 페이지 머리
@@ -870,7 +878,10 @@ const rssDate = (ymd) => {
   const d = new Date(ymd + "T09:00:00+09:00");
   return `${D[d.getUTCDay()]}, ${String(d.getUTCDate()).padStart(2, "0")} ${M[d.getUTCMonth()]} ${d.getUTCFullYear()} 09:00:00 +0900`;
 };
-const pick = (html, re) => { const m = html.match(re); return m ? m[1].trim() : ""; };
+/* 구운 HTML 의 <title>·description 은 이미 esc() 된 값이라, 아래에서 다시 esc() 하기 전에 한 번 푼다
+   (안 풀면 '&' 가 RSS 에서 '&amp;amp;' 로 이중 이스케이프된다 — 2026-11-10 점검). */
+const unesc = (s) => s.replace(/&quot;/g, '"').replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
+const pick = (html, re) => { const m = html.match(re); return m ? unesc(m[1].trim()) : ""; };
 const rssItems = indexable
   .map((p) => ({
     url: absUrl(p.file),

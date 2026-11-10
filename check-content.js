@@ -94,7 +94,8 @@ module.exports = function check({ PAGES, ARTICLES, tokErrors, relErrors, BRAND }
     const hrefs = [...p.html.matchAll(/href="([^"#:]+?\.html)(\?[^"#]*)?(#[^"]*)?"/g)];
     for (const m of hrefs) {
       if (/^https?:/.test(m[1])) continue;
-      if (!files.has(m[1])) err.push(`${p.file}: 없는 페이지로 가는 링크 ${m[1]}`);
+      // 404.html 은 링크를 루트 기준(/camps.html)으로 굽는다(build.js rootLinks) — 앞의 / 를 떼고 같은 파일 목록으로 본다
+      if (!files.has(m[1].replace(/^\//, ""))) err.push(`${p.file}: 없는 페이지로 가는 링크 ${m[1]}`);
       if (m[2]) err.push(`${p.file}: 쿼리 붙은 내부 링크 ${m[0]}`);
     }
     if ((p.html.match(/<h1[\s>]/g) || []).length !== 1) err.push(`${p.file}: h1 ${(p.html.match(/<h1[\s>]/g) || []).length}개`);
