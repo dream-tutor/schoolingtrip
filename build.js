@@ -511,18 +511,31 @@ ${ctaBlock("남은 자리부터 확인해 드립니다", "정원이 학년별로
 function buildStudy() {
   const trail = [HOME, { label: "유학" }];
   const [nz, ca] = STUDY;
-  const vsBox = (s) => `<div class="box rv"><h4>${s.name.replace(" 중·고등 유학", "").replace(" 관리형", "")} <em>${s.iso}</em></h4><p>${s.tag}</p><dl><dt>SCHOOL</dt><dd>${s.en}</dd><dt>START</dt><dd>${s.unit}</dd><dt>DIPLOMA</dt><dd>${s.diploma}</dd><dt>COST</dt><dd><b>${s.price}</b></dd><dt>WHO</dt><dd>${s.target}</dd></dl><a class="btn btn-k btn-s" href="${s.slug}.html">자세히 보기 <span class="ar">→</span></a></div>`;
+  const shortName = (s) => s.name.replace(" 중·고등 유학", "").replace(" 관리형", "");
+  // 연 비용 숫자는 전부 data.js STUDY 에서 가져온다. 표 위 문장에 차이 금액을 손으로 적어 두었다가, 11-04 캐나다 학비를
+  // 4,250 → 3,700만원으로 바꿀 때 '1,050만원 차이'가 그대로 남았다(2026-11-10 점검). 캐나다 아래 학년 금액은 priceNote 문장에서 읽는다.
+  const man = (s) => { const m = /([\d,]+)만원/.exec(s || ""); return m ? Number(m[1].replace(/,/g, "")) : NaN; };
+  const comma = (n) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  const caLow = /(중\d 이상) 기준이고, 그 아래 학년은 (연 [\d,]+만원)/.exec(ca.priceNote || "") || [];
+  if (!caLow[2]) console.warn("⚠ study.html — 캐나다 priceNote 에서 '중N 이상 기준이고, 그 아래 학년은 연 N만원'을 못 찾아 비교표 단서와 차이 금액 범위를 뺐습니다");
+  const gaps = [ca.price, caLow[2]].filter(Boolean).map((p) => man(p) - man(nz.price));
+  const up = gaps.every((g) => g > 0), down = gaps.every((g) => g < 0);
+  const amt = [...new Set(gaps.map(Math.abs))].sort((a, b) => a - b).map(comma);
+  const costLine = gaps.length && gaps.every(Number.isFinite) && (up || down)
+    ? `연간 비용은 ${josa(shortName(up ? ca : nz), "이", "가")} ${amt.length > 1 ? "학년에 따라 " : ""}${amt.join("~")}만원 더 듭니다. 다만 포함된 항목과 관리 방식이 달라서 금액만 놓고 고르기는 어렵습니다.`
+    : "두 나라는 연 비용에 포함된 항목과 관리 방식이 달라서 금액만 놓고 고르기는 어렵습니다.";
+  const vsBox = (s) => `<div class="box rv"><h4>${shortName(s)} <em>${s.iso}</em></h4><p>${s.tag}</p><dl><dt>SCHOOL</dt><dd>${s.en}</dd><dt>START</dt><dd>${s.unit}</dd><dt>DIPLOMA</dt><dd>${s.diploma}</dd><dt>COST</dt><dd><b>${s.price}</b></dd><dt>WHO</dt><dd>${s.target}</dd></dl><a class="btn btn-k btn-s" href="${s.slug}.html">자세히 보기 <span class="ar">→</span></a></div>`;
   const body = `${pageHero({ trail, kicker: "Study abroad", h1: "캠프가 열린<br>그 학교로, 유학", lead: "뉴질랜드는 Waiuku College, 캐나다는 나이아가라 가톨릭 교육청입니다. 둘 다 겨울캠프가 진행되는 곳이라 미리 다녀 본 뒤에 결정할 수 있습니다. 캠프를 거치지 않은 학생도 상담받을 수 있습니다.", art: "newzealand", cta: `<a class="btn btn-t" href="#consult" data-course="추천 받고 싶어요">유학 상담 신청 <span class="ar">→</span></a>` })}
 <section class="sec bg-paper" style="padding-top:30px"><div class="wrap"><div class="vs">${vsBox(nz)}${vsBox(ca)}</div></div></section>
 <section class="sec bg-paper2 sheet"><div class="wrap">
-  <div class="sh"><div class="rv">${eb("Side by side", "NZL vs CAN")}<h2>두 나라를 한 표에</h2></div><p class="rv d1">연간 비용은 1,050만원 차이가 납니다. 다만 포함된 항목과 관리 방식이 달라서 금액만 놓고 고르기는 어렵습니다.</p></div>
+  <div class="sh"><div class="rv">${eb("Side by side", "NZL vs CAN")}<h2>두 나라를 한 표에</h2></div><p class="rv d1">${costLine}</p></div>
   <p class="hs-hint hs-816">캐나다 칸은 표를 옆으로 밀면 나옵니다.</p>
   <div class="tw rv d1" tabindex="0" role="region" aria-label="뉴질랜드·캐나다 비교표, 칸 3개"><table class="tb"><thead><tr><th></th><th>${nz.name}</th><th>${ca.name}</th></tr></thead><tbody>
     <tr><th>학교</th><td>${nz.en} (공립, Year 9~13)</td><td>${ca.en} 소속 고교 8곳 가운데 배정</td></tr>
     <tr><th>시작 단위</th><td>${nz.unit}. 한 텀만 다녀 볼 수 있습니다</td><td>${ca.unit}</td></tr>
     <tr><th>학기</th><td>${nz.terms}</td><td>${ca.terms}</td></tr>
     <tr><th>졸업장</th><td>${nz.diploma}</td><td>${ca.diploma}</td></tr>
-    <tr><th>연 비용</th><td><b>${nz.price}</b></td><td><b>${ca.price}</b> (중3 이상 · 그 아래 연 3,600만원)</td></tr>
+    <tr><th>연 비용</th><td><b>${nz.price}</b></td><td><b>${ca.price}</b>${caLow[2] ? ` (${caLow[1]} · 그 아래 ${caLow[2]})` : ""}</td></tr>
     <tr><th>포함</th><td>${nz.includes}</td><td>${ca.includes}</td></tr>
     <tr><th>관리</th><td>학교 국제학생 담당 선생님 + 홈스테이 관리자</td><td>법적 가디언을 맡는 현지 관리 선생님, 월 1회 리포트</td></tr>
     <tr><th>방학</th><td>현지 여름방학(12~1월)에 귀국 또는 체류 선택</td><td>여름방학(약 2개월)에 귀국, 겨울방학은 호스트 가족과</td></tr>
@@ -532,7 +545,7 @@ ${block("Which one", "어느 쪽이 맞을까", `<div class="prose"><p><strong>�
 ${block("Steps", "진행 순서", `<ol class="steps line">${STUDY_PROCEDURE.map((s) => `<li><h3>${s}</h3></li>`).join("")}</ol>`, "tight")}
 ${kidsBlock("study", "유학 준비, 더 자세히")}
 ${ctaBlock("한 텀만 먼저 다녀올 수도 있습니다", "뉴질랜드는 10주 단위라 한 텀 해 보고 결정해도 됩니다. 성적과 학년을 보고 시작 시점을 같이 잡겠습니다.", "추천 받고 싶어요")}`;
-  page({ file: "study.html", title: `뉴질랜드·캐나다 중고등 유학 비교 — 비용·학제·관리 | ${BRAND}`, desc: "뉴질랜드 Waiuku College 연 3,200만원, 캐나다 나이아가라 교육청 연 3,700만원. 학제·졸업장·관리 방식 비교.", body, crumbs: trail, cur: "study" });
+  page({ file: "study.html", title: `뉴질랜드·캐나다 중고등 유학 비교 — 비용·학제·관리 | ${BRAND}`, desc: `뉴질랜드 ${nz.en} ${nz.price}, 캐나다 나이아가라 교육청 ${ca.price}. 학제·졸업장·관리 방식 비교.`, body, crumbs: trail, cur: "study" });
 }
 
 function buildStudyDetail(s) {
