@@ -922,7 +922,8 @@ ${rssItems.map((it) => `  <item>
 </rss>
 `);
 fs.writeFileSync(path.join(OUT, ".nojekyll"), "");
-// CNAME 은 쓰지 않는다 — 2026-09-22 부터 Cloudflare Pages 로 배포한다(커스텀 도메인은 CF 쪽 설정).
+// CNAME 은 쓰지 않는다 — 2026-09-22 부터 Cloudflare Worker `schoolingtrip` + 정적 에셋(docs/)으로 배포한다
+// (wrangler.toml 의 custom_domain 이 도메인·DNS 를 붙인다. git push 는 배포가 아니다). 옛 CNAME 이 남아 있으면 지운다.
 // GitHub Pages 로 되돌릴 일이 생기면 아래 한 줄을 살리고 저장소 Pages 를 다시 켤 것.
 //   if (SITE.domainReady) fs.writeFileSync(path.join(OUT, "CNAME"), SITE.baseUrl.replace(/^https?:\/\//, "") + "\n");
 fs.rmSync(path.join(OUT, "CNAME"), { force: true });

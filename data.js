@@ -15,8 +15,8 @@ const SITE = {
   tagline: "방학에 떠나는 해외캠프 · 유학",
   // 헤더 로고 아래 한 줄 (2026-09-22 사용자 요청: 헤더는 영문 워드마크만 쓰고 무엇을 하는 곳인지 옆에 적는다)
   navSub: "방학캠프 · 해외유학 · 해외대학 진학",
-  baseUrl: "https://schoolingtrip.com", // docs/CNAME 도 이 값에서 나온다
-  domainReady: true, // canonical·robots Allow·sitemap·CNAME 이 켜진다. 배포 전에 되돌리려면 false.
+  baseUrl: "https://schoolingtrip.com", // canonical·sitemap·RSS·JSON-LD 주소가 이 값에서 나온다(CNAME 은 만들지 않는다 — Worker 배포)
+  domainReady: true, // canonical·robots Allow·sitemap 이 켜진다. 배포 전에 되돌리려면 false.
   season: "2027 겨울",
   seasonEn: "WINTER 2027",
   // 전화는 우하단 플로팅 [전화 상담] 하나만. 이 번호 말고 다른 번호는 넣지 말 것.
