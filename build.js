@@ -620,7 +620,7 @@ function buildCollege() {
   const trail = [HOME, { label: "대학 진학" }];
   const body = `${pageHero({ trail, kicker: "No TOEFL pathway", h1: "토플 없이 가는<br>미국·캐나다 대학", lead: ELC.tag, art: "globe", iso: "USA · CAN", bgiso: "ELC", cta: `<a class="btn btn-t" href="#consult">진학 상담 신청 <span class="ar">→</span></a>` })}
 <div class="wrap"><div class="tk rv">${ELC.schedule.map(([k, v], i) => `<div${i === 0 ? ` class="hl"` : ""}><small>${["Open", "Course", "Depart", "Apply", "Seats"][i]}</small><b>${v.replace(/ \(6개월\)/, "")}</b><span>${k}</span></div>`).join("")}</div></div>
-${block("About", ELC.name, `<div class="prose"><p>${ELC.intro}</p><p><strong>대상</strong> — ${ELC.target}</p><p><strong>위치</strong> — ${ELC.location}</p></div>`)}
+${block("About", ELC.name, `<div class="prose"><p>${ELC.intro}</p><p><strong>대상</strong> — ${ELC.target}</p><p><strong>위치</strong> — ${ELC.location}</p></div>${ELC.photos ? shots(ELC.photos) : ""}`)}
 ${block("How it works", "이 길이 가능한 이유", `<ul class="pts">${ELC.points.map(([t, p], i) => `<li><span class="n">${pad(i + 1)}</span><h3>${t}</h3><p>${p}</p></li>`).join("")}</ul>`, "bg-forest sheet")}
 ${block("Intakes", "연 4회 전형", `<p class="hs-hint hs-1096">대학 출발 시기는 표를 옆으로 밀면 나옵니다.</p><div class="tw" tabindex="0" role="region" aria-label="연 4회 전형표, 칸 4개"><table class="tb"><thead><tr><th>전형</th><th>입학·개강</th><th>수강 기간</th><th>대학 출발</th></tr></thead><tbody>${ELC.intakes.map((r) => `<tr><th>${r[0]}</th><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join("")}</tbody></table></div>`, "bg-paper sheet")}
 ${block("Admission", "선발 과정과 서류", `<div class="duo"><div class="box"><h3>Process</h3><ul>${ELC.admission.map((x) => `<li>${x}</li>`).join("")}</ul></div><div class="box"><h3>Documents</h3><ul>${ELC.docs.map((x) => `<li>${x}</li>`).join("")}</ul></div></div><div class="note"><b>비용</b><span>${ELC.price}</span></div>`, "tight")}
@@ -783,7 +783,7 @@ function buildArticle(raw) {
   for (let i = 0; i < pool.length && rel.length < 4; i++) { const x = pool[(start + i) % pool.length]; push(artRow(deepFill(x, x.slug))); }
 
   const cls = (i) => (i === 0 ? "" : i % 2 ? "bg-paper2 sheet" : "bg-paper sheet");
-  const secs = a.sections.map((s, i) => block(s.en, s.h2, secInner(s), cls(i))).join("\n");
+  const secs = a.sections.map((s, i) => block(s.en, s.h2, secInner(s) + (i === 0 && a.photos ? shots(a.photos) : ""), cls(i))).join("\n");
   let n = a.sections.length;
   const campsBlk = a.camps && a.camps.length ? `<section class="blk ${cls(n++)}"><div class="wrap"><div class="sh one"><div class="rv">${eb("Departures", "")}<h2>${a.campsTitle || "해당하는 과정"}</h2></div></div>${campRows(a.camps)}</div></section>` : "";
   const faqBlk = a.faq && a.faq.length ? block("Q&A", "같이 나오는 질문", faqHtml(a.faq), cls(n++)) : "";

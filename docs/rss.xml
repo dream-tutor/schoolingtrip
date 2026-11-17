@@ -6,7 +6,28 @@
   <atom:link href="https://schoolingtrip.com/rss.xml" rel="self" type="application/rss+xml"/>
   <description>2027 겨울 해외캠프·유학 과정 안내. 캐나다 · 뉴질랜드 · 일본 · 말레이시아 · 필리핀.</description>
   <language>ko</language>
-  <lastBuildDate>Mon, 16 Nov 2026 09:00:00 +0900</lastBuildDate>
+  <lastBuildDate>Tue, 17 Nov 2026 09:00:00 +0900</lastBuildDate>
+  <item>
+    <title>첫 해외캠프, 몇 학년부터 보낼 수 있나</title>
+    <link>https://schoolingtrip.com/ask-first-age.html</link>
+    <guid isPermaLink="true">https://schoolingtrip.com/ask-first-age.html</guid>
+    <pubDate>Tue, 17 Nov 2026 09:00:00 +0900</pubDate>
+    <description>해외캠프 첫 참가 학년, 과정별 대상 학년표, 초3·초4가 갈 수 있는 과정, 보내기 전 확인할 세 가지, 무료 상담.</description>
+  </item>
+  <item>
+    <title>해외캠프 7주, 학교 결석과 체험학습 처리</title>
+    <link>https://schoolingtrip.com/ask-school-absence.html</link>
+    <guid isPermaLink="true">https://schoolingtrip.com/ask-school-absence.html</guid>
+    <pubDate>Tue, 17 Nov 2026 09:00:00 +0900</pubDate>
+    <description>7주 해외캠프와 한국 학교 결석, 교외체험학습 확인 순서, 2월 등교일과 겹치는 과정 표, 졸업식이 있는 학년, 겹치지 않는 3주·4주.</description>
+  </item>
+  <item>
+    <title>OSSD 뜻, 캐나다 온타리오 고교 졸업장</title>
+    <link>https://schoolingtrip.com/term-ossd.html</link>
+    <guid isPermaLink="true">https://schoolingtrip.com/term-ossd.html</guid>
+    <pubDate>Tue, 17 Nov 2026 09:00:00 +0900</pubDate>
+    <description>OSSD 뜻, 온타리오주 고교 졸업장, 필수 19학점·봉사 40시간·OSSLT 졸업 요건, 나이아가라 가톨릭 교육청 고교 8곳.</description>
+  </item>
   <item>
     <title>뉴질랜드 중·고등 유학 | Waiuku College · 연 3,200만원</title>
     <link>https://schoolingtrip.com/study-newzealand.html</link>
@@ -1126,27 +1147,6 @@
     <guid isPermaLink="true">https://schoolingtrip.com/term-pa-day.html</guid>
     <pubDate>Sun, 18 Oct 2026 09:00:00 +0900</pubDate>
     <description>PA Day 뜻, 온타리오 학교의 교사 연수일, 캐나다 3주 1월 15일 초등 배정 학생 일정, 7주 과정의 클리프턴 힐 활동.</description>
-  </item>
-  <item>
-    <title>첫 해외캠프, 몇 학년부터 보낼 수 있나</title>
-    <link>https://schoolingtrip.com/ask-first-age.html</link>
-    <guid isPermaLink="true">https://schoolingtrip.com/ask-first-age.html</guid>
-    <pubDate>Sat, 17 Oct 2026 09:00:00 +0900</pubDate>
-    <description>해외캠프 첫 참가 학년, 과정별 대상 학년표, 초3·초4가 갈 수 있는 과정, 보내기 전 확인할 세 가지, 무료 상담.</description>
-  </item>
-  <item>
-    <title>해외캠프 7주, 학교 결석과 체험학습 처리</title>
-    <link>https://schoolingtrip.com/ask-school-absence.html</link>
-    <guid isPermaLink="true">https://schoolingtrip.com/ask-school-absence.html</guid>
-    <pubDate>Sat, 17 Oct 2026 09:00:00 +0900</pubDate>
-    <description>7주 해외캠프와 한국 학교 결석, 교외체험학습 확인 순서, 2월 등교일과 겹치는 과정 표, 졸업식이 있는 학년, 겹치지 않는 3주·4주.</description>
-  </item>
-  <item>
-    <title>OSSD 뜻, 캐나다 온타리오 고교 졸업장</title>
-    <link>https://schoolingtrip.com/term-ossd.html</link>
-    <guid isPermaLink="true">https://schoolingtrip.com/term-ossd.html</guid>
-    <pubDate>Sat, 17 Oct 2026 09:00:00 +0900</pubDate>
-    <description>OSSD 뜻, 온타리오주 고교 졸업장, 필수 19학점·봉사 40시간·OSSLT 졸업 요건, 나이아가라 가톨릭 교육청 고교 8곳.</description>
   </item>
 </channel>
 </rss>
