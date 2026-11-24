@@ -6,7 +6,35 @@
   <atom:link href="https://schoolingtrip.com/rss.xml" rel="self" type="application/rss+xml"/>
   <description>2027 겨울 해외캠프·유학 과정 안내. 캐나다 · 뉴질랜드 · 일본 · 말레이시아 · 필리핀.</description>
   <language>ko</language>
-  <lastBuildDate>Mon, 23 Nov 2026 09:00:00 +0900</lastBuildDate>
+  <lastBuildDate>Tue, 24 Nov 2026 09:00:00 +0900</lastBuildDate>
+  <item>
+    <title>홈스테이 배정 기준과 생활, 과정별 안내</title>
+    <link>https://schoolingtrip.com/ask-homestay-life.html</link>
+    <guid isPermaLink="true">https://schoolingtrip.com/ask-homestay-life.html</guid>
+    <pubDate>Tue, 24 Nov 2026 09:00:00 +0900</pubDate>
+    <description>해외캠프 홈스테이 배정 기관, 한 가정 인원, 가정 검증 절차, 신청서에 적을 내용, 배정 변경 원칙, 저녁과 일요일 생활.</description>
+  </item>
+  <item>
+    <title>뉴질랜드 캠프 홈스테이, 와이우쿠 가정 생활</title>
+    <link>https://schoolingtrip.com/camp-newzealand-stay.html</link>
+    <guid isPermaLink="true">https://schoolingtrip.com/camp-newzealand-stay.html</guid>
+    <pubDate>Tue, 24 Nov 2026 09:00:00 +0900</pubDate>
+    <description>뉴질랜드 와이우쿠 홈스테이 배정 담당, 경찰 기록 조회와 실사, 같은 성별 1~2명, 공휴일과 주말, 현지 관리자와 UM 구간.</description>
+  </item>
+  <item>
+    <title>중학생 해외캠프, 중1·중2·중3 과정 고르기</title>
+    <link>https://schoolingtrip.com/pick-middle.html</link>
+    <guid isPermaLink="true">https://schoolingtrip.com/pick-middle.html</guid>
+    <pubDate>Tue, 24 Nov 2026 09:00:00 +0900</pubDate>
+    <description>중학생 해외캠프 여섯 과정, 중1·중2·중3 학년별 가능 과정, 중2를 경계로 바뀌는 대상, 캐나다 학교 배정 방식, 목적별 선택.</description>
+  </item>
+  <item>
+    <title>재수 대신 미국 대학, 같은 1년 일정 비교</title>
+    <link>https://schoolingtrip.com/college-retakers.html</link>
+    <guid isPermaLink="true">https://schoolingtrip.com/college-retakers.html</guid>
+    <pubDate>Tue, 24 Nov 2026 09:00:00 +0900</pubDate>
+    <description>재수 대신 미국 대학, 재수 1년과 6개월 과정 월별 비교, 수능 성적 미제출, 연간 유학 비용 범위, 시기별로 맞는 전형.</description>
+  </item>
   <item>
     <title>일본 교토 일본어 연수 2주 | 일정·비용·대상</title>
     <link>https://schoolingtrip.com/camp-japan.html</link>
@@ -1119,34 +1147,6 @@
     <guid isPermaLink="true">https://schoolingtrip.com/study-cost-real.html</guid>
     <pubDate>Sun, 25 Oct 2026 09:00:00 +0900</pubDate>
     <description>뉴질랜드·캐나다 조기유학 1년 비용, 연 비용에 든 항목, 항공·용돈·비자처럼 따로 드는 돈, 방학 귀국 항공, 견적 확정 시점.</description>
-  </item>
-  <item>
-    <title>홈스테이 배정 기준과 생활, 과정별 안내</title>
-    <link>https://schoolingtrip.com/ask-homestay-life.html</link>
-    <guid isPermaLink="true">https://schoolingtrip.com/ask-homestay-life.html</guid>
-    <pubDate>Sat, 24 Oct 2026 09:00:00 +0900</pubDate>
-    <description>해외캠프 홈스테이 배정 기관, 한 가정 인원, 가정 검증 절차, 신청서에 적을 내용, 배정 변경 원칙, 저녁과 일요일 생활.</description>
-  </item>
-  <item>
-    <title>뉴질랜드 캠프 홈스테이, 와이우쿠 가정 생활</title>
-    <link>https://schoolingtrip.com/camp-newzealand-stay.html</link>
-    <guid isPermaLink="true">https://schoolingtrip.com/camp-newzealand-stay.html</guid>
-    <pubDate>Sat, 24 Oct 2026 09:00:00 +0900</pubDate>
-    <description>뉴질랜드 와이우쿠 홈스테이 배정 담당, 경찰 기록 조회와 실사, 같은 성별 1~2명, 공휴일과 주말, 현지 관리자와 UM 구간.</description>
-  </item>
-  <item>
-    <title>중학생 해외캠프, 중1·중2·중3 과정 고르기</title>
-    <link>https://schoolingtrip.com/pick-middle.html</link>
-    <guid isPermaLink="true">https://schoolingtrip.com/pick-middle.html</guid>
-    <pubDate>Sat, 24 Oct 2026 09:00:00 +0900</pubDate>
-    <description>중학생 해외캠프 여섯 과정, 중1·중2·중3 학년별 가능 과정, 중2를 경계로 바뀌는 대상, 캐나다 학교 배정 방식, 목적별 선택.</description>
-  </item>
-  <item>
-    <title>재수 대신 미국 대학, 같은 1년 일정 비교</title>
-    <link>https://schoolingtrip.com/college-retakers.html</link>
-    <guid isPermaLink="true">https://schoolingtrip.com/college-retakers.html</guid>
-    <pubDate>Sat, 24 Oct 2026 09:00:00 +0900</pubDate>
-    <description>재수 대신 미국 대학, 재수 1년과 6개월 과정 월별 비교, 수능 성적 미제출, 연간 유학 비용 범위, 시기별로 맞는 전형.</description>
   </item>
 </channel>
 </rss>
