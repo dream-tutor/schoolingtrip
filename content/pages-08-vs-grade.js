@@ -796,7 +796,7 @@ module.exports = [
           ["숙소", "인솔자와 같은 건물에서 재울지, 현지 가정에 들여보낼지 정합니다."],
           ["계절", "홈스테이로 정했다면 눈 오는 캐나다와 한여름 뉴질랜드 가운데 고릅니다."],
           ["자리 확인", "캐나다 7주는 초5 자리를, 뉴질랜드 4주나 7주를 원하면 5학년 가능 여부를 문의합니다."],
-          ["마감일", "캐나다 3주 {{camp-canada-3week.deadlineKo}}, 뉴질랜드 {{camp-newzealand.deadlineKo}}, 캐나다 7주 {{camp-canada-7week.deadlineKo}}, 말레이시아와 필리핀 {{camp-malaysia.deadlineKo}}입니다."],
+          ["마감일", "뉴질랜드는 {{camp-newzealand.deadlineKo}}이고, 캐나다 3주·7주와 말레이시아·필리핀은 이번 겨울 모집이 마감되었습니다."],
         ],
       },
       {
